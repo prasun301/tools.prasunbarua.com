@@ -1,162 +1,113 @@
-/* ==================================================
-   Tools.PrasunBarua.com - Tool Page Layout Styles
-================================================== */
+/* ==========================================
+   Tools & Calculator Pages CSS
+   ========================================== */
 
-.tool-page-main {
-  padding: 40px 0 80px;
+/* Page Layout & Container */
+.tool-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
 }
 
-/* --------------------------------------------------
-   Breadcrumbs
--------------------------------------------------- */
-.breadcrumbs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  margin-bottom: 24px;
-}
-
-.breadcrumbs a {
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color var(--transition-fast, 0.2s ease);
-}
-
-.breadcrumbs a:hover {
-  color: var(--primary);
-}
-
-.breadcrumbs span.separator {
-  opacity: 0.5;
-}
-
-.breadcrumbs span.current {
-  color: var(--text);
-  font-weight: 500;
-}
-
-/* --------------------------------------------------
-   Tool Hero Header
--------------------------------------------------- */
-.tool-header-block {
+/* Tool Header */
+.tool-header {
   margin-bottom: 32px;
+  text-align: left;
 }
 
-.tool-header-block h1 {
+.tool-header h1 {
   font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.8px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--text);
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 12px;
+  line-height: 1.2;
 }
 
-.tool-header-block p {
+.tool-header p {
+  font-size: 1.1rem;
   color: var(--text-muted);
-  font-size: 1.05rem;
-  max-width: 750px;
+  max-width: 800px;
   line-height: 1.6;
 }
 
-/* --------------------------------------------------
-   Tool Workspace Grid
--------------------------------------------------- */
-.tool-workspace {
+/* Main Tool Grid Layout */
+.tool-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 340px;
   gap: 32px;
-  margin-bottom: 60px;
+  align-items: start;
 }
 
-@media (max-width: 868px) {
-  .tool-workspace {
-    grid-template-columns: 1fr;
-  }
-}
-
-.tool-card-box {
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg, 12px);
-  padding: 32px;
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
+/* Tool Main Content Area */
+.tool-main-content {
   display: flex;
   flex-direction: column;
+  gap: 32px;
 }
 
-.tool-card-box h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text);
+/* Card Container */
+.tool-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.tool-card h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-heading);
   margin-bottom: 20px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
-/* --------------------------------------------------
-   Form Controls & Modernized Native Select
--------------------------------------------------- */
+/* Form Controls & Inputs */
 .form-group {
   margin-bottom: 20px;
 }
 
-.form-group label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--text-heading);
   margin-bottom: 8px;
 }
 
-.unit-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-/* Custom Styled Native Select Dropdown */
-.form-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+.form-select,
+.form-input {
   width: 100%;
-  height: 48px;
-  /* Increased right padding to prevent text from overlapping the arrow */
-  padding: 0 48px 0 16px; 
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 10px 14px;
+  font-size: 0.95rem;
   color: var(--text);
-  background-color: var(--background);
-  /* Modern SVG Chevron Arrow */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  /* Shifted arrow position from 16px to 22px away from the right edge */
-  background-position: right 22px center; 
-  background-size: 16px;
+  background-color: var(--bg-body);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md, 8px);
-  outline: none;
-  cursor: pointer;
+  border-radius: 8px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-select:hover {
-  border-color: var(--primary);
+/* Select Styling & Custom Arrow */
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
 }
 
-.form-select:focus-visible,
-.form-select:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-ring, rgba(59, 130, 246, 0.2));
+/* Dark Mode Select Arrow Override */
+[data-theme="dark"] .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
-/* Text & Number Inputs */
+/* Input with Unit Styling */
 .input-with-unit {
   position: relative;
   display: flex;
@@ -164,430 +115,110 @@
 }
 
 .input-with-unit input {
-  width: 100%;
-  height: 48px;
-  padding: 0 50px 0 16px;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text);
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md, 8px);
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding-right: 50px;
 }
 
-.input-with-unit input:hover {
-  border-color: var(--primary);
+.input-unit {
+  position: absolute;
+  right: 14px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  pointer-events: none;
 }
 
+/* Focus States & Accessibility */
+.form-select:focus,
+.form-input:focus,
 .input-with-unit input:focus {
+  outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-ring, rgba(59, 130, 246, 0.2));
 }
 
-.unit-tag {
-  position: absolute;
-  right: 14px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  pointer-events: none;
+.form-select:focus-visible,
+.form-input:focus-visible,
+.input-with-unit input:focus-visible {
+  outline: 2px solid transparent; /* Hardens high-contrast mode compliance */
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-ring, rgba(59, 130, 246, 0.2));
 }
 
-.dynamic-inputs-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.btn-primary {
-  background-color: var(--primary);
-  color: #ffffff;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: var(--radius-md, 8px);
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  flex: 1;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover, #2563eb);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-weight: 600;
-  padding: 12px 20px;
-  border-radius: var(--radius-md, 8px);
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.btn-outline:hover {
-  background-color: var(--surface-hover, rgba(0, 0, 0, 0.03));
-  border-color: var(--text-muted);
-}
-
-/* --------------------------------------------------
-   Results Display Box & States
--------------------------------------------------- */
-.result-display-box {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md, 8px);
-  padding: 24px;
-  min-height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.result-placeholder {
-  text-align: center;
-  color: var(--text-muted);
-}
-
-.result-placeholder .result-icon {
-  font-size: 2rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.result-card-inner {
-  width: 100%;
-}
-
-.result-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px dashed var(--border);
-}
-
-.result-row:last-child {
-  border-bottom: none;
-}
-
-.result-row.primary-result {
-  background-color: var(--primary-light, rgba(59, 130, 246, 0.1));
-  padding: 16px;
-  border-radius: var(--radius-md, 8px);
-  border-bottom: none;
-  margin-bottom: 12px;
-}
-
-.result-row.primary-result .result-label {
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.result-row.primary-result .result-val {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.result-label {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.result-val {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.result-error-box {
-  text-align: center;
-  color: #ef4444;
-}
-
-.result-error-box .error-icon {
-  font-size: 1.8rem;
-  display: block;
-  margin-bottom: 6px;
-}
-
-/* --------------------------------------------------
-   Formula Breakdown Helper
--------------------------------------------------- */
-.formula-box {
-  background-color: var(--primary-light, rgba(59, 130, 246, 0.08));
-  border: 1px solid var(--primary-ring, rgba(59, 130, 246, 0.2));
-  border-radius: var(--radius-md, 8px);
-  padding: 18px;
-  font-size: 0.9rem;
-  color: var(--text);
-  line-height: 1.6;
-}
-
-.formula-box h4 {
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: var(--primary);
-}
-
-/* --------------------------------------------------
-   Educational / SEO Content Block
--------------------------------------------------- */
-.tool-guide-content {
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg, 12px);
-  padding: 40px;
-  line-height: 1.7;
-}
-
-.tool-guide-content h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 16px;
-  margin-top: 36px;
-}
-
-.tool-guide-content h2:first-child {
-  margin-top: 0;
-}
-
-.tool-guide-content p {
-  color: var(--text-muted);
-  margin-bottom: 16px;
-}
-
-.info-grid {
+/* Information & Result Display Grids */
+.info-grid,
+.pv-results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 16px;
   margin: 24px 0;
 }
 
-.info-card {
-  background-color: var(--background);
+.info-item,
+.pv-result-card {
+  background-color: var(--bg-body);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md, 8px);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.info-label,
+.pv-result-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-value,
+.pv-result-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Tool Sidebar Styling */
+.tool-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-widget {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 20px;
 }
 
-.info-card h3 {
+.sidebar-widget h3 {
   font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--primary);
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 14px;
 }
 
-.info-card p {
-  font-size: 0.875rem;
-  margin-bottom: 0;
-}
-
-/* Formula Table */
-.formula-table-wrapper {
-  overflow-x: auto;
-  margin: 24px 0;
-}
-
-.formula-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.formula-table th,
-.formula-table td {
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-}
-
-.formula-table th {
-  background-color: var(--background);
-  font-weight: 700;
-  color: var(--text);
-}
-
-.formula-table td {
-  color: var(--text);
-}
-
-.formula-table code {
-  background-color: var(--primary-light, rgba(59, 130, 246, 0.1));
-  color: var(--primary);
-  padding: 4px 8px;
-  border-radius: var(--radius-sm, 4px);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.95rem;
-}
-
-.tool-guide-content ul {
-  margin-left: 20px;
-  margin-bottom: 20px;
-  color: var(--text-muted);
-}
-
-.tool-guide-content li {
-  margin-bottom: 8px;
-}
-
-/* --------------------------------------------------
-   Responsive Adjustments
--------------------------------------------------- */
-@media (max-width: 640px) {
-  .tool-card-box,
-  .tool-guide-content {
-    padding: 20px;
+/* Responsive Media Queries */
+@media (max-width: 868px) {
+  .tool-grid {
+    grid-template-columns: 1fr;
   }
 
-  .tool-header-block h1 {
+  .tool-sidebar {
+    order: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .tool-page-container {
+    padding: 20px 16px 40px;
+  }
+
+  .tool-header h1 {
     font-size: 1.75rem;
   }
 
-  .form-actions {
-    flex-direction: column;
+  .tool-card {
+    padding: 20px;
   }
-
-  .btn-outline {
-    width: 100%;
-  }
-}
-/* --------------------------------------------------
-   Solar PV Calculator Specific Layout & Card Styles
--------------------------------------------------- */
-
-.section-subheading {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text);
-  margin: 20px 0 12px 0;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed var(--border);
-}
-
-.input-grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 640px) {
-  .input-grid-2 {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-}
-
-.offgrid-container {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md, 8px);
-  padding: 16px;
-  margin-top: 16px;
-}
-
-/* Solar Results Output Grid */
-.pv-results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  width: 100%;
-}
-
-.pv-result-card {
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md, 8px);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.pv-card-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--primary);
-  margin-bottom: 4px;
-}
-
-.pv-metric-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  padding: 4px 0;
-  border-bottom: 1px dashed var(--border);
-}
-
-.pv-metric-row:last-child {
-  border-bottom: none;
-}
-
-.pv-metric-row strong {
-  color: var(--text);
-  font-weight: 700;
-}
-
-.pv-metric-row.highlight-row {
-  background-color: var(--primary-light, rgba(59, 130, 246, 0.1));
-  padding: 8px 10px;
-  border-radius: var(--radius-sm, 4px);
-  border-bottom: none;
-  margin-top: 4px;
-}
-
-.pv-metric-row.highlight-row strong {
-  color: var(--primary);
-  font-size: 1rem;
-}
-
-/* Status Badges */
-.status-badge-wrapper {
-  margin: 8px 0;
-}
-
-.badge {
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.badge.pass {
-  background-color: #16a34a;
-  color: #ffffff;
-}
-
-.badge.warn {
-  background-color: #f59e0b;
-  color: #111111;
-}
-
-.badge.fail {
-  background-color: #dc2626;
-  color: #ffffff;
-}
-
-.status-note-text {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.5;
 }
