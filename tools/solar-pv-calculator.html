@@ -1,422 +1,1593 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solar PV System Calculator - Tools.PrasunBarua</title>
 
-  <link rel="icon" href="../favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
 
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/responsive.css">
-  <link rel="stylesheet" href="../assets/css/tool-page.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    /* Inline Safety Styles */
-    .section-subheading {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--primary, #2563eb);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin: 18px 0 10px 0;
-    }
-    .input-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    @media (max-width: 600px) {
-      .input-grid-2 { grid-template-columns: 1fr; }
-    }
-    .offgrid-container {
-      background-color: var(--background, #f8fafc);
-      border: 1px solid var(--border, #e2e8f0);
-      border-radius: 8px;
-      padding: 14px;
-      margin-top: 14px;
-    }
-    .pv-results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-    }
-    .pv-result-card {
-      background: var(--background, #f8fafc);
-      border: 1px solid var(--border, #e2e8f0);
-      border-radius: 8px;
-      padding: 12px;
-    }
-    .pv-card-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--primary, #2563eb);
-      display: block;
-      margin-bottom: 8px;
-    }
-    .pv-metric-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      padding: 4px 0;
-      border-bottom: 1px dashed var(--border, #e2e8f0);
-    }
-    .pv-metric-row:last-child { border-bottom: none; }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-    .badge.pass { background-color: #16a34a; color: #fff; }
-    .badge.warn { background-color: #f59e0b; color: #111; }
-    .badge.fail { background-color: #dc2626; color: #fff; }
-  </style>
+
+<title>
+Solar PV System Calculator - Tools.PrasunBarua
+</title>
+
+
+<link rel="icon" href="../favicon.ico">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<link rel="stylesheet" href="../assets/css/responsive.css">
+
+<link rel="stylesheet" href="../assets/css/tool-page.css">
+
+
+
+<style>
+
+
+.section-subheading {
+
+font-size:0.9rem;
+
+font-weight:700;
+
+color:var(--primary,#2563eb);
+
+text-transform:uppercase;
+
+letter-spacing:0.5px;
+
+margin:18px 0 10px 0;
+
+}
+
+
+
+.input-grid-2 {
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+}
+
+
+
+@media(max-width:600px){
+
+.input-grid-2 {
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+
+
+
+.offgrid-container {
+
+background-color:var(--background,#f8fafc);
+
+border:1px solid var(--border,#e2e8f0);
+
+border-radius:8px;
+
+padding:14px;
+
+margin-top:14px;
+
+}
+
+
+
+
+.pv-results-grid {
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:12px;
+
+}
+
+
+
+
+.pv-result-card {
+
+background:var(--background,#f8fafc);
+
+border:1px solid var(--border,#e2e8f0);
+
+border-radius:8px;
+
+padding:12px;
+
+}
+
+
+
+.pv-card-title {
+
+font-size:0.75rem;
+
+font-weight:700;
+
+text-transform:uppercase;
+
+color:var(--primary,#2563eb);
+
+display:block;
+
+margin-bottom:8px;
+
+}
+
+
+
+.pv-metric-row {
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:0.85rem;
+
+padding:5px 0;
+
+border-bottom:1px dashed var(--border,#e2e8f0);
+
+}
+
+
+
+.pv-metric-row:last-child {
+
+border-bottom:none;
+
+}
+
+
+
+.badge {
+
+display:inline-block;
+
+padding:5px 12px;
+
+border-radius:5px;
+
+font-weight:700;
+
+font-size:0.85rem;
+
+}
+
+
+
+.badge.pass {
+
+background:#16a34a;
+
+color:white;
+
+}
+
+
+
+.badge.warn {
+
+background:#f59e0b;
+
+color:#111;
+
+}
+
+
+
+.badge.fail {
+
+background:#dc2626;
+
+color:white;
+
+}
+
+
+
+.warning-box {
+
+background:#fff7ed;
+
+border-left:4px solid #f59e0b;
+
+padding:10px;
+
+margin-top:10px;
+
+border-radius:6px;
+
+font-size:0.85rem;
+
+}
+
+
+
+</style>
+
+
 </head>
+
+
+
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-inner">
-      <div class="logo">
-        <a href="../index.html">Tools<span>.PrasunBarua</span></a>
-      </div>
-      <nav class="navigation">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../index.html#tools" class="nav-link">Tools</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="tool-page-main">
-    <div class="container">
 
-      <!-- BREADCRUMBS -->
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="../index.html">Home</a>
-        <span class="separator">/</span>
-        <a href="../index.html#tools">Electrical Tools</a>
-        <span class="separator">/</span>
-        <span class="current">Solar PV Calculator</span>
-      </nav>
+<!-- HEADER -->
 
-      <!-- TOOL HEADER -->
-      <div class="tool-header-block">
-        <h1>☀️ Solar PV System Calculator</h1>
-        <p>Calculate solar array sizing, inverter temperature-adjusted string limits, estimated annual yield, and off-grid battery capacity.</p>
-      </div>
+<header class="header">
 
-      <!-- WORKSPACE -->
-      <div class="tool-workspace">
 
-        <!-- INPUTS -->
-        <div class="tool-card-box">
-          <h2>System Parameters</h2>
-          <form id="pvForm" onsubmit="return false;">
+<div class="container header-inner">
 
-            <div class="form-group">
-              <label for="pvMode">System Architecture</label>
-              <select id="pvMode" class="form-select">
-                <option value="grid">Grid-Tied System</option>
-                <option value="offgrid">Off-Grid Independent System</option>
-              </select>
-            </div>
 
-            <div class="section-subheading">PV Module Specs</div>
-            <div class="input-grid-2">
-              <div class="form-group">
-                <label for="voc">Open Circuit Volts (Voc)</label>
-                <div class="input-with-unit">
-                  <input type="number" id="voc" step="any" value="49.5">
-                  <span class="unit-tag">V</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="vmp">Max Power Volts (Vmp)</label>
-                <div class="input-with-unit">
-                  <input type="number" id="vmp" step="any" value="41.2">
-                  <span class="unit-tag">V</span>
-                </div>
-              </div>
-            </div>
+<div class="logo">
 
-            <div class="input-grid-2">
-              <div class="form-group">
-                <label for="imp">Max Power Current (Imp)</label>
-                <div class="input-with-unit">
-                  <input type="number" id="imp" step="any" value="10.8">
-                  <span class="unit-tag">A</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="pmax">Power Output (Pmax)</label>
-                <div class="input-with-unit">
-                  <input type="number" id="pmax" step="any" value="450">
-                  <span class="unit-tag">W</span>
-                </div>
-              </div>
-            </div>
+<a href="../index.html">
 
-            <div class="section-subheading">Inverter Specs</div>
-            <div class="input-grid-2">
-              <div class="form-group">
-                <label for="invRating">Inverter Rating</label>
-                <div class="input-with-unit">
-                  <input type="number" id="invRating" step="any" value="10">
-                  <span class="unit-tag">kW</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="dcmax">Max DC Voltage</label>
-                <div class="input-with-unit">
-                  <input type="number" id="dcmax" step="any" value="1000">
-                  <span class="unit-tag">V</span>
-                </div>
-              </div>
-            </div>
+Tools<span>.PrasunBarua</span>
 
-            <div class="input-grid-2">
-              <div class="form-group">
-                <label for="mpptMin">MPPT Min Voltage</label>
-                <div class="input-with-unit">
-                  <input type="number" id="mpptMin" step="any" value="200">
-                  <span class="unit-tag">V</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="mpptMax">MPPT Max Voltage</label>
-                <div class="input-with-unit">
-                  <input type="number" id="mpptMax" step="any" value="800">
-                  <span class="unit-tag">V</span>
-                </div>
-              </div>
-            </div>
+</a>
 
-            <div class="section-subheading">Environment & Yield</div>
-            <div class="input-grid-2">
-              <div class="form-group">
-                <label for="tmin">Extreme Min Temp</label>
-                <div class="input-with-unit">
-                  <input type="number" id="tmin" step="any" value="10">
-                  <span class="unit-tag">&deg;C</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="tmax">Extreme Max Temp</label>
-                <div class="input-with-unit">
-                  <input type="number" id="tmax" step="any" value="45">
-                  <span class="unit-tag">&deg;C</span>
-                </div>
-              </div>
-            </div>
+</div>
 
-            <div class="input-grid-2">
-              <div class="form-group">
-                <label for="psh">Peak Sun Hours (PSH)</label>
-                <div class="input-with-unit">
-                  <input type="number" id="psh" step="any" value="5.5">
-                  <span class="unit-tag">hrs</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="loss">System Losses</label>
-                <div class="input-with-unit">
-                  <input type="number" id="loss" step="any" value="14">
-                  <span class="unit-tag">%</span>
-                </div>
-              </div>
-            </div>
 
-            <!-- OFF-GRID CONTAINER -->
-            <div id="offgridSection" class="offgrid-container" style="display: none;">
-              <div class="section-subheading" style="margin-top:0;">Off-Grid Battery System</div>
-              <div class="input-grid-2">
-                <div class="form-group">
-                  <label for="dailyLoad">Daily Load</label>
-                  <div class="input-with-unit">
-                    <input type="number" id="dailyLoad" step="any" value="12">
-                    <span class="unit-tag">kWh</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="autonomy">Autonomy Days</label>
-                  <div class="input-with-unit">
-                    <input type="number" id="autonomy" step="any" value="2">
-                    <span class="unit-tag">Days</span>
-                  </div>
-                </div>
-              </div>
-              <div class="input-grid-2">
-                <div class="form-group">
-                  <label for="batteryV">Battery Voltage</label>
-                  <div class="input-with-unit">
-                    <input type="number" id="batteryV" step="any" value="48">
-                    <span class="unit-tag">V</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="dod">Depth of Discharge</label>
-                  <div class="input-with-unit">
-                    <input type="number" id="dod" step="any" value="80">
-                    <span class="unit-tag">%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-actions" style="margin-top: 18px;">
-              <button type="button" id="calcBtn" class="btn-primary">Calculate System</button>
-              <button type="button" id="resetBtn" class="btn-outline">Reset Defaults</button>
-            </div>
+<nav class="navigation">
 
-          </form>
+
+<a href="../index.html" class="nav-link">
+
+Home
+
+</a>
+
+
+
+<a href="../index.html#tools" class="nav-link">
+
+Tools
+
+</a>
+
+
+</nav>
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+<main class="tool-page-main">
+
+
+<div class="container">
+
+
+
+<!-- BREADCRUMB -->
+
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+
+
+<a href="../index.html">
+
+Home
+
+</a>
+
+
+<span class="separator">
+
+/
+
+</span>
+
+
+<a href="../index.html#tools">
+
+Electrical Tools
+
+</a>
+
+
+<span class="separator">
+
+/
+
+</span>
+
+
+<span class="current">
+
+Solar PV Calculator
+
+</span>
+
+
+
+</nav>
+
+
+
+
+
+<!-- TOOL HEADER -->
+
+
+<div class="tool-header-block">
+
+
+<h1>
+
+☀️ Solar PV System Calculator
+
+</h1>
+
+
+
+<p>
+
+Calculate PV array sizing, temperature-adjusted string voltage, inverter compatibility, annual energy yield, and off-grid battery requirements.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<!-- WORKSPACE -->
+
+
+<div class="tool-workspace">
+
+
+
+
+
+<!-- INPUT PANEL -->
+
+
+<div class="tool-card-box">
+
+
+<h2>
+
+System Parameters
+
+</h2>
+
+
+
+<form id="pvForm" onsubmit="return false;">
+
+
+
+
+
+<!-- SYSTEM MODE -->
+
+
+<div class="form-group">
+
+
+<label for="pvMode">
+
+System Architecture
+
+</label>
+
+
+
+<select id="pvMode" class="form-select">
+
+
+<option value="grid">
+
+Grid-Tied System
+
+</option>
+
+
+<option value="offgrid">
+
+Off-Grid Independent System
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- PV MODULE -->
+
+
+<div class="section-subheading">
+
+PV Module Specs
+
+</div>
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="voc">
+
+Open Circuit Voltage (Voc)
+
+</label>
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="voc"
+
+step="any"
+
+value="49.5">
+
+
+<span class="unit-tag">
+
+V
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="vmp">
+
+Maximum Power Voltage (Vmp)
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="vmp"
+
+step="any"
+
+value="41.2">
+
+
+
+<span class="unit-tag">
+
+V
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="imp">
+
+Maximum Power Current (Imp)
+
+</label>
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="imp"
+
+step="any"
+
+value="10.8">
+
+
+<span class="unit-tag">
+
+A
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="pmax">
+
+Module Power Output (Pmax)
+
+</label>
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="pmax"
+
+step="any"
+
+value="450">
+
+
+<span class="unit-tag">
+
+W
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+<!-- INVERTER SECTION -->
+
+
+<div class="section-subheading">
+
+Inverter Specs
+
+</div>
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="invRating">
+
+Inverter Rating
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="invRating"
+
+step="any"
+
+value="10">
+
+
+
+<span class="unit-tag">
+
+kW
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="dcmax">
+
+Maximum DC Voltage
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="dcmax"
+
+step="any"
+
+value="1000">
+
+
+
+<span class="unit-tag">
+
+V
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="mpptMin">
+
+MPPT Minimum Voltage
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="mpptMin"
+
+step="any"
+
+value="200">
+
+
+
+<span class="unit-tag">
+
+V
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="mpptMax">
+
+MPPT Maximum Voltage
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="mpptMax"
+
+step="any"
+
+value="800">
+
+
+
+<span class="unit-tag">
+
+V
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- NEW MPPT INPUTS -->
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="mpptCount">
+
+Number of MPPT Inputs
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="mpptCount"
+
+step="1"
+
+value="2">
+
+
+
+<span class="unit-tag">
+
+MPPT
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="stringsPerMppt">
+
+Maximum Strings per MPPT
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="stringsPerMppt"
+
+step="1"
+
+value="2">
+
+
+
+<span class="unit-tag">
+
+Strings
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ENVIRONMENT -->
+
+
+<div class="section-subheading">
+
+Environment & Yield
+
+</div>
+
+
+
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="tmin">
+
+Extreme Minimum Temperature
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="tmin"
+
+step="any"
+
+value="10">
+
+
+
+<span class="unit-tag">
+
+°C
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="tmax">
+
+Extreme Maximum Temperature
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="tmax"
+
+step="any"
+
+value="45">
+
+
+
+<span class="unit-tag">
+
+°C
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="psh">
+
+Peak Sun Hours (PSH)
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="psh"
+
+step="any"
+
+value="5.5">
+
+
+
+<span class="unit-tag">
+
+hrs
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="loss">
+
+System Losses
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="loss"
+
+step="any"
+
+value="14">
+
+
+
+<span class="unit-tag">
+
+%
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- OFF GRID SECTION -->
+
+
+<div
+
+id="offgridSection"
+
+class="offgrid-container"
+
+style="display:none;">
+
+
+
+
+
+
+<div class="section-subheading" style="margin-top:0;">
+
+Off-Grid Battery System
+
+</div>
+
+
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="dailyLoad">
+
+Daily Energy Load
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="dailyLoad"
+
+step="any"
+
+value="12">
+
+
+
+<span class="unit-tag">
+
+kWh/day
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="autonomy">
+
+Backup Autonomy
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="autonomy"
+
+step="any"
+
+value="2">
+
+
+
+<span class="unit-tag">
+
+Days
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="input-grid-2">
+
+
+
+<div class="form-group">
+
+
+<label for="batteryV">
+
+Battery Voltage
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="batteryV"
+
+step="any"
+
+value="48">
+
+
+
+<span class="unit-tag">
+
+V
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="dod">
+
+Depth of Discharge
+
+</label>
+
+
+
+<div class="input-with-unit">
+
+
+<input
+
+type="number"
+
+id="dod"
+
+step="any"
+
+value="80">
+
+
+
+<span class="unit-tag">
+
+%
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- BUTTONS -->
+
+
+<div class="form-actions" style="margin-top:18px;">
+
+
+
+<button
+
+type="button"
+
+id="calcBtn"
+
+class="btn-primary">
+
+Calculate System
+
+</button>
+
+
+
+
+
+
+<button
+
+type="button"
+
+id="resetBtn"
+
+class="btn-outline">
+
+Reset Defaults
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+</form>
+
+
+</div>
+      <!-- RESULTS PANEL -->
+
+
+      <div class="tool-card-box">
+
+
+        <h2>
+
+        Validation & Yield Results
+
+        </h2>
+
+
+
+
+
+        <div id="resultBox">
+
+
+          <div class="result-placeholder"
+
+          style="text-align:center; padding:30px; color:var(--text-muted,#64748b);">
+
+
+            <p>
+
+            Adjust parameters and click
+
+            <strong>
+
+            Calculate System
+
+            </strong>
+
+            to display results.
+
+            </p>
+
+
+          </div>
+
+
         </div>
 
-        <!-- RESULTS -->
-        <div class="tool-card-box">
-          <h2>Validation & Yield Results</h2>
-          <div id="resultBox">
-            <div class="result-placeholder" style="text-align: center; padding: 30px; color: var(--text-muted, #64748b);">
-              <p>Adjust parameters and click <strong>Calculate System</strong> to display results.</p>
-            </div>
-          </div>
 
-          <div class="formula-box" style="margin-top: 16px; padding: 12px; background: var(--background, #f8fafc); border: 1px solid var(--border, #e2e8f0); border-radius: 6px; font-size: 0.85rem;">
-            <strong>Validation Summary:</strong>
-            <p id="formulaApplied">Calculations will appear here after clicking Calculate.</p>
-          </div>
+
+
+
+
+        <!-- FORMULA DISPLAY -->
+
+
+        <div class="formula-box"
+
+        style="
+
+        margin-top:16px;
+
+        padding:12px;
+
+        background:var(--background,#f8fafc);
+
+        border:1px solid var(--border,#e2e8f0);
+
+        border-radius:6px;
+
+        font-size:0.85rem;
+
+        ">
+
+
+
+          <strong>
+
+          Validation Summary
+
+          </strong>
+
+
+
+
+          <p id="formulaApplied">
+
+          Calculations will appear here after clicking Calculate.
+
+          </p>
+
+
+
         </div>
 
+
+
+
+
       </div>
+
+
+
+
+
     </div>
-  </main>
 
-  <footer class="footer">
-    <div class="container footer-bottom">
-      <p>&copy; 2026 Tools.PrasunBarua. All rights reserved.</p>
-    </div>
-  </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const pvMode = document.getElementById('pvMode');
-      const offgridSection = document.getElementById('offgridSection');
-      const calcBtn = document.getElementById('calcBtn');
-      const resetBtn = document.getElementById('resetBtn');
-      const resultBox = document.getElementById('resultBox');
-      const formulaApplied = document.getElementById('formulaApplied');
+  </div>
 
-      pvMode.addEventListener('change', () => {
-        offgridSection.style.display = pvMode.value === 'offgrid' ? 'block' : 'none';
-      });
 
-      calcBtn.addEventListener('click', calculate);
-      resetBtn.addEventListener('click', () => {
-        document.getElementById('pvForm').reset();
-        offgridSection.style.display = 'none';
-        resultBox.innerHTML = '<div class="result-placeholder" style="text-align: center; padding: 30px; color: var(--text-muted, #64748b);"><p>Adjust parameters and click <strong>Calculate System</strong> to display results.</p></div>';
-        formulaApplied.textContent = 'Calculations will appear here after clicking Calculate.';
-      });
+</main>
 
-      function num(id) {
-        return parseFloat(document.getElementById(id)?.value) || 0;
-      }
 
-      function calculate() {
-        const mode = pvMode.value;
-        const Voc = num('voc'), Vmp = num('vmp'), Pmax = num('pmax');
-        const invRating = num('invRating'), dcmax = num('dcmax'), mpptMin = num('mpptMin'), mpptMax = num('mpptMax');
-        const Tmin = num('tmin'), Tmax = num('tmax'), psh = num('psh'), lossPct = num('loss');
 
-        if (Voc <= 0 || Vmp <= 0 || Pmax <= 0 || invRating <= 0 || dcmax <= 0) {
-          resultBox.innerHTML = '<p style="color:#dc2626; font-weight:600; padding:12px;">Please enter valid non-zero values for all core parameters.</p>';
-          return;
-        }
 
-        const VocCold = Voc * (1 + 0.0028 * (25 - Tmin));
-        const VmpHot = Vmp * (1 - 0.0035 * (Tmax - 25));
 
-        const maxVocModules = Math.floor(dcmax / VocCold);
-        const minMpptModules = Math.ceil(mpptMin / VmpHot);
-        const maxMpptModules = Math.floor(mpptMax / VmpHot);
 
-        const modulesPerString = Math.max(minMpptModules, Math.min(maxVocModules, maxMpptModules));
-        const totalModules = Math.ceil((invRating * 1000) / Pmax);
-        const strings = modulesPerString > 0 ? Math.ceil(totalModules / modulesPerString) : 0;
 
-        const dcSize = (totalModules * Pmax) / 1000;
-        const dcac = invRating > 0 ? dcSize / invRating : 0;
 
-        const PR = Math.max(0.4, Math.min(0.95, 1 - (lossPct / 100 + 0.07)));
-        const annualEnergy = dcSize * psh * 365 * PR;
 
-        let status = 'PASS', badgeClass = 'pass', note = 'System matches inverter specs within valid MPPT limits.';
-        if (dcac > 1.5) { status = 'WARNING'; badgeClass = 'warn'; note = 'High DC/AC ratio (>1.5) may cause power clipping.'; }
-        if (maxVocModules < minMpptModules || modulesPerString <= 0 || VocCold > dcmax) {
-          status = 'FAIL'; badgeClass = 'fail'; note = 'Voltage window mismatch. Array exceeds DC max or falls below MPPT min.';
-        }
+<!-- FOOTER -->
 
-        let battHtml = '';
-        if (mode === 'offgrid') {
-          const load = num('dailyLoad'), days = num('autonomy'), Vbat = num('batteryV'), dod = num('dod') / 100;
-          if (load > 0 && days > 0 && Vbat > 0 && dod > 0) {
-            const grossKwh = (load * days * 1.15) / (dod * 0.85);
-            const ah = (grossKwh * 1000) / Vbat;
-            battHtml = `
-              <div class="pv-result-card">
-                <span class="pv-card-title">Off-Grid Battery</span>
-                <div class="pv-metric-row"><span>Required Storage:</span> <strong>${grossKwh.toFixed(1)} kWh</strong></div>
-                <div class="pv-metric-row"><span>Capacity @ ${Vbat}V:</span> <strong>${Math.round(ah)} Ah</strong></div>
-              </div>
-            `;
-          }
-        }
 
-        resultBox.innerHTML = `
-          <div class="pv-results-grid">
-            <div class="pv-result-card">
-              <span class="pv-card-title">Array Sizing</span>
-              <div class="pv-metric-row"><span>DC Array Size:</span> <strong>${dcSize.toFixed(2)} kW</strong></div>
-              <div class="pv-metric-row"><span>Total Modules:</span> <strong>${totalModules}</strong></div>
-              <div class="pv-metric-row"><span>Modules/String:</span> <strong>${modulesPerString}</strong></div>
-              <div class="pv-metric-row"><span>DC/AC Ratio:</span> <strong>${dcac.toFixed(2)}</strong></div>
-            </div>
+<footer class="footer">
 
-            <div class="pv-result-card">
-              <span class="pv-card-title">Voltage Window</span>
-              <div class="pv-metric-row"><span>Cold Voc (${Tmin}&deg;C):</span> <strong>${VocCold.toFixed(1)} V</strong></div>
-              <div class="pv-metric-row"><span>Hot Vmp (${Tmax}&deg;C):</span> <strong>${VmpHot.toFixed(1)} V</strong></div>
-              <div class="pv-metric-row"><span>Inverter Limit:</span> <strong>${dcmax} V</strong></div>
-            </div>
 
-            <div class="pv-result-card">
-              <span class="pv-card-title">Annual Generation</span>
-              <div class="pv-metric-row"><span>Annual Yield:</span> <strong>${Math.round(annualEnergy).toLocaleString()} kWh</strong></div>
-              <div class="pv-metric-row"><span>Daily Average:</span> <strong>${(annualEnergy/365).toFixed(1)} kWh/day</strong></div>
-            </div>
+<div class="container footer-bottom">
 
-            <div class="pv-result-card">
-              <span class="pv-card-title">Validation Status</span>
-              <div style="margin: 6px 0;"><span class="badge ${badgeClass}">${status}</span></div>
-              <p style="font-size:0.8rem; color: var(--text-muted, #64748b);">${note}</p>
-            </div>
 
-            ${battHtml}
-          </div>
-        `;
+<p>
 
-        formulaApplied.innerHTML = `
-          • Cold Voc (@ ${Tmin}&deg;C): <strong>${VocCold.toFixed(1)}V</strong> (Limit: ${dcmax}V)<br>
-          • Hot Vmp (@ ${Tmax}&deg;C): <strong>${VmpHot.toFixed(1)}V</strong> (MPPT Range: ${mpptMin}V–${mpptMax}V)<br>
-          • Total Array Output: <strong>${dcSize.toFixed(2)} kW DC</strong> (${totalModules} panels across ${strings} strings)
-        `;
-      }
-    });
-  </script>
+&copy; 2026 Tools.PrasunBarua. All rights reserved.
+
+</p>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+
+<!-- SOLAR PV CALCULATOR SCRIPT -->
+
+
+<script src="../assets/js/solar-pv-calculator.js"></script>
+
+
+
 </body>
+
+
 </html>
