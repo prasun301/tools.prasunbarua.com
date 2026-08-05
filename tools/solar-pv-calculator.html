@@ -116,12 +116,22 @@
   <header class="header">
     <div class="container header-inner">
       <div class="logo">
-        <a href="../index.html">Tools<span>.PrasunBarua</span></a>
+        <a href="/">Tools<span>.PrasunBarua</span></a>
       </div>
-      <nav class="navigation">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../index.html#tools" class="nav-link">Tools</a>
+      <nav class="navigation" id="navMenu" aria-label="Main Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/#tools" class="nav-link">Tools</a>
+        <a href="/#categories" class="nav-link">Categories</a>
       </nav>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -130,9 +140,9 @@
 
       <!-- BREADCRUMB -->
       <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="../index.html">Home</a>
+        <a href="/">Home</a>
         <span class="separator">/</span>
-        <a href="../index.html#tools">Electrical Tools</a>
+        <a href="/#tools">Electrical Tools</a>
         <span class="separator">/</span>
         <span class="current">Solar PV Calculator</span>
       </nav>
@@ -360,7 +370,8 @@
     </div>
   </footer>
 
-  <!-- SOLAR PV CALCULATOR SCRIPT -->
+  <!-- SOLAR PV CALCULATOR SCRIPTS -->
+  <script src="../assets/js/app.js"></script>
   <script src="../assets/js/solar-pv-calculator.js"></script>
 </body>
 </html>
