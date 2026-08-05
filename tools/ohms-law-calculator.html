@@ -1,208 +1,234 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="ohms-calc-container">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.ohms-calc-container {
+  --ohms-card: var(--surface, #ffffff);
+  --ohms-text: var(--text, #0f172a);
+  --ohms-muted: var(--text-muted, #64748b);
+  --ohms-primary: var(--primary, #2563eb);
+  --ohms-border: var(--border, #e2e8f0);
+  --ohms-result: var(--primary-light, #eff6ff);
+  
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 15px 0;
+  max-width: 720px;
+  margin: auto;
+}
 
-  <title>Ohm's Law Calculator - Calculate Voltage, Current, Resistance & Power</title>
+.ohms-calc-container * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <meta name="description"
-    content="Free online Ohm's Law Calculator. Instantly calculate Voltage (V), Current (I), Resistance (R), and Power (P) with step-by-step formula breakdowns.">
-  <meta name="keywords"
-    content="ohms law calculator, voltage calculator, current calculator, resistance calculator, power calculator, electrical engineering tool">
-  <meta name="author" content="Prasun Barua">
+.ohms-calc-card {
+  background: var(--ohms-card);
+  border: 1px solid var(--ohms-border);
+  border-radius: 16px;
+  padding: 24px;
+  color: var(--ohms-text);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(15, 23, 42, 0.05));
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-  <link rel="icon" href="../favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+.ohms-calc-container p {
+  color: var(--ohms-muted);
+  margin-bottom: 18px;
+  font-size: 15px;
+}
 
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/responsive.css">
-  <link rel="stylesheet" href="../assets/css/tool-page.css">
-</head>
+.ohms-calc-container label {
+  font-size: 13px;
+  color: var(--ohms-muted);
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
 
-<body>
+.ohms-calc-container select, 
+.ohms-calc-container input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ohms-border);
+  background-color: var(--ohms-card);
+  color: var(--ohms-text);
+  outline: none;
+  font-size: 15px;
+  transition: border-color 0.2s, background 0.3s, color 0.3s;
+}
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-inner">
-      <div class="logo">
-        <a href="/">Tools<span>.PrasunBarua</span></a>
+.ohms-calc-container select:focus, 
+.ohms-calc-container input:focus {
+  border-color: var(--ohms-primary);
+}
+
+.ohms-calc-container select option {
+  background-color: var(--ohms-card);
+  color: var(--ohms-text);
+}
+
+.ohms-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.ohms-calc-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.ohms-calc-container .calc-btn {
+  background: var(--ohms-primary);
+  color: #ffffff;
+}
+
+.ohms-calc-container .reset-btn {
+  background: #64748b;
+  color: #ffffff;
+}
+
+.ohms-calc-container .result-box {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--ohms-result);
+  border: 1px solid var(--ohms-border);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ohms-text);
+}
+</style>
+
+<div class="ohms-calc-card">
+  <p>Select what you want to calculate</p>
+
+  <label>Mode</label>
+  <select id="ohms-mode" onchange="ohmsUpdateUI()">
+    <option value="">-- Select --</option>
+    <option value="V">Voltage (V)</option>
+    <option value="I">Current (I)</option>
+    <option value="R">Resistance (R)</option>
+  </select>
+
+  <div class="ohms-calc-grid" id="ohms-inputs"></div>
+
+  <button class="calc-btn" onclick="ohmsCalculate()">Calculate</button>
+  <button class="reset-btn" onclick="ohmsResetAll()">Reset</button>
+
+  <div class="result-box" id="ohms-result">
+    Result will appear here
+  </div>
+</div>
+
+<script>
+function ohmsUpdateUI(){
+  const mode = document.getElementById("ohms-mode").value;
+  const box = document.getElementById("ohms-inputs");
+
+  document.getElementById("ohms-result").innerHTML = "Result will appear here";
+  box.innerHTML = "";
+
+  if(mode === "V"){
+    box.innerHTML = `
+      <div>
+        <label>Current (A)</label>
+        <input type="number" id="ohms-i-val" step="any">
       </div>
-      <nav class="navigation" id="navMenu" aria-label="Main Navigation">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/#tools" class="nav-link">Tools</a>
-        <a href="/#categories" class="nav-link">Categories</a>
-      </nav>
-      <div class="header-actions">
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-          <span class="theme-icon-light">☀️</span>
-          <span class="theme-icon-dark">🌙</span>
-        </button>
-        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
+      <div>
+        <label>Resistance (Ω)</label>
+        <input type="number" id="ohms-r-val" step="any">
       </div>
-    </div>
-  </header>
-
-  <main class="tool-page-main">
-    <div class="container">
-
-      <!-- BREADCRUMBS -->
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span class="separator">/</span>
-        <a href="/#tools">Electrical Tools</a>
-        <span class="separator">/</span>
-        <span class="current">Ohm's Law Calculator</span>
-      </nav>
-
-      <!-- TOOL HEADER -->
-      <div class="tool-header-block">
-        <h1>⚡ Ohm's Law Calculator</h1>
-        <p>Select what parameter you want to calculate, enter the known values, and click <strong>Calculate</strong> for instant results and formula breakdowns.</p>
+    `;
+  }
+  else if(mode === "I"){
+    box.innerHTML = `
+      <div>
+        <label>Voltage (V)</label>
+        <input type="number" id="ohms-v-val" step="any">
       </div>
-
-      <!-- WORKSPACE / CALCULATOR -->
-      <div class="tool-workspace">
-        
-        <!-- INPUTS PANEL -->
-        <div class="tool-card-box">
-          <h2>Calculator Controls</h2>
-
-          <form id="ohmsForm" onsubmit="return false;">
-            
-            <div class="form-group">
-              <label for="calcMode">What do you want to calculate?</label>
-              <select id="calcMode" class="form-select">
-                <option value="V">Voltage (V) — Volts</option>
-                <option value="I">Current (I) — Amperes</option>
-                <option value="R">Resistance (R) — Ohms</option>
-                <option value="P">Power (P) — Watts</option>
-              </select>
-            </div>
-
-            <!-- Dynamic Inputs Container -->
-            <div id="dynamicInputs" class="dynamic-inputs-grid">
-              <!-- Inputs generated via JavaScript -->
-            </div>
-
-            <div class="form-actions">
-              <button type="button" id="calcBtn" class="btn-primary">Calculate</button>
-              <button type="button" id="resetBtn" class="btn-outline">Reset</button>
-            </div>
-
-          </form>
-        </div>
-
-        <!-- RESULTS PANEL -->
-        <div class="tool-card-box">
-          <h2>Calculation Result</h2>
-
-          <div class="result-display-box" id="resultBox">
-            <div class="result-placeholder">
-              <span class="result-icon">⚡</span>
-              <p>Select a mode, fill in the values, and click <strong>Calculate</strong>.</p>
-            </div>
-          </div>
-
-          <div class="formula-box">
-            <h4>Formula Applied</h4>
-            <p id="formulaApplied">Formula breakdown will appear here after calculation.</p>
-          </div>
-
-        </div>
-
+      <div>
+        <label>Resistance (Ω)</label>
+        <input type="number" id="ohms-r-val" step="any">
       </div>
+    `;
+  }
+  else if(mode === "R"){
+    box.innerHTML = `
+      <div>
+        <label>Voltage (V)</label>
+        <input type="number" id="ohms-v-val" step="any">
+      </div>
+      <div>
+        <label>Current (A)</label>
+        <input type="number" id="ohms-i-val" step="any">
+      </div>
+    `;
+  }
+}
 
-      <!-- SEO / EDUCATIONAL CONTENT -->
-      <article class="tool-guide-content">
-        <h2>What is Ohm's Law?</h2>
-        <p>
-          Ohm's Law is one of the most fundamental principles in electrical engineering and circuit design. Formulated by German physicist Georg Simon Ohm in 1827, it describes the mathematical relationship between <strong>Voltage (V)</strong>, <strong>Current (I)</strong>, and <strong>Resistance (R)</strong> in an electrical circuit.
-        </p>
-        
-        <div class="info-grid">
-          <div class="info-card">
-            <h3>Voltage (V)</h3>
-            <p>The electrical potential difference between two points, measured in <strong>Volts (V)</strong>.</p>
-          </div>
-          <div class="info-card">
-            <h3>Current (I)</h3>
-            <p>The rate of flow of electric charge through a conductor, measured in <strong>Amperes (A)</strong>.</p>
-          </div>
-          <div class="info-card">
-            <h3>Resistance (R)</h3>
-            <p>The measure of opposition to the flow of electric current, measured in <strong>Ohms (&Omega;)</strong>.</p>
-          </div>
-          <div class="info-card">
-            <h3>Power (P)</h3>
-            <p>The rate at which electrical energy is transferred or consumed, measured in <strong>Watts (W)</strong>.</p>
-          </div>
-        </div>
+function ohmsCalculate(){
+  const mode = document.getElementById("ohms-mode").value;
+  const resultBox = document.getElementById("ohms-result");
 
-        <h2>Ohm's Law Formula Summary</h2>
-        <p>You can express Ohm's Law using the following standard equations depending on your target parameter:</p>
+  if(!mode){
+    resultBox.innerHTML = "❌ Please select mode";
+    return;
+  }
 
-        <div class="formula-table-wrapper">
-          <table class="formula-table">
-            <thead>
-              <tr>
-                <th>Target Parameter</th>
-                <th>Primary Formula</th>
-                <th>Alternative Formula (with Power)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Voltage (V)</strong></td>
-                <td><code>V = I &times; R</code></td>
-                <td><code>V = P / I</code> or <code>V = &radic;(P &times; R)</code></td>
-              </tr>
-              <tr>
-                <td><strong>Current (I)</strong></td>
-                <td><code>I = V / R</code></td>
-                <td><code>I = P / V</code> or <code>I = &radic;(P / R)</code></td>
-              </tr>
-              <tr>
-                <td><strong>Resistance (R)</strong></td>
-                <td><code>R = V / I</code></td>
-                <td><code>R = V<sup>2</sup> / P</code> or <code>R = P / I<sup>2</sup></code></td>
-              </tr>
-              <tr>
-                <td><strong>Power (P)</strong></td>
-                <td><code>P = V &times; I</code></td>
-                <td><code>P = I<sup>2</sup> &times; R</code> or <code>P = V<sup>2</sup> / R</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  let output = "";
 
-        <h2>Practical Example</h2>
-        <p>
-          Suppose you have a <strong>12V DC power supply</strong> connected to a heating element with a resistance of <strong>6 &Omega;</strong>:
-        </p>
-        <ul>
-          <li><strong>Current Calculation:</strong> <code>I = V / R = 12V / 6&Omega; = 2 Amperes</code></li>
-          <li><strong>Power Consumption:</strong> <code>P = V &times; I = 12V &times; 2A = 24 Watts</code></li>
-        </ul>
-      </article>
+  if(mode === "V"){
+    let I = parseFloat(document.getElementById("ohms-i-val")?.value);
+    let R = parseFloat(document.getElementById("ohms-r-val")?.value);
 
-    </div>
-  </main>
+    if(isNaN(I) || isNaN(R)){
+      output = "❌ Enter valid values";
+    } else {
+      output = `⚡ Voltage (V) = ${(I * R).toFixed(4)} V`;
+    }
+  }
+  else if(mode === "I"){
+    let V = parseFloat(document.getElementById("ohms-v-val")?.value);
+    let R = parseFloat(document.getElementById("ohms-r-val")?.value);
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-bottom">
-      <p>&copy; 2026 Tools.PrasunBarua. All rights reserved.</p>
-    </div>
-  </footer>
+    if(isNaN(V) || isNaN(R)){
+      output = "❌ Enter valid values";
+    } else if(R === 0){
+      output = "❌ Resistance cannot be zero";
+    } else {
+      output = `⚡ Current (A) = ${(V / R).toFixed(4)} A`;
+    }
+  }
+  else if(mode === "R"){
+    let V = parseFloat(document.getElementById("ohms-v-val")?.value);
+    let I = parseFloat(document.getElementById("ohms-i-val")?.value);
 
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/ohms-law-calculator.js"></script>
-</body>
+    if(isNaN(V) || isNaN(I)){
+      output = "❌ Enter valid values";
+    } else if(I === 0){
+      output = "❌ Current cannot be zero";
+    } else {
+      output = `⚡ Resistance (Ω) = ${(V / I).toFixed(4)} Ω`;
+    }
+  }
 
-</html>
+  resultBox.innerHTML = output;
+}
+
+function ohmsResetAll(){
+  document.getElementById("ohms-mode").value = "";
+  document.getElementById("ohms-inputs").innerHTML = "";
+  document.getElementById("ohms-result").innerHTML = "Result will appear here";
+}
+</script>
+</div>
