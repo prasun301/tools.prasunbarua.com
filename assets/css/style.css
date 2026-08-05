@@ -839,7 +839,88 @@ input, select, textarea {
 }
 
 /* ==========================================
-   10. FOOTER
+   10. CALCULATOR SUBPAGE & RESULTS COMPONENTS
+========================================== */
+.calculator-container,
+.tool-main-container {
+  max-width: 800px;
+  margin: 40px auto 80px;
+}
+
+.calc-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.calc-card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 24px;
+}
+
+.result-box {
+  margin-top: 30px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.result-card-inner h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 16px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.result-item {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-item .label {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.result-item .value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.result-item .value.highlight {
+  color: var(--primary);
+}
+
+.formula-applied {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background-color: var(--primary-light);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+/* ==========================================
+   11. FOOTER
 ========================================== */
 .footer {
   background-color: #0b1329;
@@ -900,11 +981,11 @@ input, select, textarea {
 }
 
 /* ==========================================
-   11. RESPONSIVE MEDIA QUERIES
+   12. RESPONSIVE MEDIA QUERIES
 ========================================== */
 @media (max-width: 868px) {
   .navigation {
-    display: none; /* Hide navigation link bar by default on tablet/mobile */
+    display: none;
   }
 
   .mobile-menu-btn {
