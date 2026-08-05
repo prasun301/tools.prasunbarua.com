@@ -260,131 +260,119 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // ==============================
-    // STRING SIZE CALCULATION
-    // ==============================
+    // =====================================================
+// PROFESSIONAL STRING SIZING ALGORITHM
+// =====================================================
+
+// Total modules required
+
+const totalModules =
+    Math.ceil((invRating * 1000) / Pmax);
 
 
-    // Maximum modules allowed by DC voltage
+// Voltage limits
 
-    const maxVocModules =
-      Math.floor(
-        dcmax / VocColdModule
-      );
+const maxVocModules =
+    Math.floor(dcmax / VocColdModule);
 
+const minMpptModules =
+    Math.ceil(mpptMin / VmpHotModule);
 
-
-    // Minimum modules required for MPPT
-
-    const minMpptModules =
-      Math.ceil(
-        mpptMin / VmpHotModule
-      );
+const maxMpptModules =
+    Math.floor(mpptMax / VmpHotModule);
 
 
+// Final allowable range
 
-    // Maximum modules allowed by MPPT
+const upperLimit =
+    Math.min(maxVocModules, maxMpptModules);
 
-    const maxMpptModules =
-      Math.floor(
-        mpptMax / VmpHotModule
-      );
-
-
-
-    const upperLimit =
-      Math.min(
-        maxVocModules,
-        maxMpptModules
-      );
+const lowerLimit =
+    minMpptModules;
 
 
-    const lowerLimit =
-      minMpptModules;
+let modulesPerString = 0;
+let strings = 0;
+let voltageMismatch = false;
+let bestRemainder = Number.MAX_SAFE_INTEGER;
 
 
+// Search every possible string size
 
-    let modulesPerString=0;
+for (
+    let m = lowerLimit;
+    m <= upperLimit;
+    m++
+) {
 
-    let voltageMismatch=false;
+    const s = Math.ceil(totalModules / m);
 
+    const remainder = totalModules % s;
 
+    // Reject impossible strings
 
-    if(
-      upperLimit>=lowerLimit &&
-      lowerLimit>0
-    ){
+    const smallestString =
+        Math.floor(totalModules / s);
 
-      modulesPerString=upperLimit;
+    if (smallestString < lowerLimit)
+        continue;
 
-    }
+    // Keep the most balanced layout
 
-    else{
+    if (remainder < bestRemainder) {
 
-      modulesPerString=Math.max(
-        1,
-        maxVocModules
-      );
-
-      voltageMismatch=true;
+        bestRemainder = remainder;
+        modulesPerString = m;
+        strings = s;
 
     }
 
+}
 
 
-    // ==============================
-    // STRING VOLTAGE CALCULATION
-    // ==============================
+// No valid configuration
+
+if (modulesPerString === 0) {
+
+    voltageMismatch = true;
+
+    modulesPerString = lowerLimit;
+
+    strings = Math.ceil(
+        totalModules / modulesPerString
+    );
+
+}
 
 
-    /*
-      IMPORTANT:
-      Inverter checks STRING voltage,
-      not single module voltage.
-    */
+// Actual string voltages
 
+const stringVocCold =
+    VocColdModule *
+    modulesPerString;
 
-    const stringVocCold =
-      VocColdModule *
-      modulesPerString;
+const stringVmpHot =
+    VmpHotModule *
+    modulesPerString;
 
+    // Distribution
 
-    const stringVmpHot =
-      VmpHotModule *
-      modulesPerString;
+const baseModules =
+    Math.floor(totalModules / strings);
 
+const extraModules =
+    totalModules % strings;
 
+let stringLayout = [];
 
-        // ==============================
-    // SYSTEM SIZING
-    // ==============================
+for (let i = 0; i < strings; i++) {
 
+    stringLayout.push(
+        baseModules +
+        (i < extraModules ? 1 : 0)
+    );
 
-    const totalModules =
-      Math.ceil(
-        (invRating * 1000) / Pmax
-      );
-
-
-    const strings =
-      modulesPerString > 0
-        ? Math.ceil(totalModules / modulesPerString)
-        : 0;
-
-
-
-    const dcSize =
-      (totalModules * Pmax) / 1000;
-
-
-
-    const dcac =
-      invRating > 0
-        ? dcSize / invRating
-        : 0;
-
-
-
+}
 
     // ==============================
     // ENERGY YIELD CALCULATION
