@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const pvForm = document.getElementById('pvForm');
   const resultBox = document.getElementById('resultBox');
   const formulaApplied = document.getElementById('formulaApplied');
+  const calcBtn = document.getElementById('calcBtn');
 
+  // Bind form submit if form exists
   if (pvForm) {
     pvForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -25,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const calcBtn = document.getElementById('calcBtn');
-  if (calcBtn && !pvForm) {
+  // Always bind button click (works inside or outside form)
+  if (calcBtn) {
     calcBtn.addEventListener('click', (e) => {
       e.preventDefault();
       calculatePVSystem();
