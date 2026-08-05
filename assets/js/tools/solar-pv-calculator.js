@@ -121,526 +121,192 @@ document.addEventListener('DOMContentLoaded', () => {
   // MAIN CALCULATION
   // ==============================
 
+function performCalculation() {
 
-  function performCalculation(){
-
-
-    const mode=pvMode.value;
-
-
+    const mode = pvMode.value;
 
     // ------------------------------
     // MODULE PARAMETERS
     // ------------------------------
-
-    const Voc=num('voc');
-    const Vmp=num('vmp');
-    const Imp=num('imp');
-    const Pmax=num('pmax');
-
-
+    const Voc = num('voc');
+    const Vmp = num('vmp');
+    const Imp = num('imp');
+    const Pmax = num('pmax');
 
     // ------------------------------
     // INVERTER PARAMETERS
     // ------------------------------
-
-    const invRating=num('invRating');
-
-    const dcmax=num('dcmax');
-
-    const mpptMin=num('mpptMin');
-
-    const mpptMax=num('mpptMax');
-
-
+    const invRating = num('invRating');
+    const dcmax = num('dcmax');
+    const mpptMin = num('mpptMin');
+    const mpptMax = num('mpptMax');
 
     // ------------------------------
     // ENVIRONMENT
     // ------------------------------
-
-    const Tmin=num('tmin');
-
-    const Tmax=num('tmax');
-
-    const psh=num('psh');
-
-    const lossPct=num('loss');
-
-
+    const Tmin = num('tmin');
+    const Tmax = num('tmax');
+    const psh = num('psh');
+    const lossPct = num('loss');
 
     // ------------------------------
     // BASIC VALIDATION
     // ------------------------------
-
-    if(
-      Voc<=0 ||
-      Vmp<=0 ||
-      Pmax<=0 ||
-      invRating<=0 ||
-      dcmax<=0
-    ){
-
-      showError(
-        'Please enter valid PV module and inverter values.'
-      );
-
+    if (Voc <= 0 || Vmp <= 0 || Pmax <= 0 || invRating <= 0 || dcmax <= 0) {
+      showError('Please enter valid PV module and inverter values.');
       return;
-
     }
-
-
-    if(Vmp>=Voc){
-
-      showError(
-        'Vmp must be lower than Voc.'
-      );
-
+    if (Vmp >= Voc) {
+      showError('Vmp must be lower than Voc.');
       return;
-
     }
-
-
-    if(mpptMin>=mpptMax){
-
-      showError(
-        'MPPT minimum must be lower than MPPT maximum.'
-      );
-
+    if (mpptMin >= mpptMax) {
+      showError('MPPT minimum must be lower than MPPT maximum.');
       return;
-
     }
-
-
 
     // ==============================
     // TEMPERATURE CORRECTION
     // ==============================
-
-
     /*
-      Voc temperature coefficient:
-      +0.28% / °C below 25°C
-
-      Vmp temperature coefficient:
-      -0.35% / °C above 25°C
+      Voc temperature coefficient: approx +0.28% / °C below 25°C
+      Vmp temperature coefficient: approx -0.35% / °C above 25°C
+      *Professional fix: Calculate Cell Temp for Hot Vmp (+25C above ambient)*
     */
+    const TmaxCell = Tmax + 25; // Estimated module operating temperature
 
+    const VocColdModule = Voc * (1 + 0.0028 * (25 - Tmin));
+    const VmpHotModule = Vmp * (1 - 0.0035 * (TmaxCell - 25));
 
-    const VocColdModule =
-      Voc *
-      (
-        1 +
-        0.0028 *
-        (25-Tmin)
-      );
-
-
-    const VmpHotModule =
-      Vmp *
-      (
-        1 -
-        0.0035 *
-        (Tmax-25)
-      );
-
-
-
-    if(
-      VocColdModule<=0 ||
-      VmpHotModule<=0
-    ){
-
-      showError(
-        'Temperature calculation produced invalid voltage.'
-      );
-
+    if (VocColdModule <= 0 || VmpHotModule <= 0) {
+      showError('Temperature calculation produced invalid voltage.');
       return;
-
     }
 
-
-
     // =====================================================
-// PROFESSIONAL STRING SIZING ALGORITHM
-// =====================================================
+    // PROFESSIONAL STRING SIZING ALGORITHM
+    // =====================================================
 
-// Total modules required
+    // Total modules required (Base 1:1 sizing)
+    const totalModules = Math.ceil((invRating * 1000) / Pmax);
 
-const totalModules =
-    Math.ceil((invRating * 1000) / Pmax);
+    // *CRITICAL FIX: Define dcSize and dcac*
+    const dcSize = (totalModules * Pmax) / 1000;
+    const dcac = dcSize / invRating;
 
+    // Voltage limits
+    const maxVocModules = Math.floor(dcmax / VocColdModule);
+    const minMpptModules = Math.ceil(mpptMin / VmpHotModule);
+    const maxMpptModules = Math.floor(mpptMax / VmpHotModule);
 
-// Voltage limits
+    // Final allowable range
+    const upperLimit = Math.min(maxVocModules, maxMpptModules);
+    const lowerLimit = minMpptModules;
 
-const maxVocModules =
-    Math.floor(dcmax / VocColdModule);
+    let modulesPerString = 0;
+    let strings = 0;
+    let voltageMismatch = false;
+    let bestRemainder = Number.MAX_SAFE_INTEGER;
 
-const minMpptModules =
-    Math.ceil(mpptMin / VmpHotModule);
+    // Search every possible string size
+    for (let m = lowerLimit; m <= upperLimit; m++) {
+      const s = Math.ceil(totalModules / m);
+      const remainder = totalModules % s;
+      const smallestString = Math.floor(totalModules / s);
 
-const maxMpptModules =
-    Math.floor(mpptMax / VmpHotModule);
+      if (smallestString < lowerLimit) continue;
 
-
-// Final allowable range
-
-const upperLimit =
-    Math.min(maxVocModules, maxMpptModules);
-
-const lowerLimit =
-    minMpptModules;
-
-
-let modulesPerString = 0;
-let strings = 0;
-let voltageMismatch = false;
-let bestRemainder = Number.MAX_SAFE_INTEGER;
-
-
-// Search every possible string size
-
-for (
-    let m = lowerLimit;
-    m <= upperLimit;
-    m++
-) {
-
-    const s = Math.ceil(totalModules / m);
-
-    const remainder = totalModules % s;
-
-    // Reject impossible strings
-
-    const smallestString =
-        Math.floor(totalModules / s);
-
-    if (smallestString < lowerLimit)
-        continue;
-
-    // Keep the most balanced layout
-
-    if (remainder < bestRemainder) {
-
+      if (remainder < bestRemainder) {
         bestRemainder = remainder;
         modulesPerString = m;
         strings = s;
-
+      }
     }
 
-}
+    if (modulesPerString === 0) {
+      voltageMismatch = true;
+      modulesPerString = lowerLimit;
+      strings = Math.ceil(totalModules / modulesPerString);
+    }
 
-
-// No valid configuration
-
-if (modulesPerString === 0) {
-
-    voltageMismatch = true;
-
-    modulesPerString = lowerLimit;
-
-    strings = Math.ceil(
-        totalModules / modulesPerString
-    );
-
-}
-
-
-// Actual string voltages
-
-const stringVocCold =
-    VocColdModule *
-    modulesPerString;
-
-const stringVmpHot =
-    VmpHotModule *
-    modulesPerString;
-
-    // Distribution
-
-const baseModules =
-    Math.floor(totalModules / strings);
-
-const extraModules =
-    totalModules % strings;
-
-let stringLayout = [];
-
-for (let i = 0; i < strings; i++) {
-
-    stringLayout.push(
-        baseModules +
-        (i < extraModules ? 1 : 0)
-    );
-
-}
+    const stringVocCold = VocColdModule * modulesPerString;
+    const stringVmpHot = VmpHotModule * modulesPerString;
 
     // ==============================
     // ENERGY YIELD CALCULATION
     // ==============================
-
-
-    /*
-      Loss model:
-
-      User loss
-      Inverter efficiency loss
-      Wiring loss
-      Soiling loss
-      Mismatch loss
-    */
-
-
     const inverterEff = 0.97;
-
     const wiringLoss = 0.02;
-
     const soilingLoss = 0.03;
-
     const mismatchLoss = 0.02;
+    const generalLossFactor = lossPct / 100;
 
+    // *Professional fix: Multiplicative loss calculation for accuracy*
+    const PR = (1 - generalLossFactor) * inverterEff * (1 - wiringLoss) * (1 - soilingLoss) * (1 - mismatchLoss);
+    const PRClamped = Math.max(0.40, Math.min(0.95, isNaN(PR) ? 0.75 : PR));
 
-    const generalLossFactor =
-      lossPct / 100;
-
-
-
-    const PR =
-      1 -
-      (
-        generalLossFactor +
-        (1 - inverterEff) +
-        wiringLoss +
-        soilingLoss +
-        mismatchLoss
-      );
-
-
-
-    const PRClamped =
-      Math.max(
-        0.40,
-        Math.min(
-          0.95,
-          isNaN(PR) ? 0.75 : PR
-        )
-      );
-
-
-
-    const annualEnergy =
-      dcSize *
-      psh *
-      365 *
-      PRClamped;
-
-
-
-    const dailyEnergy =
-      annualEnergy / 365;
-
-
-
+    const annualEnergy = dcSize * psh * 365 * PRClamped;
+    const dailyEnergy = annualEnergy / 365;
 
     // ==============================
     // VALIDATION STATUS
     // ==============================
+    let status = 'PASS';
+    let badgeClass = 'pass';
+    let statusNote = 'System configuration meets inverter electrical limits and MPPT voltage window.';
 
-
-    let status='PASS';
-
-    let badgeClass='pass';
-
-    let statusNote =
-      'System configuration meets inverter electrical limits and MPPT voltage window.';
-
-
-
-    // DC/AC ratio check
-
-    if(dcac > 1.5){
-
-      status='WARNING';
-
-      badgeClass='warn';
-
-      statusNote =
-      'High DC/AC ratio. Possible inverter clipping during high irradiance.';
-
+    if (dcac > 1.5) {
+      status = 'WARNING';
+      badgeClass = 'warn';
+      statusNote = 'High DC/AC ratio. Possible inverter clipping during high irradiance.';
     }
 
-
-
-    // Voltage validation
-
-    if(
-
-      voltageMismatch ||
-
-      modulesPerString===0 ||
-
-      stringVocCold > dcmax ||
-
-      stringVmpHot < mpptMin ||
-
-      stringVmpHot > mpptMax
-
-    ){
-
-      status='FAIL';
-
-      badgeClass='fail';
-
-
-      statusNote =
-      'String voltage is outside inverter DC voltage or MPPT operating range.';
-
+    if (voltageMismatch || modulesPerString === 0 || stringVocCold > dcmax || stringVmpHot < mpptMin || stringVmpHot > mpptMax) {
+      status = 'FAIL';
+      badgeClass = 'fail';
+      statusNote = 'String voltage is outside inverter DC voltage or MPPT operating range.';
     }
 
-
-
-
-    // ==============================
-    // TEMPERATURE WARNING
-    // ==============================
-
-
-    let temperatureWarning='';
-
-
-    if(
-      Tmin < -50 ||
-      Tmax > 80
-    ){
-
-      temperatureWarning =
-      `
+    let temperatureWarning = '';
+    if (Tmin < -50 || Tmax > 80) {
+      temperatureWarning = `
       <div class="warning-box">
       ⚠ Extreme temperature values detected.
       Please verify environmental design conditions.
       </div>
       `;
-
     }
-
-
-
 
     // ==============================
     // OFF GRID BATTERY CALCULATION
     // ==============================
+    let batteryCardHtml = '';
+    if (mode === 'offgrid') {
+      const load = num('dailyLoad');
+      const days = num('autonomy');
+      const Vbat = num('batteryV');
+      const dod = num('dod') / 100;
 
+      if (load > 0 && days > 0 && Vbat > 0 && dod > 0) {
+        const invEff = 0.93;
+        const battEff = 0.92;
+        const safetyFactor = 1.15;
+        const netUsableKwh = load * days;
+        
+        const grossRequiredKwh = (netUsableKwh * safetyFactor) / (dod * invEff * battEff);
+        const batteryAh = (grossRequiredKwh * 1000) / Vbat;
 
-    let batteryCardHtml='';
-
-
-
-    if(mode==='offgrid'){
-
-
-      const load=num('dailyLoad');
-
-      const days=num('autonomy');
-
-      const Vbat=num('batteryV');
-
-      const dod=num('dod')/100;
-
-
-
-      if(
-
-        load>0 &&
-        days>0 &&
-        Vbat>0 &&
-        dod>0
-
-      ){
-
-
-        const invEff=0.93;
-
-        const battEff=0.92;
-
-        const safetyFactor=1.15;
-
-
-
-        const netUsableKwh =
-          load * days;
-
-
-
-        const grossRequiredKwh =
-          (
-            netUsableKwh *
-            safetyFactor
-          )
-          /
-          (
-            dod *
-            invEff *
-            battEff
-          );
-
-
-
-        const batteryAh =
-          (
-            grossRequiredKwh *
-            1000
-          )
-          /
-          Vbat;
-
-
-
-        batteryCardHtml =
-        `
-
+        batteryCardHtml = `
         <div class="pv-result-card">
-
-        <span class="pv-card-title">
-        Off-Grid Battery Storage
-        </span>
-
-
-        <div class="pv-metric-row">
-        <span>Daily Load:</span>
-        <strong>${formatNum(load)} kWh/day</strong>
+          <span class="pv-card-title">Off-Grid Battery Storage</span>
+          <div class="pv-metric-row"><span>Daily Load:</span><strong>${formatNum(load)} kWh/day</strong></div>
+          <div class="pv-metric-row"><span>Autonomy:</span><strong>${days} Days</strong></div>
+          <div class="pv-metric-row"><span>Required Storage:</span><strong>${formatNum(grossRequiredKwh)} kWh</strong></div>
+          <div class="pv-metric-row highlight-row"><span>Battery Capacity:</span><strong>${formatNum(batteryAh, 0)} Ah @ ${Vbat}V</strong></div>
         </div>
-
-
-        <div class="pv-metric-row">
-        <span>Autonomy:</span>
-        <strong>${days} Days</strong>
-        </div>
-
-
-        <div class="pv-metric-row">
-        <span>Required Storage:</span>
-        <strong>${formatNum(grossRequiredKwh)} kWh</strong>
-        </div>
-
-
-        <div class="pv-metric-row highlight-row">
-        <span>Battery Capacity:</span>
-        <strong>
-        ${formatNum(batteryAh,0)}
-        Ah @ ${Vbat}V
-        </strong>
-        </div>
-
-
-        </div>
-
         `;
-
-
       }
-
-
     }
-
 
 
     
