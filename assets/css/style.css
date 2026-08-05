@@ -23,6 +23,12 @@
   --border: #e2e8f0;
   --border-hover: #cbd5e1;
 
+  /* Aliases for Tools & Calculator Subpages */
+  --bg-body: var(--background);
+  --bg-surface: var(--surface);
+  --bg-surface-hover: var(--surface-hover);
+  --text-heading: var(--secondary);
+
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.07);
@@ -57,6 +63,12 @@
   --text-muted: #9ca3af;
   --border: #1f2937;
   --border-hover: #374151;
+
+  /* Aliases for Tools & Calculator Subpages */
+  --bg-body: var(--background);
+  --bg-surface: var(--surface);
+  --bg-surface-hover: var(--surface-hover);
+  --text-heading: var(--secondary);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
@@ -101,8 +113,9 @@ button {
   touch-action: manipulation;
 }
 
-input {
+input, select, textarea {
   font-family: inherit;
+  color: inherit;
 }
 
 /* Layout Container */
@@ -141,7 +154,7 @@ input {
 .logo a {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--text);
+  color: var(--text-heading);
   letter-spacing: -0.5px;
 }
 
@@ -221,7 +234,39 @@ input {
 }
 
 /* ==========================================
-   4. HERO SECTION & GOOGLE-STYLE SEARCH
+   4. BREADCRUMBS (SUBPAGE NAVIGATION)
+========================================== */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.breadcrumbs a {
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+  color: var(--primary);
+}
+
+.breadcrumbs .separator {
+  color: var(--border-hover);
+}
+
+.breadcrumbs .current {
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+/* ==========================================
+   5. HERO SECTION & GOOGLE-STYLE SEARCH
 ========================================== */
 .hero {
   padding: 70px 0 50px;
@@ -246,7 +291,7 @@ input {
   letter-spacing: -1px;
   max-width: 850px;
   margin: 0 auto 16px;
-  color: var(--text);
+  color: var(--text-heading);
 }
 
 .hero p {
@@ -400,7 +445,146 @@ input {
 }
 
 /* ==========================================
-   5. CATEGORIES SECTION
+   6. GLOBAL FORM CONTROLS & BUTTONS
+========================================== */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label,
+.form-group label {
+  display: block;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 8px;
+}
+
+.form-select,
+.form-input,
+.form-group input[type="number"],
+.form-group input[type="text"],
+.input-with-unit input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: var(--text);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-select:focus,
+.form-input:focus,
+.input-with-unit input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-ring);
+}
+
+.input-with-unit {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-unit input {
+  padding-right: 50px;
+}
+
+.input-unit,
+.unit-tag {
+  position: absolute;
+  right: 14px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  pointer-events: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-outline:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+
+/* Status Badges & Alerts */
+.badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.badge.pass { background: #16a34a; color: #ffffff; }
+.badge.warn { background: #f59e0b; color: #111111; }
+.badge.fail { background: #dc2626; color: #ffffff; }
+
+.warning-box {
+  background: #fff7ed;
+  border-left: 4px solid #f59e0b;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: #9a3412;
+}
+
+[data-theme="dark"] .warning-box {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fde68a;
+}
+
+/* ==========================================
+   7. CATEGORIES SECTION
 ========================================== */
 .categories {
   padding: 60px 0;
@@ -417,6 +601,7 @@ input {
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 8px;
+  color: var(--text-heading);
 }
 
 .section-header p {
@@ -489,7 +674,7 @@ input {
 }
 
 /* ==========================================
-   6. TOOLS GRID SECTION
+   8. TOOLS GRID SECTION
 ========================================== */
 .tools-section {
   padding: 60px 0;
@@ -511,6 +696,7 @@ input {
   font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.5px;
+  color: var(--text-heading);
 }
 
 .filter-badge {
@@ -622,28 +808,8 @@ input {
   margin-bottom: 20px;
 }
 
-.btn-secondary {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: var(--primary);
-  color: #ffffff;
-  font-weight: 600;
-  border-radius: var(--radius-full);
-  transition: background-color var(--transition-fast);
-}
-
-.btn-secondary:hover {
-  background-color: var(--primary-hover);
-}
-
-.btn-secondary:focus-visible {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  box-shadow: 0 0 0 3px var(--primary-ring);
-}
-
 /* ==========================================
-   7. ABOUT SECTION
+   9. ABOUT SECTION
 ========================================== */
 .about {
   padding: 70px 0;
@@ -663,6 +829,7 @@ input {
 .about-card h2 {
   font-size: 1.75rem;
   margin-bottom: 16px;
+  color: var(--text-heading);
 }
 
 .about-card p {
@@ -672,12 +839,16 @@ input {
 }
 
 /* ==========================================
-   8. FOOTER
+   10. FOOTER
 ========================================== */
 .footer {
-  background-color: var(--secondary);
+  background-color: #0b1329;
   color: #94a3b8;
   padding-top: 60px;
+}
+
+[data-theme="dark"] .footer {
+  background-color: #050811;
 }
 
 .footer-inner {
@@ -729,7 +900,7 @@ input {
 }
 
 /* ==========================================
-   9. RESPONSIVE MEDIA QUERIES
+   11. RESPONSIVE MEDIA QUERIES
 ========================================== */
 @media (max-width: 868px) {
   .navigation {
@@ -767,5 +938,9 @@ input {
   .footer-inner {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  .form-actions {
+    flex-direction: column;
   }
 }
