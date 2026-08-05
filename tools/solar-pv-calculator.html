@@ -2,147 +2,1104 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solar PV & Battery Sizing Calculator - Tools.PrasunBarua</title>
-  <meta name="description" content="Calculate required solar panel system size, total panel count, inverter capacity, and estimated daily energy generation.">
-  <meta name="author" content="Prasun Barua">
 
-  <link rel="icon" href="../favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/responsive.css">
+<title>Solar PV System Sizing Calculator | Free Engineering Tool | Tools.PrasunBarua</title>
+
+<meta name="description"
+content="Professional Solar PV System Sizing Calculator for residential, commercial and industrial solar projects. Calculate solar array size, inverter capacity, number of panels, daily energy generation and battery storage.">
+
+<meta name="keywords"
+content="solar pv calculator, solar panel calculator, pv sizing calculator, inverter sizing, battery sizing, renewable energy calculator, engineering calculator">
+
+<meta name="author" content="Prasun Barua">
+
+<meta name="robots" content="index,follow">
+
+<meta name="theme-color" content="#2563eb">
+
+<link rel="canonical"
+href="https://tools.prasunbarua.com/tools/solar-pv-calculator.html">
+
+<!-- Open Graph -->
+
+<meta property="og:type" content="website">
+
+<meta property="og:title"
+content="Solar PV System Sizing Calculator">
+
+<meta property="og:description"
+content="Professional engineering calculator for sizing solar PV systems.">
+
+<meta property="og:url"
+content="https://tools.prasunbarua.com/tools/solar-pv-calculator.html">
+
+<meta property="og:site_name"
+content="Tools.PrasunBarua">
+
+<meta property="og:image"
+content="https://tools.prasunbarua.com/assets/images/solar-pv-cover.jpg">
+
+<!-- Twitter -->
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<meta name="twitter:title"
+content="Solar PV System Sizing Calculator">
+
+<meta name="twitter:description"
+content="Free engineering calculator for solar PV system design.">
+
+<meta name="twitter:image"
+content="https://tools.prasunbarua.com/assets/images/solar-pv-cover.jpg">
+
+<link rel="icon" href="../favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="../assets/css/style.css">
+
+<link rel="stylesheet"
+href="../assets/css/tool-page.css">
+
+<link rel="stylesheet"
+href="../assets/css/responsive.css">
+
+<!-- Structured Data -->
+
+<script type="application/ld+json">
+
+{
+"@context":"https://schema.org",
+"@type":"WebApplication",
+
+"name":"Solar PV System Sizing Calculator",
+
+"url":"https://tools.prasunbarua.com/tools/solar-pv-calculator.html",
+
+"applicationCategory":"EngineeringApplication",
+
+"operatingSystem":"Any",
+
+"browserRequirements":"Requires JavaScript",
+
+"creator":{
+"@type":"Person",
+"name":"Prasun Barua"
+}
+
+}
+
+</script>
+
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-inner">
-      <div class="logo">
-        <a href="../index.html">
-          Tools<span>.PrasunBarua</span>
-        </a>
-      </div>
+<header class="header">
 
-      <nav class="navigation" id="navMenu" aria-label="Main Navigation">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../index.html#tools" class="nav-link">Tools</a>
-        <a href="../index.html#categories" class="nav-link">Categories</a>
-      </nav>
+<div class="container header-inner">
 
-      <div class="header-actions">
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle light/dark theme">
-          <span class="theme-icon-light">☀️</span>
-          <span class="theme-icon-dark">🌙</span>
-        </button>
-        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
+<div class="logo">
+
+<a href="../index.html">
+
+Tools<span>.PrasunBarua</span>
+
+</a>
+
+</div>
+
+<nav
+class="navigation"
+id="navMenu">
+
+<a href="../index.html"
+class="nav-link">
+
+Home
+
+</a>
+
+<a href="../index.html#tools"
+class="nav-link active">
+
+Tools
+
+</a>
+
+<a href="../index.html#categories"
+class="nav-link">
+
+Categories
+
+</a>
+
+</nav>
+
+<div class="header-actions">
+
+<button
+id="themeToggle"
+class="theme-toggle"
+aria-label="Toggle Theme">
+
+<span class="theme-icon-light">☀️</span>
+
+<span class="theme-icon-dark">🌙</span>
+
+</button>
+
+<button
+id="mobileMenuBtn"
+class="mobile-menu-btn">
+
+<span></span>
+<span></span>
+<span></span>
+
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+<main>
+
+<div class="tool-page-container">
+
+<nav class="breadcrumbs">
+
+<a href="../index.html">
+
+Home
+
+</a>
+
+<span class="separator">/</span>
+
+<a href="../index.html#tools">
+
+Engineering Tools
+
+</a>
+
+<span class="separator">/</span>
+
+<span class="current">
+
+Solar PV Calculator
+
+</span>
+
+</nav>
+
+<div class="tool-header">
+
+<div class="hero-badge">
+
+☀ Professional Engineering Calculator
+
+</div>
+
+<h1>
+
+Solar PV System Sizing Calculator
+
+</h1>
+
+<p class="tool-description">
+
+Design preliminary residential, commercial and industrial solar photovoltaic systems using standard engineering calculations. Estimate required PV array size, inverter capacity, number of solar modules, battery storage and expected energy production.
+
+</p>
+
+</div>
+
+<div class="tool-workspace">
+
+<!-- LEFT COLUMN -->
+
+<div class="tool-card-box">
+
+<h2>
+
+⚙ Input Parameters
+
+</h2>
+
+<div class="status-box status-success">
+
+<strong>Engineering Note</strong>
+
+<p>
+
+This calculator performs preliminary PV sizing based on daily energy consumption and peak sun hours. Final system design should always be verified using detailed engineering analysis.
+
+</p>
+
+</div>
+
+<form id="pvForm">
+
+<div class="form-group">
+
+<label for="dailyEnergy">
+
+Daily Energy Consumption
+
+</label>
+
+<div class="input-with-unit">
+
+<input
+type="number"
+id="dailyEnergy"
+value="15"
+min="0.1"
+step="0.1"
+required>
+
+<span class="unit-tag">
+
+kWh/day
+
+</span>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label for="sunHours">
+
+Peak Sun Hours
+
+</label>
+
+<div class="input-with-unit">
+
+<input
+type="number"
+id="sunHours"
+value="5.5"
+min="1"
+max="10"
+step="0.1"
+required>
+
+<span class="unit-tag">
+
+Hours
+
+</span>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label for="panelWattage">
+
+Solar Panel Rating
+
+</label>
+
+<div class="input-with-unit">
+
+<input
+type="number"
+id="panelWattage"
+value="640"
+min="100"
+max="800"
+step="10"
+required>
+
+<span class="unit-tag">
+
+Wp
+
+</span>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+System Efficiency
+
+</label>
+
+<div class="input-with-unit">
+
+<input
+type="number"
+id="systemEfficiency"
+value="80"
+min="50"
+max="100"
+step="1">
+
+<span class="unit-tag">
+
+%
+
+</span>
+
+</div>
+
+</div>
+<div class="form-group">
+
+    <label for="performanceRatio">
+        Performance Ratio (PR)
+    </label>
+
+    <div class="input-with-unit">
+
+        <input
+            type="number"
+            id="performanceRatio"
+            value="0.80"
+            min="0.50"
+            max="1.00"
+            step="0.01">
+
+        <span class="unit-tag">
+            PR
+        </span>
+
     </div>
-  </header>
 
-  <main class="container">
-    
-    <!-- BREADCRUMBS NAVIGATION -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="../index.html">Home</a>
-      <span class="separator">/</span>
-      <a href="../index.html#tools">Calculators</a>
-      <span class="separator">/</span>
-      <span class="current">Solar PV Calculator</span>
-    </nav>
+</div>
 
-    <!-- CALCULATOR MAIN CONTAINER -->
-    <div class="calculator-container">
-      <div class="calc-card">
-        <h2>☀️ Solar PV System Sizing Calculator</h2>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem;">
-          Estimate your exact solar array size, recommended inverter capacity, and total panel count based on daily household electricity consumption.
+<div class="form-group">
+
+    <label for="batteryAutonomy">
+
+        Battery Backup (Autonomy)
+
+    </label>
+
+    <div class="input-with-unit">
+
+        <input
+            type="number"
+            id="batteryAutonomy"
+            value="1"
+            min="0"
+            max="5"
+            step="0.5">
+
+        <span class="unit-tag">
+
+            Day
+
+        </span>
+
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <label for="batteryVoltage">
+
+        Battery Bank Voltage
+
+    </label>
+
+    <select
+        id="batteryVoltage"
+        class="form-select">
+
+        <option value="12">12 V</option>
+        <option value="24">24 V</option>
+        <option value="48" selected>48 V</option>
+
+    </select>
+
+</div>
+
+<div class="form-group">
+
+    <label for="systemType">
+
+        System Type
+
+    </label>
+
+    <select
+        id="systemType"
+        class="form-select">
+
+        <option value="grid" selected>
+
+            Grid-Tied
+
+        </option>
+
+        <option value="hybrid">
+
+            Hybrid
+
+        </option>
+
+        <option value="offgrid">
+
+            Off-Grid
+
+        </option>
+
+    </select>
+
+</div>
+
+<div class="form-actions">
+
+    <button
+        type="submit"
+        id="calcBtn"
+        class="btn-primary">
+
+        Calculate System
+
+    </button>
+
+    <button
+        type="reset"
+        class="btn-outline">
+
+        Reset
+
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+<!-- ================================================= -->
+<!-- RIGHT COLUMN -->
+<!-- ================================================= -->
+
+<div class="tool-card-box">
+
+<h2>
+
+📊 Engineering Results
+
+</h2>
+
+<div
+id="resultBox"
+class="result-panel"
+style="display:none;">
+
+<div class="pv-results-grid">
+
+<div class="pv-result-card">
+
+<strong>
+
+PV Array Size
+
+</strong>
+
+<div
+class="highlight"
+id="pvSizeResult">
+
+--
+
+</div>
+
+</div>
+
+<div class="pv-result-card">
+
+<strong>
+
+Solar Panels
+
+</strong>
+
+<div
+class="highlight"
+id="panelCountResult">
+
+--
+
+</div>
+
+</div>
+
+<div class="pv-result-card">
+
+<strong>
+
+Recommended Inverter
+
+</strong>
+
+<div
+class="highlight"
+id="inverterResult">
+
+--
+
+</div>
+
+</div>
+
+<div class="pv-result-card">
+
+<strong>
+
+Battery Capacity
+
+</strong>
+
+<div
+class="highlight"
+id="batteryResult">
+
+--
+
+</div>
+
+</div>
+
+<div class="pv-result-card">
+
+<strong>
+
+Daily Generation
+
+</strong>
+
+<div
+class="highlight"
+id="generationResult">
+
+--
+
+</div>
+
+</div>
+
+<div class="pv-result-card">
+
+<strong>
+
+Annual Generation
+
+</strong>
+
+<div
+class="highlight"
+id="annualGenerationResult">
+
+--
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="formulaApplied"
+class="formula-box"
+style="display:none;">
+
+</div>
+
+<div
+class="status-box status-warning"
+style="margin-top:25px;">
+
+<strong>
+
+Engineering Reminder
+
+</strong>
+
+<p>
+
+Calculated values are preliminary estimates.
+
+Final design should verify:
+
+</p>
+
+<ul style="margin-top:10px;padding-left:18px;line-height:1.8;">
+
+<li>PV string voltage limits</li>
+
+<li>Inverter MPPT compatibility</li>
+
+<li>Cable sizing</li>
+
+<li>Voltage drop</li>
+
+<li>Protection devices</li>
+
+<li>Earthing system</li>
+
+<li>Local electrical code compliance</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- ENGINEERING INFORMATION -->
+<!-- ================================================= -->
+
+<section
+style="margin-top:60px;">
+
+<div class="tool-card-box">
+
+<h2>
+
+📘 Engineering Notes
+
+</h2>
+
+<div class="engineering-table-wrapper">
+
+<table class="engineering-table">
+
+<thead>
+
+<tr>
+
+<th>
+
+Parameter
+
+</th>
+
+<th>
+
+Typical Value
+
+</th>
+
+<th>
+
+Description
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+Performance Ratio
+
+</td>
+
+<td>
+
+0.75 – 0.85
+
+</td>
+
+<td>
+
+Accounts for inverter, cable, dust and temperature losses.
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Peak Sun Hours
+
+</td>
+
+<td>
+
+4.5 – 6.5
+
+</td>
+
+<td>
+
+Average equivalent full sunlight hours.
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+PV Module
+
+</td>
+
+<td>
+
+550–700 Wp
+
+</td>
+
+<td>
+
+Modern mono PERC / TOPCon modules.
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Inverter Oversizing
+
+</td>
+
+<td>
+
+1.10–1.30
+
+</td>
+
+<td>
+
+Typical DC/AC ratio used in engineering practice.
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Battery DoD
+
+</td>
+
+<td>
+
+80%
+
+</td>
+
+<td>
+
+Recommended for LiFePO₄ battery systems.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+<!-- ==========================================================
+     FAQ SECTION (SEO)
+=========================================================== -->
+
+<section class="tool-page-section">
+
+    <div class="tool-card-box">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-list">
+
+            <div class="faq-item">
+                <h3>How accurate is this calculator?</h3>
+                <p>
+                    This calculator provides preliminary engineering estimates suitable for
+                    feasibility studies and early-stage design. Final system design should
+                    always be verified using detailed engineering calculations, manufacturer
+                    specifications, and applicable electrical standards.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What is Peak Sun Hour (PSH)?</h3>
+                <p>
+                    Peak Sun Hour is the equivalent number of hours per day when solar
+                    irradiance averages 1000 W/m². It varies depending on geographical
+                    location and season.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can this calculator be used for commercial systems?</h3>
+                <p>
+                    Yes. The calculator can be used for residential, commercial, and
+                    industrial preliminary PV sizing. Larger projects should be validated
+                    using professional PV design software.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does this replace a detailed engineering design?</h3>
+                <p>
+                    No. It is intended for preliminary sizing only. Detailed engineering
+                    should include shading analysis, string design, cable sizing, protection
+                    coordination, voltage drop calculations, and compliance with local
+                    electrical codes.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+     ENGINEERING DISCLAIMER
+=========================================================== -->
+
+<section class="tool-page-section">
+
+    <div class="status-box status-warning">
+
+        <strong>Engineering Disclaimer</strong>
+
+        <p style="margin-top:10px;">
+
+            The calculated values are preliminary estimates intended for educational,
+            planning, and conceptual engineering purposes only.
+
         </p>
 
-        <form id="pvForm">
-          <div class="form-group">
-            <label for="dailyEnergy">Daily Energy Consumption (kWh / day)</label>
-            <div class="input-with-unit">
-              <input type="number" id="dailyEnergy" value="15" min="0.1" step="0.1" required>
-              <span class="unit-tag">kWh</span>
-            </div>
-          </div>
+        <p>
 
-          <div class="form-group">
-            <label for="sunHours">Peak Sun Hours per Day (hours)</label>
-            <div class="input-with-unit">
-              <input type="number" id="sunHours" value="5" min="0.5" max="12" step="0.1" required>
-              <span class="unit-tag">Hours</span>
-            </div>
-          </div>
+            Final solar PV system design must comply with manufacturer specifications,
+            applicable electrical standards, local utility requirements, and local
+            electrical codes.
 
-          <div class="form-group">
-            <label for="panelWattage">Solar Panel Individual Wattage (Watts)</label>
-            <div class="input-with-unit">
-              <input type="number" id="panelWattage" value="400" min="50" max="800" step="10" required>
-              <span class="unit-tag">W</span>
-            </div>
-          </div>
+        </p>
 
-          <div class="form-actions">
-            <button type="submit" id="calcBtn" class="btn-primary" style="flex: 1;">Calculate System</button>
-            <button type="reset" class="btn-outline">Reset</button>
-          </div>
-        </form>
-
-        <!-- RESULTS SECTION -->
-        <div id="resultBox" class="result-box" style="display: none;">
-          <!-- Dynamically populated via JavaScript -->
-        </div>
-
-        <div id="formulaApplied" class="formula-applied" style="display: none;">
-          <!-- Dynamically populated formula explanation -->
-        </div>
-
-      </div>
     </div>
 
-  </main>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+<!-- ==========================================================
+     RELATED TOOLS
+=========================================================== -->
+
+<section class="tool-page-section">
+
+    <div class="tool-card-box">
+
+        <h2>Related Engineering Tools</h2>
+
+        <div class="tool-grid">
+
+            <a href="ohms-law-calculator.html" class="tool-card">
+
+                <div class="tool-card-header">
+
+                    <span class="tool-icon">⚡</span>
+
+                    <span class="tool-category-tag">
+
+                        Electrical
+
+                    </span>
+
+                </div>
+
+                <h3>Ohm's Law Calculator</h3>
+
+                <p>
+
+                    Calculate voltage, current, resistance and power instantly.
+
+                </p>
+
+                <span class="tool-card-cta">
+
+                    Open Tool →
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+</main>
+
+<!-- ==========================================================
+     FOOTER
+=========================================================== -->
+
+<footer class="footer">
+
     <div class="container footer-inner">
-      <div class="footer-section brand-col">
-        <h3>Tools.<span>PrasunBarua</span></h3>
-        <p>Free online tools for engineering, software development, calculations, and daily digital productivity.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Navigation</h4>
-        <a href="../index.html">Home</a>
-        <a href="../index.html#tools">Popular Tools</a>
-        <a href="../index.html#categories">All Categories</a>
-      </div>
-      <div class="footer-section">
-        <h4>Legal &amp; Info</h4>
-        <a href="../privacy.html">Privacy Policy</a>
-        <a href="../terms.html">Terms of Service</a>
-      </div>
+
+        <div class="footer-section brand-col">
+
+            <h3>
+
+                Tools.<span>PrasunBarua</span>
+
+            </h3>
+
+            <p>
+
+                Professional engineering calculators, solar PV tools,
+                electrical design utilities and productivity tools for
+                engineers, technicians, students and professionals.
+
+            </p>
+
+        </div>
+
+        <div class="footer-section">
+
+            <h4>Engineering Tools</h4>
+
+            <a href="solar-pv-calculator.html">
+
+                Solar PV Calculator
+
+            </a>
+
+            <a href="ohms-law-calculator.html">
+
+                Ohm's Law Calculator
+
+            </a>
+
+        </div>
+
+        <div class="footer-section">
+
+            <h4>Navigation</h4>
+
+            <a href="../index.html">
+
+                Home
+
+            </a>
+
+            <a href="../index.html#tools">
+
+                All Tools
+
+            </a>
+
+            <a href="../index.html#categories">
+
+                Categories
+
+            </a>
+
+        </div>
+
+        <div class="footer-section">
+
+            <h4>Information</h4>
+
+            <a href="../privacy.html">
+
+                Privacy Policy
+
+            </a>
+
+            <a href="../terms.html">
+
+                Terms of Service
+
+            </a>
+
+            <a href="../contact.html">
+
+                Contact
+
+            </a>
+
+        </div>
+
     </div>
+
     <div class="footer-bottom">
-      <div class="container">
-        <p>&copy; 2026 Tools.PrasunBarua. All rights reserved.</p>
-      </div>
+
+        <div class="container">
+
+            <p>
+
+                © 2026 Tools.PrasunBarua. All Rights Reserved.
+
+            </p>
+
+        </div>
+
     </div>
-  </footer>
 
-  <!-- Global App & Theme Script -->
-  <script src="../assets/js/app.js"></script>
+</footer>
 
-  <!-- Dedicated Tool Logic Script -->
-  <script src="../assets/js/solar-pv-calculator.js"></script>
+<!-- ==========================================================
+     SCRIPTS
+=========================================================== -->
+
+<script src="../assets/js/app.js"></script>
+
+<script src="../assets/js/tools/solar-pv-calculator.js"></script>
+
 </body>
 
 </html>
