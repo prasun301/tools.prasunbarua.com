@@ -177,6 +177,7 @@ function renderTools(toolsList) {
 function initCategoryFilter() {
   const categoryCards = document.querySelectorAll('.category-card[data-category]');
   const resetBtn = document.getElementById('resetFilterBtn');
+  const toolsSection = document.getElementById('tools');
 
   categoryCards.forEach(card => {
     card.addEventListener('click', () => {
@@ -186,6 +187,11 @@ function initCategoryFilter() {
       card.classList.add('active');
 
       filterCategory(category);
+
+      // Auto-scroll smoothly to the tools grid section
+      if (toolsSection) {
+        toolsSection.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 
