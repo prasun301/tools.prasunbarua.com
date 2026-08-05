@@ -15,17 +15,17 @@ const TOOLS_DATA = [
     categorySlug: "electrical",
     description: "Calculate voltage, current, resistance, and power instantly.",
     keywords: ["ohm", "law", "voltage", "current", "resistance", "power", "amps", "volts", "watts", "electrical"],
-    url: "/tools/ohms-law-calculator.html"
+    url: "tools/ohms-law-calculator.html"
   },
   {
-    id: "solar-calculator",
+    id: "solar-pv-calculator",
     title: "Solar PV Calculator",
     icon: "☀️",
     category: "Solar PV Tools",
     categorySlug: "solar",
     description: "Estimate solar capacity, battery sizing, and daily energy output.",
     keywords: ["solar", "pv", "panel", "energy", "battery", "inverter", "renewable", "kw", "kwh", "sun"],
-    url: "/tools/solar-calculator.html"
+    url: "tools/solar-pv-calculator.html"
   },
   {
     id: "json-formatter",
@@ -35,7 +35,7 @@ const TOOLS_DATA = [
     categorySlug: "developer",
     description: "Format, validate, beautify, and minify JSON data online.",
     keywords: ["json", "formatter", "developer", "validator", "beautify", "minify", "code", "programming"],
-    url: "/tools/json-formatter.html"
+    url: "tools/json-formatter.html"
   },
   {
     id: "unit-converter",
@@ -45,7 +45,7 @@ const TOOLS_DATA = [
     categorySlug: "converter",
     description: "Convert engineering units, lengths, masses, temperatures, and areas.",
     keywords: ["unit", "converter", "engineering", "conversion", "measurement", "metric", "imperial"],
-    url: "/tools/unit-converter.html"
+    url: "tools/unit-converter.html"
   },
   {
     id: "password-generator",
@@ -55,7 +55,7 @@ const TOOLS_DATA = [
     categorySlug: "utility",
     description: "Generate cryptographically secure random passwords.",
     keywords: ["password", "generator", "security", "random", "privacy", "lock", "safety"],
-    url: "/tools/password-generator.html"
+    url: "tools/password-generator.html"
   },
   {
     id: "word-counter",
@@ -65,7 +65,7 @@ const TOOLS_DATA = [
     categorySlug: "text",
     description: "Count words, characters, sentences, and estimated reading time.",
     keywords: ["word", "counter", "character", "text", "writing", "editor", "reading time"],
-    url: "/tools/word-counter.html"
+    url: "tools/word-counter.html"
   }
 ];
 
