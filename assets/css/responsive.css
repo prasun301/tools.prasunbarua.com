@@ -58,14 +58,21 @@
     top: 64px;
     left: 0;
     right: 0;
-    background-color: var(--surface);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     flex-direction: column;
     padding: 24px;
     gap: 20px;
     transform: translateY(-150%);
-    transition: transform var(--transition-normal);
+    transition: transform var(--transition-normal), background-color var(--transition-normal);
     z-index: 90;
+  }
+
+  /* Dark Theme Support for Mobile Nav */
+  [data-theme="dark"] .navigation {
+    background-color: rgba(17, 24, 39, 0.95);
   }
 
   .navigation.open {
@@ -77,10 +84,24 @@
     font-size: 1.05rem;
     width: 100%;
     text-align: center;
+    padding: 10px 0; /* Increased touch target */
   }
 
   .mobile-menu-btn {
     display: flex;
+  }
+
+  /* Hamburger Menu Animation States */
+  .mobile-menu-btn.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  
+  .mobile-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-menu-btn.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   /* Hero & Google Search */
@@ -100,6 +121,7 @@
 
   .search-results-dropdown {
     top: 58px;
+    max-height: 300px; /* Prevents overflow on short mobile viewports */
   }
 
   /* Grid Layouts */
@@ -148,6 +170,16 @@
   .tool-card {
     padding: 18px;
   }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn-primary, 
+  .form-actions .btn-secondary, 
+  .form-actions .btn-outline {
+    width: 100%;
+  }
 }
 
 /* ==========================================
@@ -157,12 +189,27 @@
   .header, 
   .google-search, 
   .theme-toggle, 
+  .mobile-menu-btn,
+  .breadcrumbs,
   .footer {
     display: none !important;
   }
 
   body {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .category-card, 
+  .tool-card {
+    page-break-inside: avoid;
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
   }
 }
