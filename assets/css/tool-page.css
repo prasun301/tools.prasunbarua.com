@@ -6,7 +6,9 @@
   padding: 40px 0 80px;
 }
 
-/* Breadcrumbs */
+/* --------------------------------------------------
+   Breadcrumbs
+-------------------------------------------------- */
 .breadcrumbs {
   display: flex;
   align-items: center;
@@ -18,7 +20,8 @@
 
 .breadcrumbs a {
   color: var(--text-muted);
-  transition: color var(--transition-fast);
+  text-decoration: none;
+  transition: color var(--transition-fast, 0.2s ease);
 }
 
 .breadcrumbs a:hover {
@@ -29,7 +32,14 @@
   opacity: 0.5;
 }
 
-/* Tool Hero Header */
+.breadcrumbs span.current {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------
+   Tool Hero Header
+-------------------------------------------------- */
 .tool-header-block {
   margin-bottom: 32px;
 }
@@ -42,15 +52,19 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  color: var(--text);
 }
 
 .tool-header-block p {
   color: var(--text-muted);
   font-size: 1.05rem;
   max-width: 750px;
+  line-height: 1.6;
 }
 
-/* Tool Workspace Grid */
+/* --------------------------------------------------
+   Tool Workspace Grid
+-------------------------------------------------- */
 .tool-workspace {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -67,20 +81,25 @@
 .tool-card-box {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg, 12px);
   padding: 32px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
+  display: flex;
+  flex-direction: column;
 }
 
 .tool-card-box h2 {
   font-size: 1.25rem;
   font-weight: 700;
+  color: var(--text);
   margin-bottom: 20px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
-/* Form Controls */
+/* --------------------------------------------------
+   Form Controls & Modernized Native Select
+-------------------------------------------------- */
 .form-group {
   margin-bottom: 20px;
 }
@@ -101,25 +120,41 @@
   font-weight: 400;
 }
 
-.form-select,
-.input-with-unit input {
+/* Custom Styled Native Select Dropdown */
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   width: 100%;
   height: 48px;
-  padding: 0 16px;
+  padding: 0 40px 0 16px;
   font-size: 1rem;
   font-weight: 500;
   color: var(--text);
   background-color: var(--background);
+  /* Modern SVG Chevron Arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 8px);
   outline: none;
-  transition: var(--transition-fast);
-}
-
-.form-select {
   cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.form-select:hover {
+  border-color: var(--primary);
+}
+
+.form-select:focus-visible,
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-ring, rgba(59, 130, 246, 0.2));
+}
+
+/* Text & Number Inputs */
 .input-with-unit {
   position: relative;
   display: flex;
@@ -127,13 +162,26 @@
 }
 
 .input-with-unit input {
-  padding-right: 50px;
+  width: 100%;
+  height: 48px;
+  padding: 0 50px 0 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 8px);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-select:focus,
+.input-with-unit input:hover {
+  border-color: var(--primary);
+}
+
 .input-with-unit input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-ring);
+  box-shadow: 0 0 0 3px var(--primary-ring, rgba(59, 130, 246, 0.2));
 }
 
 .unit-tag {
@@ -162,15 +210,15 @@
   color: #ffffff;
   font-weight: 600;
   padding: 12px 24px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 8px);
   border: none;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: background-color 0.2s ease;
   flex: 1;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--primary-hover, #2563eb);
 }
 
 .btn-outline {
@@ -179,20 +227,23 @@
   border: 1px solid var(--border);
   font-weight: 600;
   padding: 12px 20px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 8px);
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-outline:hover {
-  background-color: var(--surface-hover);
+  background-color: var(--surface-hover, rgba(0, 0, 0, 0.03));
+  border-color: var(--text-muted);
 }
 
-/* Results Card & States */
+/* --------------------------------------------------
+   Results Display Box & States
+-------------------------------------------------- */
 .result-display-box {
   background-color: var(--background);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 8px);
   padding: 24px;
   min-height: 160px;
   display: flex;
@@ -229,11 +280,11 @@
 }
 
 .result-row.primary-result {
-  background-color: var(--primary-light);
-  padding: 14px;
-  border-radius: var(--radius-md);
+  background-color: var(--primary-light, rgba(59, 130, 246, 0.1));
+  padding: 16px;
+  border-radius: var(--radius-md, 8px);
   border-bottom: none;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .result-row.primary-result .result-label {
@@ -269,12 +320,14 @@
   margin-bottom: 6px;
 }
 
-/* Formula Helper Box */
+/* --------------------------------------------------
+   Formula Breakdown Helper
+-------------------------------------------------- */
 .formula-box {
-  background-color: var(--primary-light);
-  border: 1px solid var(--primary-ring);
-  border-radius: var(--radius-md);
-  padding: 16px;
+  background-color: var(--primary-light, rgba(59, 130, 246, 0.08));
+  border: 1px solid var(--primary-ring, rgba(59, 130, 246, 0.2));
+  border-radius: var(--radius-md, 8px);
+  padding: 18px;
   font-size: 0.9rem;
   color: var(--text);
   line-height: 1.6;
@@ -286,19 +339,23 @@
   color: var(--primary);
 }
 
-/* Educational SEO Content Block */
+/* --------------------------------------------------
+   Educational / SEO Content Block
+-------------------------------------------------- */
 .tool-guide-content {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg, 12px);
   padding: 40px;
   line-height: 1.7;
 }
 
 .tool-guide-content h2 {
   font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
   margin-bottom: 16px;
-  margin-top: 32px;
+  margin-top: 36px;
 }
 
 .tool-guide-content h2:first-child {
@@ -320,8 +377,8 @@
 .info-card {
   background-color: var(--background);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 18px;
+  border-radius: var(--radius-md, 8px);
+  padding: 20px;
 }
 
 .info-card h3 {
@@ -357,14 +414,19 @@
 .formula-table th {
   background-color: var(--background);
   font-weight: 700;
+  color: var(--text);
+}
+
+.formula-table td {
+  color: var(--text);
 }
 
 .formula-table code {
-  background-color: var(--primary-light);
+  background-color: var(--primary-light, rgba(59, 130, 246, 0.1));
   color: var(--primary);
   padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  font-family: monospace;
+  border-radius: var(--radius-sm, 4px);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.95rem;
 }
 
@@ -376,4 +438,26 @@
 
 .tool-guide-content li {
   margin-bottom: 8px;
+}
+
+/* --------------------------------------------------
+   Responsive Adjustments
+-------------------------------------------------- */
+@media (max-width: 640px) {
+  .tool-card-box,
+  .tool-guide-content {
+    padding: 20px;
+  }
+
+  .tool-header-block h1 {
+    font-size: 1.75rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-outline {
+    width: 100%;
+  }
 }
