@@ -1,11 +1,18 @@
 /**
- * Solar PV System Calculator Logic
- * Handles temperature-adjusted string sizing, DC/AC ratio checks, annual yield estimation, 
- * and off-grid battery storage calculations.
+ * Solar PV System Calculator Logic v2.0
+ * Corrected string voltage validation,
+ * temperature-adjusted sizing,
+ * DC/AC ratio,
+ * energy yield,
+ * and battery calculations.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Safe DOM Element Initialization
+
+  // ==============================
+  // DOM ELEMENT INITIALIZATION
+  // ==============================
+
   const pvMode = document.getElementById('pvMode');
   const offgridSection = document.getElementById('offgridSection');
   const calcBtn = document.getElementById('calcBtn');
@@ -14,292 +21,1121 @@ document.addEventListener('DOMContentLoaded', () => {
   const formulaApplied = document.getElementById('formulaApplied');
   const pvForm = document.getElementById('pvForm');
 
-  // Guard Clause: Ensure core elements exist before proceeding
+
   if (!calcBtn || !resultBox || !pvMode) {
-    console.error('Solar PV Calculator: Required DOM elements (calcBtn, resultBox, pvMode) are missing.');
+    console.error(
+      'Solar PV Calculator: Required DOM elements missing.'
+    );
     return;
   }
 
-  // Toggle Off-Grid Inputs Visibility
+
+  // ==============================
+  // MODE SWITCH
+  // ==============================
+
   pvMode.addEventListener('change', () => {
+
     if (offgridSection) {
-      offgridSection.style.display = pvMode.value === 'offgrid' ? 'block' : 'none';
+
+      offgridSection.style.display =
+        pvMode.value === 'offgrid'
+          ? 'block'
+          : 'none';
+
     }
+
   });
 
-  // Calculate & Reset Action Handlers (Prevent Form Reloads)
-  calcBtn.addEventListener('click', (e) => {
+
+
+  // ==============================
+  // BUTTON EVENTS
+  // ==============================
+
+  calcBtn.addEventListener('click', (e)=>{
+
     e.preventDefault();
     performCalculation();
+
   });
 
-  if (resetBtn) {
-    resetBtn.addEventListener('click', (e) => {
+
+  if(resetBtn){
+
+    resetBtn.addEventListener('click',(e)=>{
+
       e.preventDefault();
       resetCalculator();
+
     });
+
   }
 
-  if (pvForm) {
-    pvForm.addEventListener('submit', (e) => {
+
+  if(pvForm){
+
+    pvForm.addEventListener('submit',(e)=>{
+
       e.preventDefault();
       performCalculation();
+
     });
+
   }
 
-  // Helper function: Safely read numeric input value
-  function num(id) {
-    const el = document.getElementById(id);
-    if (!el) return 0;
-    const val = parseFloat(el.value);
-    return isNaN(val) ? 0 : val;
+
+
+  // ==============================
+  // INPUT HELPERS
+  // ==============================
+
+
+  function num(id){
+
+    const el=document.getElementById(id);
+
+    if(!el) return 0;
+
+    const value=parseFloat(el.value);
+
+    return isNaN(value) ? 0 : value;
+
   }
 
-  // Helper function: Safely write value to input field
-  function setVal(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.value = value;
+
+
+  function setVal(id,value){
+
+    const el=document.getElementById(id);
+
+    if(el){
+      el.value=value;
+    }
+
   }
 
-  function performCalculation() {
-    const mode = pvMode.value;
 
-    // Read Module Inputs
-    const Voc = num('voc');
-    const Vmp = num('vmp');
-    const Imp = num('imp');
-    const Pmax = num('pmax');
 
-    // Read Inverter Inputs
-    const invRating = num('invRating');
-    const dcmax = num('dcmax');
-    const mpptMin = num('mpptMin');
-    const mpptMax = num('mpptMax');
+  // ==============================
+  // MAIN CALCULATION
+  // ==============================
 
-    // Read Environment Inputs
-    const Tmin = num('tmin');
-    const Tmax = num('tmax');
-    const psh = num('psh');
-    const lossPct = num('loss');
 
-    // Basic Validation Checks
-    if (Voc <= 0 || Vmp <= 0 || Pmax <= 0 || invRating <= 0 || dcmax <= 0) {
-      showError('Please enter positive non-zero values for PV module and inverter ratings.');
+  function performCalculation(){
+
+
+    const mode=pvMode.value;
+
+
+
+    // ------------------------------
+    // MODULE PARAMETERS
+    // ------------------------------
+
+    const Voc=num('voc');
+    const Vmp=num('vmp');
+    const Imp=num('imp');
+    const Pmax=num('pmax');
+
+
+
+    // ------------------------------
+    // INVERTER PARAMETERS
+    // ------------------------------
+
+    const invRating=num('invRating');
+
+    const dcmax=num('dcmax');
+
+    const mpptMin=num('mpptMin');
+
+    const mpptMax=num('mpptMax');
+
+
+
+    // ------------------------------
+    // ENVIRONMENT
+    // ------------------------------
+
+    const Tmin=num('tmin');
+
+    const Tmax=num('tmax');
+
+    const psh=num('psh');
+
+    const lossPct=num('loss');
+
+
+
+    // ------------------------------
+    // BASIC VALIDATION
+    // ------------------------------
+
+    if(
+      Voc<=0 ||
+      Vmp<=0 ||
+      Pmax<=0 ||
+      invRating<=0 ||
+      dcmax<=0
+    ){
+
+      showError(
+        'Please enter valid PV module and inverter values.'
+      );
+
       return;
+
     }
 
-    if (Vmp >= Voc) {
-      showError('Vmp (Max Power Voltage) must be strictly less than Voc (Open Circuit Voltage).');
+
+    if(Vmp>=Voc){
+
+      showError(
+        'Vmp must be lower than Voc.'
+      );
+
       return;
+
     }
 
-    if (mpptMin >= mpptMax) {
-      showError('MPPT Minimum voltage must be strictly less than MPPT Maximum voltage.');
+
+    if(mpptMin>=mpptMax){
+
+      showError(
+        'MPPT minimum must be lower than MPPT maximum.'
+      );
+
       return;
+
     }
 
-    // Temperature Correction Calculations
-    // Voc rises in cold temperatures (+0.28%/°C factor relative to 25°C STC)
-    const VocCold = Voc * (1 + 0.0028 * (25 - Tmin));
-    // Vmp drops in warm temperatures (-0.35%/°C factor relative to 25°C STC)
-    const VmpHot = Vmp * (1 - 0.0035 * (Tmax - 25));
 
-    if (VocCold <= 0 || VmpHot <= 0) {
-      showError('Temperature values resulted in invalid voltage levels. Check temperature inputs.');
+
+    // ==============================
+    // TEMPERATURE CORRECTION
+    // ==============================
+
+
+    /*
+      Voc temperature coefficient:
+      +0.28% / °C below 25°C
+
+      Vmp temperature coefficient:
+      -0.35% / °C above 25°C
+    */
+
+
+    const VocColdModule =
+      Voc *
+      (
+        1 +
+        0.0028 *
+        (25-Tmin)
+      );
+
+
+    const VmpHotModule =
+      Vmp *
+      (
+        1 -
+        0.0035 *
+        (Tmax-25)
+      );
+
+
+
+    if(
+      VocColdModule<=0 ||
+      VmpHotModule<=0
+    ){
+
+      showError(
+        'Temperature calculation produced invalid voltage.'
+      );
+
       return;
+
     }
 
-    // String Sizing Logic
-    const maxVocModules = Math.floor(dcmax / VocCold);
-    const minMpptModules = Math.ceil(mpptMin / VmpHot);
-    const maxMpptModules = Math.floor(mpptMax / VmpHot);
 
-    const upperLimit = Math.min(maxVocModules, maxMpptModules);
-    const lowerLimit = minMpptModules;
 
-    let modulesPerString = 0;
-    let voltageMismatch = false;
+    // ==============================
+    // STRING SIZE CALCULATION
+    // ==============================
 
-    if (upperLimit >= lowerLimit && lowerLimit > 0) {
-      modulesPerString = upperLimit;
-    } else {
-      modulesPerString = Math.max(1, maxVocModules);
-      voltageMismatch = true;
+
+    // Maximum modules allowed by DC voltage
+
+    const maxVocModules =
+      Math.floor(
+        dcmax / VocColdModule
+      );
+
+
+
+    // Minimum modules required for MPPT
+
+    const minMpptModules =
+      Math.ceil(
+        mpptMin / VmpHotModule
+      );
+
+
+
+    // Maximum modules allowed by MPPT
+
+    const maxMpptModules =
+      Math.floor(
+        mpptMax / VmpHotModule
+      );
+
+
+
+    const upperLimit =
+      Math.min(
+        maxVocModules,
+        maxMpptModules
+      );
+
+
+    const lowerLimit =
+      minMpptModules;
+
+
+
+    let modulesPerString=0;
+
+    let voltageMismatch=false;
+
+
+
+    if(
+      upperLimit>=lowerLimit &&
+      lowerLimit>0
+    ){
+
+      modulesPerString=upperLimit;
+
     }
 
-    // System Sizing
-    const totalModules = Math.ceil((invRating * 1000) / Pmax);
-    const strings = modulesPerString > 0 ? Math.ceil(totalModules / modulesPerString) : 0;
+    else{
 
-    const dcSize = (totalModules * Pmax) / 1000; // kW
-    const dcac = invRating > 0 ? dcSize / invRating : 0;
+      modulesPerString=Math.max(
+        1,
+        maxVocModules
+      );
 
-    // Performance Ratio (PR) & Energy Yield
+      voltageMismatch=true;
+
+    }
+
+
+
+    // ==============================
+    // STRING VOLTAGE CALCULATION
+    // ==============================
+
+
+    /*
+      IMPORTANT:
+      Inverter checks STRING voltage,
+      not single module voltage.
+    */
+
+
+    const stringVocCold =
+      VocColdModule *
+      modulesPerString;
+
+
+    const stringVmpHot =
+      VmpHotModule *
+      modulesPerString;
+
+
+
+        // ==============================
+    // SYSTEM SIZING
+    // ==============================
+
+
+    const totalModules =
+      Math.ceil(
+        (invRating * 1000) / Pmax
+      );
+
+
+    const strings =
+      modulesPerString > 0
+        ? Math.ceil(totalModules / modulesPerString)
+        : 0;
+
+
+
+    const dcSize =
+      (totalModules * Pmax) / 1000;
+
+
+
+    const dcac =
+      invRating > 0
+        ? dcSize / invRating
+        : 0;
+
+
+
+
+    // ==============================
+    // ENERGY YIELD CALCULATION
+    // ==============================
+
+
+    /*
+      Loss model:
+
+      User loss
+      Inverter efficiency loss
+      Wiring loss
+      Soiling loss
+      Mismatch loss
+    */
+
+
     const inverterEff = 0.97;
+
     const wiringLoss = 0.02;
+
     const soilingLoss = 0.03;
+
     const mismatchLoss = 0.02;
-    const generalLossFactor = lossPct / 100;
 
-    const PR = 1 - (generalLossFactor + (1 - inverterEff) + wiringLoss + soilingLoss + mismatchLoss);
-    const PRClamped = Math.max(0.4, Math.min(0.95, isNaN(PR) ? 0.75 : PR));
-    const annualEnergy = dcSize * psh * 365 * PRClamped;
 
-    // Status Assessment
-    let status = 'PASS';
-    let badgeClass = 'pass';
-    let statusNote = 'System configuration meets inverter electrical limits and MPPT voltage windows.';
+    const generalLossFactor =
+      lossPct / 100;
 
-    if (dcac > 1.5) {
-      status = 'WARNING';
-      badgeClass = 'warn';
-      statusNote = 'High DC to AC ratio (> 1.5). Inverter may experience power clipping during peak solar irradiance.';
+
+
+    const PR =
+      1 -
+      (
+        generalLossFactor +
+        (1 - inverterEff) +
+        wiringLoss +
+        soilingLoss +
+        mismatchLoss
+      );
+
+
+
+    const PRClamped =
+      Math.max(
+        0.40,
+        Math.min(
+          0.95,
+          isNaN(PR) ? 0.75 : PR
+        )
+      );
+
+
+
+    const annualEnergy =
+      dcSize *
+      psh *
+      365 *
+      PRClamped;
+
+
+
+    const dailyEnergy =
+      annualEnergy / 365;
+
+
+
+
+    // ==============================
+    // VALIDATION STATUS
+    // ==============================
+
+
+    let status='PASS';
+
+    let badgeClass='pass';
+
+    let statusNote =
+      'System configuration meets inverter electrical limits and MPPT voltage window.';
+
+
+
+    // DC/AC ratio check
+
+    if(dcac > 1.5){
+
+      status='WARNING';
+
+      badgeClass='warn';
+
+      statusNote =
+      'High DC/AC ratio. Possible inverter clipping during high irradiance.';
+
     }
 
-    if (voltageMismatch || maxVocModules < minMpptModules || modulesPerString === 0 || (modulesPerString * VocCold) > dcmax) {
-      status = 'FAIL';
-      badgeClass = 'fail';
-      statusNote = 'Voltage window mismatch. Array cold voltage exceeds DC max or hot Vmp falls outside MPPT limits.';
+
+
+    // Voltage validation
+
+    if(
+
+      voltageMismatch ||
+
+      modulesPerString===0 ||
+
+      stringVocCold > dcmax ||
+
+      stringVmpHot < mpptMin ||
+
+      stringVmpHot > mpptMax
+
+    ){
+
+      status='FAIL';
+
+      badgeClass='fail';
+
+
+      statusNote =
+      'String voltage is outside inverter DC voltage or MPPT operating range.';
+
     }
 
-    // Optional Off-Grid Battery Sizing
-    let batteryCardHtml = '';
-    if (mode === 'offgrid') {
-      const load = num('dailyLoad');
-      const days = num('autonomy');
-      const Vbat = num('batteryV');
-      const dod = num('dod') / 100;
 
-      if (load > 0 && days > 0 && Vbat > 0 && dod > 0) {
-        const invEff = 0.93;
-        const battEff = 0.92;
-        const safetyFactor = 1.15;
 
-        const netUsableKwh = load * days;
-        const grossRequiredKwh = (netUsableKwh * safetyFactor) / (dod * invEff * battEff);
-        const batteryAh = (grossRequiredKwh * 1000) / Vbat;
 
-        batteryCardHtml = `
-          <div class="pv-result-card">
-            <span class="pv-card-title">Off-Grid Battery Storage</span>
-            <div class="pv-metric-row"><span>Net Daily Demand:</span> <strong>${formatNum(load)} kWh/day</strong></div>
-            <div class="pv-metric-row"><span>Target Autonomy:</span> <strong>${days} Days (${formatNum(netUsableKwh)} kWh)</strong></div>
-            <div class="pv-metric-row"><span>Gross Storage Required:</span> <strong>${formatNum(grossRequiredKwh)} kWh</strong></div>
-            <div class="pv-metric-row highlight-row"><span>Required Battery Capacity:</span> <strong>${formatNum(batteryAh, 0)} Ah @ ${Vbat}V</strong></div>
-          </div>
-        `;
-      }
-    }
+    // ==============================
+    // TEMPERATURE WARNING
+    // ==============================
 
-    // Render Results Output
-    resultBox.innerHTML = `
-      <div class="pv-results-grid">
-        <div class="pv-result-card">
-          <span class="pv-card-title">PV Array Sizing</span>
-          <div class="pv-metric-row"><span>Total Array Rating:</span> <strong>${formatNum(dcSize)} kW</strong></div>
-          <div class="pv-metric-row"><span>Total Panels Required:</span> <strong>${totalModules} Modules</strong></div>
-          <div class="pv-metric-row"><span>Modules per String:</span> <strong>${modulesPerString} Panels</strong></div>
-          <div class="pv-metric-row"><span>Parallel Strings:</span> <strong>${strings} Strings</strong></div>
-          <div class="pv-metric-row"><span>DC to AC Oversizing:</span> <strong>${formatNum(dcac)}</strong></div>
-        </div>
 
-        <div class="pv-result-card">
-          <span class="pv-card-title">Electrical Voltage Limits</span>
-          <div class="pv-metric-row"><span>Cold Voc (@ ${Tmin}&deg;C):</span> <strong>${formatNum(VocCold)} V</strong></div>
-          <div class="pv-metric-row"><span>Hot Vmp (@ ${Tmax}&deg;C):</span> <strong>${formatNum(VmpHot)} V</strong></div>
-          <div class="pv-metric-row"><span>Inverter DC Max:</span> <strong>${dcmax} V</strong></div>
-          <div class="pv-metric-row"><span>MPPT Voltage Window:</span> <strong>${mpptMin} V &ndash; ${mpptMax} V</strong></div>
-        </div>
+    let temperatureWarning='';
 
-        <div class="pv-result-card">
-          <span class="pv-card-title">Energy Yield & Efficiency</span>
-          <div class="pv-metric-row"><span>Est. Annual Generation:</span> <strong>${formatNum(annualEnergy, 0)} kWh/year</strong></div>
-          <div class="pv-metric-row"><span>Est. Daily Generation:</span> <strong>${formatNum(annualEnergy / 365)} kWh/day</strong></div>
-          <div class="pv-metric-row"><span>Performance Ratio (PR):</span> <strong>${formatNum(PRClamped * 100, 1)}%</strong></div>
-        </div>
 
-        <div class="pv-result-card">
-          <span class="pv-card-title">System Status</span>
-          <div class="status-badge-wrapper">
-            <span class="badge ${badgeClass}">${status}</span>
-          </div>
-          <p class="status-note-text">${statusNote}</p>
-        </div>
+    if(
+      Tmin < -50 ||
+      Tmax > 80
+    ){
 
-        ${batteryCardHtml}
+      temperatureWarning =
+      `
+      <div class="warning-box">
+      ⚠ Extreme temperature values detected.
+      Please verify environmental design conditions.
       </div>
+      `;
+
+    }
+
+
+
+
+    // ==============================
+    // OFF GRID BATTERY CALCULATION
+    // ==============================
+
+
+    let batteryCardHtml='';
+
+
+
+    if(mode==='offgrid'){
+
+
+      const load=num('dailyLoad');
+
+      const days=num('autonomy');
+
+      const Vbat=num('batteryV');
+
+      const dod=num('dod')/100;
+
+
+
+      if(
+
+        load>0 &&
+        days>0 &&
+        Vbat>0 &&
+        dod>0
+
+      ){
+
+
+        const invEff=0.93;
+
+        const battEff=0.92;
+
+        const safetyFactor=1.15;
+
+
+
+        const netUsableKwh =
+          load * days;
+
+
+
+        const grossRequiredKwh =
+          (
+            netUsableKwh *
+            safetyFactor
+          )
+          /
+          (
+            dod *
+            invEff *
+            battEff
+          );
+
+
+
+        const batteryAh =
+          (
+            grossRequiredKwh *
+            1000
+          )
+          /
+          Vbat;
+
+
+
+        batteryCardHtml =
+        `
+
+        <div class="pv-result-card">
+
+        <span class="pv-card-title">
+        Off-Grid Battery Storage
+        </span>
+
+
+        <div class="pv-metric-row">
+        <span>Daily Load:</span>
+        <strong>${formatNum(load)} kWh/day</strong>
+        </div>
+
+
+        <div class="pv-metric-row">
+        <span>Autonomy:</span>
+        <strong>${days} Days</strong>
+        </div>
+
+
+        <div class="pv-metric-row">
+        <span>Required Storage:</span>
+        <strong>${formatNum(grossRequiredKwh)} kWh</strong>
+        </div>
+
+
+        <div class="pv-metric-row highlight-row">
+        <span>Battery Capacity:</span>
+        <strong>
+        ${formatNum(batteryAh,0)}
+        Ah @ ${Vbat}V
+        </strong>
+        </div>
+
+
+        </div>
+
+        `;
+
+
+      }
+
+
+    }
+
+
+
+    
+    // ==============================
+    // RENDER RESULTS
+    // ==============================
+
+
+    resultBox.innerHTML = `
+
+    <div class="pv-results-grid">
+
+
+      <!-- PV ARRAY SIZING -->
+
+      <div class="pv-result-card">
+
+      <span class="pv-card-title">
+      PV Array Sizing
+      </span>
+
+
+      <div class="pv-metric-row">
+      <span>Total Array Rating:</span>
+      <strong>${formatNum(dcSize)} kW</strong>
+      </div>
+
+
+      <div class="pv-metric-row">
+      <span>Total Panels Required:</span>
+      <strong>${totalModules} Modules</strong>
+      </div>
+
+
+      <div class="pv-metric-row">
+      <span>Modules per String:</span>
+      <strong>${modulesPerString} Modules</strong>
+      </div>
+
+
+      <div class="pv-metric-row">
+      <span>Parallel Strings:</span>
+      <strong>${strings} Strings</strong>
+      </div>
+
+
+      <div class="pv-metric-row">
+      <span>DC/AC Ratio:</span>
+      <strong>${formatNum(dcac)}</strong>
+      </div>
+
+
+      </div>
+
+
+
+
+      <!-- VOLTAGE VALIDATION -->
+
+      <div class="pv-result-card">
+
+      <span class="pv-card-title">
+      Voltage Window Validation
+      </span>
+
+
+
+      <div class="pv-metric-row">
+      <span>Cold Voc / Module:</span>
+      <strong>${formatNum(VocColdModule)} V</strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>Cold Voc / String:</span>
+      <strong>${formatNum(stringVocCold)} V</strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>Hot Vmp / Module:</span>
+      <strong>${formatNum(VmpHotModule)} V</strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>Hot Vmp / String:</span>
+      <strong>${formatNum(stringVmpHot)} V</strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>Inverter DC Max:</span>
+      <strong>${dcmax} V</strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>MPPT Range:</span>
+      <strong>
+      ${mpptMin}V - ${mpptMax}V
+      </strong>
+      </div>
+
+
+      </div>
+
+
+
+
+
+      <!-- ENERGY YIELD -->
+
+      <div class="pv-result-card">
+
+      <span class="pv-card-title">
+      Energy Yield
+      </span>
+
+
+
+      <div class="pv-metric-row">
+      <span>Annual Generation:</span>
+      <strong>
+      ${formatNum(annualEnergy,0)}
+      kWh/year
+      </strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>Daily Average:</span>
+      <strong>
+      ${formatNum(dailyEnergy)}
+      kWh/day
+      </strong>
+      </div>
+
+
+
+      <div class="pv-metric-row">
+      <span>Performance Ratio:</span>
+      <strong>
+      ${formatNum(PRClamped*100,1)}%
+      </strong>
+      </div>
+
+
+      </div>
+
+
+
+
+
+      <!-- STATUS -->
+
+      <div class="pv-result-card">
+
+      <span class="pv-card-title">
+      Validation Status
+      </span>
+
+
+      <div class="status-badge-wrapper">
+
+      <span class="badge ${badgeClass}">
+      ${status}
+      </span>
+
+      </div>
+
+
+      <p class="status-note-text">
+      ${statusNote}
+      </p>
+
+
+      ${temperatureWarning}
+
+
+      </div>
+
+
+
+      ${batteryCardHtml}
+
+
+    </div>
+
     `;
 
-    if (formulaApplied) {
+
+
+
+
+    // ==============================
+    // FORMULA DISPLAY
+    // ==============================
+
+
+    if(formulaApplied){
+
+
       formulaApplied.innerHTML = `
-        <strong>Temperature Voltage Limits:</strong><br>
-        • Cold Voc (@ ${Tmin}&deg;C) = ${Voc}V &times; [1 + 0.0028 &times; (25 - ${Tmin})] = <strong>${formatNum(VocCold)}V</strong> (Max Limit: ${dcmax}V)<br>
-        • Hot Vmp (@ ${Tmax}&deg;C) = ${Vmp}V &times; [1 - 0.0035 &times; (${Tmax} - 25)] = <strong>${formatNum(VmpHot)}V</strong> (Min MPPT: ${mpptMin}V)<br>
-        • Selected String Size = <strong>${modulesPerString} panels/string</strong>
+
+
+      <strong>
+      Temperature Adjusted Voltage Calculation
+      </strong>
+      <br><br>
+
+
+      Cold Voc per Module:
+      <br>
+
+      ${Voc} × [1 + 0.0028 × (25 - ${Tmin})]
+
+      =
+      <strong>
+      ${formatNum(VocColdModule)}V
+      </strong>
+
+
+      <br><br>
+
+
+
+      Cold Voc String:
+
+      <br>
+
+      ${formatNum(VocColdModule)}
+      ×
+      ${modulesPerString}
+
+      =
+      <strong>
+      ${formatNum(stringVocCold)}V
+      </strong>
+
+
+
+      <br><br>
+
+
+
+      Hot Vmp per Module:
+
+      <br>
+
+      ${Vmp}
+      ×
+      [1 - 0.0035 × (${Tmax}-25)]
+
+      =
+      <strong>
+      ${formatNum(VmpHotModule)}V
+      </strong>
+
+
+
+      <br><br>
+
+
+
+      Hot Vmp String:
+
+      <br>
+
+      ${formatNum(VmpHotModule)}
+      ×
+      ${modulesPerString}
+
+      =
+      <strong>
+      ${formatNum(stringVmpHot)}V
+      </strong>
+
+
       `;
+
+
     }
+
+
+
   }
 
-  function showError(msg) {
-    if (resultBox) {
+
+
+
+  // ==============================
+  // ERROR DISPLAY
+  // ==============================
+
+
+  function showError(msg){
+
+
+    if(resultBox){
+
+
       resultBox.innerHTML = `
-        <div class="result-error-box" style="padding:14px; background:#fef2f2; border:1px solid #fca5a5; border-radius:6px; color:#991b1b;">
-          <span class="error-icon" style="font-size:1.2rem; margin-right:6px;">⚠️</span>
-          <strong>Error:</strong> ${msg}
-        </div>
+
+      <div class="result-error-box">
+
+      ⚠️
+      <strong>Error:</strong>
+      ${msg}
+
+      </div>
+
       `;
+
+
     }
-    if (formulaApplied) {
-      formulaApplied.textContent = 'Calculation failed due to invalid or missing input values.';
+
+
+
+    if(formulaApplied){
+
+      formulaApplied.textContent =
+      'Calculation failed. Please check input values.';
+
     }
+
+
   }
 
-  function resetResultsDisplay() {
-    if (resultBox) {
+
+
+
+
+  // ==============================
+  // RESET FUNCTION
+  // ==============================
+
+
+  function resetResultsDisplay(){
+
+
+    if(resultBox){
+
       resultBox.innerHTML = `
-        <div class="result-placeholder" style="text-align: center; padding: 30px; color: #64748b;">
-          <span class="result-icon" style="font-size:2rem; display:block; margin-bottom:8px;">☀️</span>
-          <p>Adjust parameters and click <strong>Calculate System</strong> to view detailed PV array sizing and validation.</p>
-        </div>
+
+      <div class="result-placeholder">
+
+      ☀️
+
+      <p>
+      Adjust parameters and click
+      <strong>
+      Calculate System
+      </strong>
+      </p>
+
+      </div>
+
       `;
+
     }
-    if (formulaApplied) {
-      formulaApplied.textContent = 'Validation and temperature window calculations will appear here after calculation.';
+
+
+
+    if(formulaApplied){
+
+      formulaApplied.textContent =
+      'Validation calculations will appear here.';
+
     }
+
+
   }
 
-  function resetCalculator() {
-    setVal('voc', 49.5);
-    setVal('vmp', 41.2);
-    setVal('imp', 10.8);
-    setVal('pmax', 450);
 
-    setVal('invRating', 10);
-    setVal('dcmax', 1000);
-    setVal('mpptMin', 200);
-    setVal('mpptMax', 800);
 
-    setVal('tmin', 10);
-    setVal('tmax', 45);
-    setVal('psh', 5.5);
-    setVal('loss', 14);
 
-    setVal('dailyLoad', 12);
-    setVal('autonomy', 2);
-    setVal('batteryV', 48);
-    setVal('dod', 80);
 
-    if (pvMode) pvMode.value = 'grid';
-    if (offgridSection) offgridSection.style.display = 'none';
+  function resetCalculator(){
+
+
+
+    setVal('voc',49.5);
+
+    setVal('vmp',41.2);
+
+    setVal('imp',10.8);
+
+    setVal('pmax',450);
+
+
+
+    setVal('invRating',10);
+
+    setVal('dcmax',1000);
+
+    setVal('mpptMin',200);
+
+    setVal('mpptMax',800);
+
+
+
+    setVal('tmin',10);
+
+    setVal('tmax',45);
+
+    setVal('psh',5.5);
+
+    setVal('loss',14);
+
+
+
+    setVal('dailyLoad',12);
+
+    setVal('autonomy',2);
+
+    setVal('batteryV',48);
+
+    setVal('dod',80);
+
+
+
+    if(pvMode){
+
+      pvMode.value='grid';
+
+    }
+
+
+
+    if(offgridSection){
+
+      offgridSection.style.display='none';
+
+    }
+
 
     resetResultsDisplay();
+
+
   }
 
-  function formatNum(num, decimals = 2) {
-    if (isNaN(num) || num === null || num === undefined) return '0';
-    return Number(num).toLocaleString('en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: decimals
-    });
+
+
+
+
+  // ==============================
+  // NUMBER FORMATTER
+  // ==============================
+
+
+  function formatNum(value, decimals=2){
+
+
+    if(
+      isNaN(value) ||
+      value===null ||
+      value===undefined
+    ){
+
+      return '0';
+
+    }
+
+
+    return Number(value)
+      .toLocaleString(
+        'en-US',
+        {
+          minimumFractionDigits:0,
+          maximumFractionDigits:decimals
+        }
+      );
+
+
   }
+
+
+
 });
