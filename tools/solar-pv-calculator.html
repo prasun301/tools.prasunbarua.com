@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solar PV Calculator - Tools.PrasunBarua</title>
-  <meta name="description" content="Free online Solar PV calculator to estimate required solar panel capacity, daily energy output, and battery storage sizing.">
+  <title>Solar PV & Battery Sizing Calculator - Tools.PrasunBarua</title>
+  <meta name="description" content="Calculate required solar panel system size, total panel count, inverter capacity, and estimated daily energy generation.">
   <meta name="author" content="Prasun Barua">
 
   <link rel="icon" href="../favicon.ico">
@@ -54,7 +54,7 @@
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="../index.html">Home</a>
       <span class="separator">/</span>
-      <a href="../index.html#tools">Solar PV Tools</a>
+      <a href="../index.html#tools">Calculators</a>
       <span class="separator">/</span>
       <span class="current">Solar PV Calculator</span>
     </nav>
@@ -62,16 +62,16 @@
     <!-- CALCULATOR MAIN CONTAINER -->
     <div class="calculator-container">
       <div class="calc-card">
-        <h2>☀️ Solar PV & Battery Sizing Calculator</h2>
+        <h2>☀️ Solar PV System Sizing Calculator</h2>
         <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem;">
-          Estimate your system's required solar array capacity, daily power generation, and minimum battery storage capacity based on your daily energy use.
+          Estimate your exact solar array size, recommended inverter capacity, and total panel count based on daily household electricity consumption.
         </p>
 
-        <form id="solarForm">
+        <form id="pvForm">
           <div class="form-group">
             <label for="dailyEnergy">Daily Energy Consumption (kWh / day)</label>
             <div class="input-with-unit">
-              <input type="number" id="dailyEnergy" value="10" min="0.1" step="0.1" required>
+              <input type="number" id="dailyEnergy" value="15" min="0.1" step="0.1" required>
               <span class="unit-tag">kWh</span>
             </div>
           </div>
@@ -79,55 +79,32 @@
           <div class="form-group">
             <label for="sunHours">Peak Sun Hours per Day (hours)</label>
             <div class="input-with-unit">
-              <input type="number" id="sunHours" value="4.5" min="0.5" max="12" step="0.1" required>
+              <input type="number" id="sunHours" value="5" min="0.5" max="12" step="0.1" required>
               <span class="unit-tag">Hours</span>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="systemEfficiency">System Efficiency Factor (%)</label>
+            <label for="panelWattage">Solar Panel Individual Wattage (Watts)</label>
             <div class="input-with-unit">
-              <input type="number" id="systemEfficiency" value="75" min="10" max="100" step="1" required>
-              <span class="unit-tag">%</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="autonomyDays">Days of Autonomy (Battery Backup)</label>
-            <div class="input-with-unit">
-              <input type="number" id="autonomyDays" value="1" min="0" max="7" step="1" required>
-              <span class="unit-tag">Days</span>
+              <input type="number" id="panelWattage" value="400" min="50" max="800" step="10" required>
+              <span class="unit-tag">W</span>
             </div>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn-primary" style="flex: 1;">Calculate System</button>
-            <button type="button" id="resetBtn" class="btn-outline">Reset</button>
+            <button type="submit" id="calcBtn" class="btn-primary" style="flex: 1;">Calculate System</button>
+            <button type="reset" class="btn-outline">Reset</button>
           </div>
         </form>
 
         <!-- RESULTS SECTION -->
-        <div id="resultBox" class="result-box">
-          <div class="result-card-inner">
-            <h3>Calculated System Requirements</h3>
-            <div class="result-grid">
-              <div class="result-item">
-                <span class="label">Recommended PV Capacity</span>
-                <span class="value highlight" id="resPvSize">-- kW</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Daily Energy Generation</span>
-                <span class="value" id="resDailyGen">-- kWh</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Min. Battery Storage Capacity</span>
-                <span class="value" id="resBattery">-- kWh</span>
-              </div>
-            </div>
-            <div class="formula-applied" id="formulaText">
-              Formula: PV Size = Daily Load / (Peak Sun Hours × Efficiency Factor)
-            </div>
-          </div>
+        <div id="resultBox" class="result-box" style="display: none;">
+          <!-- Dynamically populated via JavaScript -->
+        </div>
+
+        <div id="formulaApplied" class="formula-applied" style="display: none;">
+          <!-- Dynamically populated formula explanation -->
         </div>
 
       </div>
@@ -161,50 +138,11 @@
     </div>
   </footer>
 
-  <!-- App Script for Theme & Navigation -->
+  <!-- Global App & Theme Script -->
   <script src="../assets/js/app.js"></script>
 
-  <!-- Calculator Logic Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('solarForm');
-      const resetBtn = document.getElementById('resetBtn');
-
-      function calculateSolar() {
-        const energy = parseFloat(document.getElementById('dailyEnergy').value) || 0;
-        const sunHours = parseFloat(document.getElementById('sunHours').value) || 0;
-        const efficiency = (parseFloat(document.getElementById('systemEfficiency').value) || 75) / 100;
-        const days = parseFloat(document.getElementById('autonomyDays').value) || 1;
-
-        if (sunHours <= 0 || efficiency <= 0) return;
-
-        // PV Array size calculation (Daily energy / (Sun Hours * Efficiency))
-        const pvSizeKw = energy / (sunHours * efficiency);
-        const dailyGen = pvSizeKw * sunHours * efficiency;
-        const batteryCapacity = energy * days;
-
-        document.getElementById('resPvSize').textContent = pvSizeKw.toFixed(2) + ' kW';
-        document.getElementById('resDailyGen').textContent = dailyGen.toFixed(2) + ' kWh/day';
-        document.getElementById('resBattery').textContent = batteryCapacity.toFixed(2) + ' kWh';
-      }
-
-      form.addEventListener('input', calculateSolar);
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        calculateSolar();
-      });
-
-      resetBtn.addEventListener('click', () => {
-        form.reset();
-        document.getElementById('resPvSize').textContent = '-- kW';
-        document.getElementById('resDailyGen').textContent = '-- kWh';
-        document.getElementById('resBattery').textContent = '-- kWh';
-      });
-
-      // Run initial calculation on load
-      calculateSolar();
-    });
-  </script>
+  <!-- Dedicated Tool Logic Script -->
+  <script src="../assets/js/solar-pv-calculator.js"></script>
 </body>
 
 </html>
