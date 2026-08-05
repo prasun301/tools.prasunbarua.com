@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultBox = document.getElementById('resultBox');
   const formulaApplied = document.getElementById('formulaApplied');
 
+  // State object to retain input values when users switch modes
+  let inputState = { V: '', I: '', R: '' };
+
   // Initialize UI on load
   updateInputsUI();
 
@@ -19,87 +22,71 @@ document.addEventListener('DOMContentLoaded', () => {
   calcBtn.addEventListener('click', performCalculation);
   resetBtn.addEventListener('click', resetCalculator);
 
+  // Save current input values before wiping the DOM during a mode change
+  function saveInputState() {
+    if (document.getElementById('inputV')) inputState.V = document.getElementById('inputV').value;
+    if (document.getElementById('inputI')) inputState.I = document.getElementById('inputI').value;
+    if (document.getElementById('inputR')) inputState.R = document.getElementById('inputR').value;
+  }
+
   // Render dynamic form inputs based on target mode
   function updateInputsUI() {
+    saveInputState(); // Save data before re-rendering
     const mode = calcMode.value;
+    
     dynamicInputs.innerHTML = '';
     resetResultsDisplay();
 
+    // Reusable Input HTML blocks
+    const inputTemplates = {
+      V: `
+        <div class="form-group">
+          <label for="inputV">Voltage (V) <span class="unit-label">Volts (V)</span></label>
+          <div class="input-with-unit">
+            <input type="number" id="inputV" step="any" placeholder="e.g. 12" value="${inputState.V}">
+            <span class="unit-tag">V</span>
+          </div>
+        </div>
+      `,
+      I: `
+        <div class="form-group">
+          <label for="inputI">Current (I) <span class="unit-label">Amperes (A)</span></label>
+          <div class="input-with-unit">
+            <input type="number" id="inputI" step="any" placeholder="e.g. 2" value="${inputState.I}">
+            <span class="unit-tag">A</span>
+          </div>
+        </div>
+      `,
+      R: `
+        <div class="form-group">
+          <label for="inputR">Resistance (R) <span class="unit-label">Ohms (&Omega;)</span></label>
+          <div class="input-with-unit">
+            <input type="number" id="inputR" step="any" placeholder="e.g. 6" value="${inputState.R}">
+            <span class="unit-tag">&Omega;</span>
+          </div>
+        </div>
+      `
+    };
+
+    // Inject appropriate inputs for the selected mode
     if (mode === 'V') {
-      dynamicInputs.innerHTML = `
-        <div class="form-group">
-          <label for="inputI">Current (I) <span class="unit-label">Amperes (A)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputI" step="any" placeholder="e.g. 2">
-            <span class="unit-tag">A</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputR">Resistance (R) <span class="unit-label">Ohms (&Omega;)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputR" step="any" placeholder="e.g. 6">
-            <span class="unit-tag">&Omega;</span>
-          </div>
-        </div>
-      `;
+      dynamicInputs.innerHTML = inputTemplates.I + inputTemplates.R;
     } else if (mode === 'I') {
-      dynamicInputs.innerHTML = `
-        <div class="form-group">
-          <label for="inputV">Voltage (V) <span class="unit-label">Volts (V)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputV" step="any" placeholder="e.g. 12">
-            <span class="unit-tag">V</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputR">Resistance (R) <span class="unit-label">Ohms (&Omega;)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputR" step="any" placeholder="e.g. 6">
-            <span class="unit-tag">&Omega;</span>
-          </div>
-        </div>
-      `;
+      dynamicInputs.innerHTML = inputTemplates.V + inputTemplates.R;
     } else if (mode === 'R') {
-      dynamicInputs.innerHTML = `
-        <div class="form-group">
-          <label for="inputV">Voltage (V) <span class="unit-label">Volts (V)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputV" step="any" placeholder="e.g. 12">
-            <span class="unit-tag">V</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputI">Current (I) <span class="unit-label">Amperes (A)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputI" step="any" placeholder="e.g. 2">
-            <span class="unit-tag">A</span>
-          </div>
-        </div>
-      `;
+      dynamicInputs.innerHTML = inputTemplates.V + inputTemplates.I;
     } else if (mode === 'P') {
-      dynamicInputs.innerHTML = `
-        <div class="form-group">
-          <label for="inputV">Voltage (V) <span class="unit-label">Volts (V)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputV" step="any" placeholder="e.g. 12">
-            <span class="unit-tag">V</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputI">Current (I) <span class="unit-label">Amperes (A)</span></label>
-          <div class="input-with-unit">
-            <input type="number" id="inputI" step="any" placeholder="e.g. 2">
-            <span class="unit-tag">A</span>
-          </div>
-        </div>
-      `;
+      dynamicInputs.innerHTML = inputTemplates.V + inputTemplates.I;
     }
 
-    // Add enter-key submit event to inputs
+    // Add enter-key submit event to the new inputs (using modern 'keydown' instead of 'keypress')
     const inputs = dynamicInputs.querySelectorAll('input');
     inputs.forEach(inp => {
-      inp.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') performCalculation();
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); // Prevents page reload if inputs are wrapped in a <form>
+          performCalculation();
+        }
       });
     });
   }
@@ -108,13 +95,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function performCalculation() {
     const mode = calcMode.value;
 
-    if (mode === 'V') {
-      const iVal = parseFloat(document.getElementById('inputI')?.value);
-      const rVal = parseFloat(document.getElementById('inputR')?.value);
+    // Safely parse values
+    const vVal = parseFloat(document.getElementById('inputV')?.value);
+    const iVal = parseFloat(document.getElementById('inputI')?.value);
+    const rVal = parseFloat(document.getElementById('inputR')?.value);
 
+    // ==========================================
+    // Mode: Calculate Voltage (V)
+    // ==========================================
+    if (mode === 'V') {
       if (isNaN(iVal) || isNaN(rVal)) {
-        showError('Please enter valid numeric values for Current and Resistance.');
-        return;
+        return showError('Please enter valid numeric values for Current and Resistance.');
       }
 
       const vRes = iVal * rVal;
@@ -131,17 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
         P = V &times; I = ${formatNum(vRes)} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong>
       `;
     } 
+    
+    // ==========================================
+    // Mode: Calculate Current (I)
+    // ==========================================
     else if (mode === 'I') {
-      const vVal = parseFloat(document.getElementById('inputV')?.value);
-      const rVal = parseFloat(document.getElementById('inputR')?.value);
-
       if (isNaN(vVal) || isNaN(rVal)) {
-        showError('Please enter valid numeric values for Voltage and Resistance.');
-        return;
+        return showError('Please enter valid numeric values for Voltage and Resistance.');
       }
       if (rVal === 0) {
-        showError('Resistance cannot be zero (Division by zero error).');
-        return;
+        return showError('Resistance cannot be zero (Division by zero error).');
       }
 
       const iRes = vVal / rVal;
@@ -158,17 +148,16 @@ document.addEventListener('DOMContentLoaded', () => {
         P = V &times; I = ${vVal} V &times; ${formatNum(iRes)} A = <strong>${formatNum(pRes)} W</strong>
       `;
     } 
+    
+    // ==========================================
+    // Mode: Calculate Resistance (R)
+    // ==========================================
     else if (mode === 'R') {
-      const vVal = parseFloat(document.getElementById('inputV')?.value);
-      const iVal = parseFloat(document.getElementById('inputI')?.value);
-
       if (isNaN(vVal) || isNaN(iVal)) {
-        showError('Please enter valid numeric values for Voltage and Current.');
-        return;
+        return showError('Please enter valid numeric values for Voltage and Current.');
       }
       if (iVal === 0) {
-        showError('Current cannot be zero (Division by zero error).');
-        return;
+        return showError('Current cannot be zero (Division by zero error).');
       }
 
       const rRes = vVal / iVal;
@@ -185,27 +174,27 @@ document.addEventListener('DOMContentLoaded', () => {
         P = V &times; I = ${vVal} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong>
       `;
     } 
+    
+    // ==========================================
+    // Mode: Calculate Power (P)
+    // ==========================================
     else if (mode === 'P') {
-      const vVal = parseFloat(document.getElementById('inputV')?.value);
-      const iVal = parseFloat(document.getElementById('inputI')?.value);
-
       if (isNaN(vVal) || isNaN(iVal)) {
-        showError('Please enter valid numeric values for Voltage and Current.');
-        return;
+        return showError('Please enter valid numeric values for Voltage and Current.');
       }
 
       const pRes = vVal * iVal;
-      const rRes = iVal !== 0 ? vVal / iVal : 0;
+      const rRes = iVal !== 0 ? vVal / iVal : Infinity;
 
       renderSuccessResult([
         { label: 'Power (P)', value: `${formatNum(pRes)} Watts (W)`, main: true },
-        { label: 'Associated Resistance (R)', value: `${formatNum(rRes)} Ohms (&Omega;)`, main: false }
+        { label: 'Associated Resistance (R)', value: `${iVal === 0 ? 'Infinity' : formatNum(rRes)} Ohms (&Omega;)`, main: false }
       ]);
 
       formulaApplied.innerHTML = `
         <strong>P = V &times; I</strong><br>
         P = ${vVal} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong><br>
-        R = V / I = ${vVal} V / ${iVal} A = <strong>${formatNum(rRes)} &Omega;</strong>
+        R = V / I = ${vVal} V / ${iVal} A = <strong>${iVal === 0 ? '&infin;' : formatNum(rRes)} &Omega;</strong>
       `;
     }
   }
@@ -225,12 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resultBox.innerHTML = html;
   }
 
-  // Render error message card
+  // Render error message using global CSS warning classes
   function showError(msg) {
     resultBox.innerHTML = `
-      <div class="result-error-box">
+      <div class="result-error-box warning-box">
         <span class="error-icon">⚠️</span>
-        <p>${msg}</p>
+        <p style="display:inline; margin-left: 8px;">${msg}</p>
       </div>
     `;
     formulaApplied.textContent = 'Calculation failed due to invalid or missing inputs.';
@@ -247,14 +236,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function resetCalculator() {
+    // Clear global state tracking 
+    inputState = { V: '', I: '', R: '' };
+    
     const inputs = dynamicInputs.querySelectorAll('input');
     inputs.forEach(i => i.value = '');
     resetResultsDisplay();
   }
 
+  // Helper function to handle decimal formatting cleanly
   function formatNum(num) {
-    if (isNaN(num)) return '0';
-    // Format to max 4 decimal places without trailing zeros
-    return Math.round((num + Number.EPSILON) * 10000) / 10000;
+    if (!isFinite(num)) return num.toString();
+    // Rounds to a max of 4 decimal places natively without displaying trailing zeros
+    return parseFloat(num.toFixed(4)).toString();
   }
 });
