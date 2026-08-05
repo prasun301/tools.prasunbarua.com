@@ -463,3 +463,131 @@
     width: 100%;
   }
 }
+/* --------------------------------------------------
+   Solar PV Calculator Specific Layout & Card Styles
+-------------------------------------------------- */
+
+.section-subheading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 20px 0 12px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.input-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .input-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.offgrid-container {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 8px);
+  padding: 16px;
+  margin-top: 16px;
+}
+
+/* Solar Results Output Grid */
+.pv-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.pv-result-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 8px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pv-card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.pv-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.pv-metric-row:last-child {
+  border-bottom: none;
+}
+
+.pv-metric-row strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.pv-metric-row.highlight-row {
+  background-color: var(--primary-light, rgba(59, 130, 246, 0.1));
+  padding: 8px 10px;
+  border-radius: var(--radius-sm, 4px);
+  border-bottom: none;
+  margin-top: 4px;
+}
+
+.pv-metric-row.highlight-row strong {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* Status Badges */
+.status-badge-wrapper {
+  margin: 8px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge.pass {
+  background-color: #16a34a;
+  color: #ffffff;
+}
+
+.badge.warn {
+  background-color: #f59e0b;
+  color: #111111;
+}
+
+.badge.fail {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.status-note-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
