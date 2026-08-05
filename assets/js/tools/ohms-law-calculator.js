@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultBox = document.getElementById('resultBox');
   const formulaApplied = document.getElementById('formulaApplied');
 
+  // Guard clause if essential container elements are missing
+  if (!calcMode || !dynamicInputs) return;
+
   // State object to retain input values when users switch modes
   let inputState = { V: '', I: '', R: '' };
 
@@ -19,14 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event Listeners
   calcMode.addEventListener('change', updateInputsUI);
-  calcBtn.addEventListener('click', performCalculation);
-  resetBtn.addEventListener('click', resetCalculator);
+  if (calcBtn) calcBtn.addEventListener('click', performCalculation);
+  if (resetBtn) resetBtn.addEventListener('click', resetCalculator);
 
   // Save current input values before wiping the DOM during a mode change
   function saveInputState() {
-    if (document.getElementById('inputV')) inputState.V = document.getElementById('inputV').value;
-    if (document.getElementById('inputI')) inputState.I = document.getElementById('inputI').value;
-    if (document.getElementById('inputR')) inputState.R = document.getElementById('inputR').value;
+    const inputV = document.getElementById('inputV');
+    const inputI = document.getElementById('inputI');
+    const inputR = document.getElementById('inputR');
+    
+    if (inputV) inputState.V = inputV.value;
+    if (inputI) inputState.I = inputI.value;
+    if (inputR) inputState.R = inputR.value;
   }
 
   // Render dynamic form inputs based on target mode
@@ -73,26 +80,25 @@ document.addEventListener('DOMContentLoaded', () => {
       dynamicInputs.innerHTML = inputTemplates.I + inputTemplates.R;
     } else if (mode === 'I') {
       dynamicInputs.innerHTML = inputTemplates.V + inputTemplates.R;
-    } else if (mode === 'R') {
-      dynamicInputs.innerHTML = inputTemplates.V + inputTemplates.I;
-    } else if (mode === 'P') {
+    } else if (mode === 'R' || mode === 'P') {
       dynamicInputs.innerHTML = inputTemplates.V + inputTemplates.I;
     }
 
-    // Add enter-key submit event to the new inputs (using modern 'keydown' instead of 'keypress')
+    // Add enter-key submit event to the new inputs
     const inputs = dynamicInputs.querySelectorAll('input');
     inputs.forEach(inp => {
       inp.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          e.preventDefault(); // Prevents page reload if inputs are wrapped in a <form>
-          performCalculation();
+          e.preventDefault();
+          performCalculation(e);
         }
       });
     });
   }
 
   // Calculation Logic
-  function performCalculation() {
+  function performCalculation(e) {
+    if (e) e.preventDefault();
     const mode = calcMode.value;
 
     // Safely parse values
@@ -116,11 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Associated Power (P)', value: `${formatNum(pRes)} Watts (W)`, main: false }
       ]);
 
-      formulaApplied.innerHTML = `
-        <strong>V = I &times; R</strong><br>
-        V = ${iVal} A &times; ${rVal} &Omega; = <strong>${formatNum(vRes)} V</strong><br>
-        P = V &times; I = ${formatNum(vRes)} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong>
-      `;
+      if (formulaApplied) {
+        formulaApplied.innerHTML = `
+          <strong>V = I &times; R</strong><br>
+          V = ${iVal} A &times; ${rVal} &Omega; = <strong>${formatNum(vRes)} V</strong><br>
+          P = V &times; I = ${formatNum(vRes)} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong>
+        `;
+      }
     } 
     
     // ==========================================
@@ -142,11 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Associated Power (P)', value: `${formatNum(pRes)} Watts (W)`, main: false }
       ]);
 
-      formulaApplied.innerHTML = `
-        <strong>I = V / R</strong><br>
-        I = ${vVal} V / ${rVal} &Omega; = <strong>${formatNum(iRes)} A</strong><br>
-        P = V &times; I = ${vVal} V &times; ${formatNum(iRes)} A = <strong>${formatNum(pRes)} W</strong>
-      `;
+      if (formulaApplied) {
+        formulaApplied.innerHTML = `
+          <strong>I = V / R</strong><br>
+          I = ${vVal} V / ${rVal} &Omega; = <strong>${formatNum(iRes)} A</strong><br>
+          P = V &times; I = ${vVal} V &times; ${formatNum(iRes)} A = <strong>${formatNum(pRes)} W</strong>
+        `;
+      }
     } 
     
     // ==========================================
@@ -168,11 +178,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Associated Power (P)', value: `${formatNum(pRes)} Watts (W)`, main: false }
       ]);
 
-      formulaApplied.innerHTML = `
-        <strong>R = V / I</strong><br>
-        R = ${vVal} V / ${iVal} A = <strong>${formatNum(rRes)} &Omega;</strong><br>
-        P = V &times; I = ${vVal} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong>
-      `;
+      if (formulaApplied) {
+        formulaApplied.innerHTML = `
+          <strong>R = V / I</strong><br>
+          R = ${vVal} V / ${iVal} A = <strong>${formatNum(rRes)} &Omega;</strong><br>
+          P = V &times; I = ${vVal} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong>
+        `;
+      }
     } 
     
     // ==========================================
@@ -191,16 +203,19 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Associated Resistance (R)', value: `${iVal === 0 ? 'Infinity' : formatNum(rRes)} Ohms (&Omega;)`, main: false }
       ]);
 
-      formulaApplied.innerHTML = `
-        <strong>P = V &times; I</strong><br>
-        P = ${vVal} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong><br>
-        R = V / I = ${vVal} V / ${iVal} A = <strong>${iVal === 0 ? '&infin;' : formatNum(rRes)} &Omega;</strong>
-      `;
+      if (formulaApplied) {
+        formulaApplied.innerHTML = `
+          <strong>P = V &times; I</strong><br>
+          P = ${vVal} V &times; ${iVal} A = <strong>${formatNum(pRes)} W</strong><br>
+          R = V / I = ${vVal} V / ${iVal} A = <strong>${iVal === 0 ? '&infin;' : formatNum(rRes)} &Omega;</strong>
+        `;
+      }
     }
   }
 
   // Render calculation results card
   function renderSuccessResult(items) {
+    if (!resultBox) return;
     let html = `<div class="result-card-inner">`;
     items.forEach(item => {
       html += `
@@ -216,29 +231,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render error message using global CSS warning classes
   function showError(msg) {
+    if (!resultBox) return;
     resultBox.innerHTML = `
       <div class="result-error-box warning-box">
         <span class="error-icon">⚠️</span>
         <p style="display:inline; margin-left: 8px;">${msg}</p>
       </div>
     `;
-    formulaApplied.textContent = 'Calculation failed due to invalid or missing inputs.';
+    if (formulaApplied) {
+      formulaApplied.textContent = 'Calculation failed due to invalid or missing inputs.';
+    }
   }
 
   function resetResultsDisplay() {
+    if (!resultBox) return;
     resultBox.innerHTML = `
       <div class="result-placeholder">
         <span class="result-icon">⚡</span>
         <p>Select a mode, fill in the values, and click <strong>Calculate</strong>.</p>
       </div>
     `;
-    formulaApplied.textContent = 'Formula breakdown will appear here after calculation.';
+    if (formulaApplied) {
+      formulaApplied.textContent = 'Formula breakdown will appear here after calculation.';
+    }
   }
 
   function resetCalculator() {
-    // Clear global state tracking 
     inputState = { V: '', I: '', R: '' };
-    
     const inputs = dynamicInputs.querySelectorAll('input');
     inputs.forEach(i => i.value = '');
     resetResultsDisplay();
@@ -247,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Helper function to handle decimal formatting cleanly
   function formatNum(num) {
     if (!isFinite(num)) return num.toString();
-    // Rounds to a max of 4 decimal places natively without displaying trailing zeros
     return parseFloat(num.toFixed(4)).toString();
   }
 });
