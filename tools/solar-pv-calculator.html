@@ -1,116 +1,210 @@
-<div class="pv-design-container">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
 
-  <!-- Calculator Form -->
-  <form id="pvForm">
-    <label style="font-weight:600; font-size:13px;">System Architecture Mode</label>
-    <select id="pv-mode">
-      <option value="grid">Grid-Tied System</option>
-      <option value="offgrid">Off-Grid Independent System</option>
-    </select>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar PV Calculator - Tools.PrasunBarua</title>
+  <meta name="description" content="Free online Solar PV calculator to estimate required solar panel capacity, daily energy output, and battery storage sizing.">
+  <meta name="author" content="Prasun Barua">
 
-    <h3>PV Module Parameters</h3>
-    <div class="grid2">
-      <div>
-        <label>Open Circuit Voltage (Voc)</label>
-        <input id="pv-voc" value="49.5" type="number" step="any">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <a href="../index.html">
+          Tools<span>.PrasunBarua</span>
+        </a>
       </div>
-      <div>
-        <label>Max Power Voltage (Vmp)</label>
-        <input id="pv-vmp" value="41.2" type="number" step="any">
+
+      <nav class="navigation" id="navMenu" aria-label="Main Navigation">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#tools" class="nav-link">Tools</a>
+        <a href="../index.html#categories" class="nav-link">Categories</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle light/dark theme">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
+  </header>
 
-    <div class="grid2">
-      <div>
-        <label>Max Power Current (Imp)</label>
-        <input id="pv-imp" value="10.8" type="number" step="any">
-      </div>
-      <div>
-        <label>Max Power Output (Pmax)</label>
-        <input id="pv-pmax" value="450" type="number" step="any">
-      </div>
-    </div>
+  <main class="container">
+    
+    <!-- BREADCRUMBS NAVIGATION -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="separator">/</span>
+      <a href="../index.html#tools">Solar PV Tools</a>
+      <span class="separator">/</span>
+      <span class="current">Solar PV Calculator</span>
+    </nav>
 
-    <h3>Inverter Specifications</h3>
-    <div class="grid2">
-      <div>
-        <label>Inverter Rating (kW)</label>
-        <input id="pv-inv" value="10" type="number" step="any">
-      </div>
-      <div>
-        <label>Max DC Input Voltage (V)</label>
-        <input id="pv-dcmax" value="1000" type="number" step="any">
-      </div>
-    </div>
+    <!-- CALCULATOR MAIN CONTAINER -->
+    <div class="calculator-container">
+      <div class="calc-card">
+        <h2>☀️ Solar PV & Battery Sizing Calculator</h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem;">
+          Estimate your system's required solar array capacity, daily power generation, and minimum battery storage capacity based on your daily energy use.
+        </p>
 
-    <div class="grid2">
-      <div>
-        <label>MPPT Voltage Min (V)</label>
-        <input id="pv-mpptMin" value="200" type="number" step="any">
-      </div>
-      <div>
-        <label>MPPT Voltage Max (V)</label>
-        <input id="pv-mpptMax" value="800" type="number" step="any">
-      </div>
-    </div>
+        <form id="solarForm">
+          <div class="form-group">
+            <label for="dailyEnergy">Daily Energy Consumption (kWh / day)</label>
+            <div class="input-with-unit">
+              <input type="number" id="dailyEnergy" value="10" min="0.1" step="0.1" required>
+              <span class="unit-tag">kWh</span>
+            </div>
+          </div>
 
-    <h3>Environmental Site Conditions</h3>
-    <div class="grid2">
-      <div>
-        <label>Extreme Min Temp (°C)</label>
-        <input id="pv-tmin" value="10" type="number" step="any">
-      </div>
-      <div>
-        <label>Extreme Max Temp (°C)</label>
-        <input id="pv-tmax" value="45" type="number" step="any">
-      </div>
-    </div>
+          <div class="form-group">
+            <label for="sunHours">Peak Sun Hours per Day (hours)</label>
+            <div class="input-with-unit">
+              <input type="number" id="sunHours" value="4.5" min="0.5" max="12" step="0.1" required>
+              <span class="unit-tag">Hours</span>
+            </div>
+          </div>
 
-    <div class="grid2">
-      <div>
-        <label>Peak Sun Hours (PSH)</label>
-        <input id="pv-psh" value="5.5" type="number" step="any">
-      </div>
-      <div>
-        <label>General System Losses (%)</label>
-        <input id="pv-loss" value="14" type="number" step="any">
-      </div>
-    </div>
+          <div class="form-group">
+            <label for="systemEfficiency">System Efficiency Factor (%)</label>
+            <div class="input-with-unit">
+              <input type="number" id="systemEfficiency" value="75" min="10" max="100" step="1" required>
+              <span class="unit-tag">%</span>
+            </div>
+          </div>
 
-    <div id="pv-offgridBox" style="display: none;">
-      <h3>Battery Storage Configurations</h3>
-      <div class="grid2">
-        <div>
-          <label>Daily Consumption (kWh)</label>
-          <input id="pv-dailyLoad" value="12" type="number" step="any">
+          <div class="form-group">
+            <label for="autonomyDays">Days of Autonomy (Battery Backup)</label>
+            <div class="input-with-unit">
+              <input type="number" id="autonomyDays" value="1" min="0" max="7" step="1" required>
+              <span class="unit-tag">Days</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" style="flex: 1;">Calculate System</button>
+            <button type="button" id="resetBtn" class="btn-outline">Reset</button>
+          </div>
+        </form>
+
+        <!-- RESULTS SECTION -->
+        <div id="resultBox" class="result-box">
+          <div class="result-card-inner">
+            <h3>Calculated System Requirements</h3>
+            <div class="result-grid">
+              <div class="result-item">
+                <span class="label">Recommended PV Capacity</span>
+                <span class="value highlight" id="resPvSize">-- kW</span>
+              </div>
+              <div class="result-item">
+                <span class="label">Daily Energy Generation</span>
+                <span class="value" id="resDailyGen">-- kWh</span>
+              </div>
+              <div class="result-item">
+                <span class="label">Min. Battery Storage Capacity</span>
+                <span class="value" id="resBattery">-- kWh</span>
+              </div>
+            </div>
+            <div class="formula-applied" id="formulaText">
+              Formula: PV Size = Daily Load / (Peak Sun Hours × Efficiency Factor)
+            </div>
+          </div>
         </div>
-        <div>
-          <label>Autonomy Days</label>
-          <input id="pv-autonomy" value="2" type="number" step="any">
-        </div>
-      </div>
 
-      <div class="grid2">
-        <div>
-          <label>Battery Bank Voltage (V)</label>
-          <input id="pv-batteryV" value="48" type="number" step="any">
-        </div>
-        <div>
-          <label>Depth of Discharge (DoD %)</label>
-          <input id="pv-dod" value="80" type="number" step="any">
-        </div>
       </div>
     </div>
 
-    <div class="actions-row">
-      <button id="calcBtn" class="run" type="submit">RUN CONFIGURATION</button>
-      <button type="button" class="reset" onclick="pvResetAll()">RESET VALUES</button>
-    </div>
-  </form>
+  </main>
 
-  <!-- Results -->
-  <div id="resultBox" class="result"></div>
-  <div id="formulaApplied" class="result"></div>
-  <div id="pv-out" class="result"></div>
-</div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-section brand-col">
+        <h3>Tools.<span>PrasunBarua</span></h3>
+        <p>Free online tools for engineering, software development, calculations, and daily digital productivity.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Navigation</h4>
+        <a href="../index.html">Home</a>
+        <a href="../index.html#tools">Popular Tools</a>
+        <a href="../index.html#categories">All Categories</a>
+      </div>
+      <div class="footer-section">
+        <h4>Legal &amp; Info</h4>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Tools.PrasunBarua. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Script for Theme & Navigation -->
+  <script src="../assets/js/app.js"></script>
+
+  <!-- Calculator Logic Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('solarForm');
+      const resetBtn = document.getElementById('resetBtn');
+
+      function calculateSolar() {
+        const energy = parseFloat(document.getElementById('dailyEnergy').value) || 0;
+        const sunHours = parseFloat(document.getElementById('sunHours').value) || 0;
+        const efficiency = (parseFloat(document.getElementById('systemEfficiency').value) || 75) / 100;
+        const days = parseFloat(document.getElementById('autonomyDays').value) || 1;
+
+        if (sunHours <= 0 || efficiency <= 0) return;
+
+        // PV Array size calculation (Daily energy / (Sun Hours * Efficiency))
+        const pvSizeKw = energy / (sunHours * efficiency);
+        const dailyGen = pvSizeKw * sunHours * efficiency;
+        const batteryCapacity = energy * days;
+
+        document.getElementById('resPvSize').textContent = pvSizeKw.toFixed(2) + ' kW';
+        document.getElementById('resDailyGen').textContent = dailyGen.toFixed(2) + ' kWh/day';
+        document.getElementById('resBattery').textContent = batteryCapacity.toFixed(2) + ' kWh';
+      }
+
+      form.addEventListener('input', calculateSolar);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        calculateSolar();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        document.getElementById('resPvSize').textContent = '-- kW';
+        document.getElementById('resDailyGen').textContent = '-- kWh';
+        document.getElementById('resBattery').textContent = '-- kWh';
+      });
+
+      // Run initial calculation on load
+      calculateSolar();
+    });
+  </script>
+</body>
+
+</html>
