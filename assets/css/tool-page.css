@@ -1,0 +1,255 @@
+/* ==================================================
+   Tools.PrasunBarua.com - Tool Page Layout Styles
+================================================== */
+
+.tool-page-main {
+  padding: 40px 0 80px;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.breadcrumbs a {
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+  color: var(--primary);
+}
+
+.breadcrumbs span.separator {
+  opacity: 0.5;
+}
+
+/* Tool Hero Header */
+.tool-header-block {
+  margin-bottom: 32px;
+}
+
+.tool-header-block h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tool-header-block p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 750px;
+}
+
+/* Tool Workspace Grid */
+.tool-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 868px) {
+  .tool-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tool-card-box {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tool-card-box h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.input-with-unit {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-unit input {
+  width: 100%;
+  height: 48px;
+  padding: 0 50px 0 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.input-with-unit input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-ring);
+}
+
+.input-with-unit input.calculated-field {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+.unit-tag {
+  position: absolute;
+  right: 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  transition: var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  transition: var(--transition-fast);
+}
+
+.btn-outline:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Results Card */
+.results-card {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.result-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.result-value.highlight {
+  color: var(--primary);
+}
+
+/* Formula Helper Box */
+.formula-box {
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-ring);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-size: 0.875rem;
+  color: var(--text);
+  margin-top: 20px;
+}
+
+.formula-box h4 {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--primary);
+}
+
+/* Educational SEO Content Block */
+.tool-guide-content {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  line-height: 1.7;
+}
+
+.tool-guide-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  margin-top: 28px;
+}
+
+.tool-guide-content h2:first-child {
+  margin-top: 0;
+}
+
+.tool-guide-content p {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.tool-guide-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  color: var(--text-muted);
+}
+
+.tool-guide-content li {
+  margin-bottom: 8px;
+}
