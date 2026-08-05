@@ -1,10 +1,13 @@
 /* ==================================================
-   Tools.PrasunBarua.com
-   Modern Stylesheet with Light & Dark Theme System
+   Tools.PrasunBarua.com - Main Stylesheet
+   Design System, Components & Dark Theme Support
 ================================================== */
 
+/* ==========================================
+   1. DESIGN SYSTEM & ROOT VARIABLES
+========================================== */
 :root {
-  /* Color Palette - Light Theme */
+  /* Color System - Light Theme (Default) */
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
   --primary-light: #eff6ff;
@@ -18,26 +21,27 @@
   --text: #0f172a;
   --text-muted: #64748b;
   --border: #e2e8f0;
-  --border-focus: #93c5fd;
+  --border-hover: #cbd5e1;
 
-  /* Elevation Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  --shadow-dropdown: 0 20px 30px -10px rgba(15, 23, 42, 0.18);
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.07);
+  --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12);
+  --shadow-dropdown: 0 20px 35px rgba(15, 23, 42, 0.18);
 
-  /* Geometry & Metrics */
+  /* Geometry & Radii */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-full: 9999px;
   --container-max: 1200px;
   
+  /* Transitions */
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s ease;
 }
 
-/* Dark Theme Overrides */
+/* Color System - Dark Theme */
 [data-theme="dark"] {
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
@@ -52,15 +56,17 @@
   --text: #f3f4f6;
   --text-muted: #9ca3af;
   --border: #1f2937;
-  --border-focus: #3b82f6;
+  --border-hover: #374151;
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-  --shadow-dropdown: 0 20px 30px -10px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.45);
+  --shadow-dropdown: 0 20px 35px rgba(0, 0, 0, 0.65);
 }
 
-/* RESET & BASE STYLES */
+/* ==========================================
+   2. CSS RESET & GLOBAL BASE
+========================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -91,9 +97,14 @@ button {
   border: none;
   background: none;
   font-family: inherit;
+  color: inherit;
 }
 
-/* CONTAINER */
+input {
+  font-family: inherit;
+}
+
+/* Layout Container */
 .container {
   width: 100%;
   max-width: var(--container-max);
@@ -101,7 +112,9 @@ button {
   padding: 0 24px;
 }
 
-/* HEADER & NAVBAR */
+/* ==========================================
+   3. HEADER & NAVIGATION
+========================================== */
 .header {
   position: sticky;
   top: 0;
@@ -189,6 +202,7 @@ button {
   flex-direction: column;
   gap: 5px;
   padding: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .mobile-menu-btn span {
@@ -198,7 +212,9 @@ button {
   transition: var(--transition-fast);
 }
 
-/* HERO SECTION & GOOGLE SEARCH */
+/* ==========================================
+   4. HERO SECTION & GOOGLE-STYLE SEARCH
+========================================== */
 .hero {
   padding: 70px 0 50px;
   text-align: center;
@@ -232,7 +248,7 @@ button {
   margin: 0 auto 36px;
 }
 
-/* Google-like Search Bar */
+/* Search Bar Wrapper */
 .google-search {
   position: relative;
   max-width: 650px;
@@ -290,7 +306,7 @@ button {
   color: var(--text);
 }
 
-/* Dropdown Search Results */
+/* Search Dropdown Results */
 .search-results-dropdown {
   position: absolute;
   top: 64px;
@@ -373,7 +389,13 @@ button {
   font-size: 0.95rem;
 }
 
-/* SECTION HEADERS */
+/* ==========================================
+   5. CATEGORIES SECTION
+========================================== */
+.categories {
+  padding: 60px 0;
+}
+
 .section-header {
   text-align: center;
   max-width: 600px;
@@ -390,35 +412,6 @@ button {
 .section-header p {
   color: var(--text-muted);
   font-size: 1rem;
-}
-
-.section-header-inline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.section-header-inline h2 {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
-
-.filter-badge {
-  font-size: 0.85rem;
-  font-weight: 600;
-  background-color: var(--primary-light);
-  color: var(--primary);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-}
-
-/* CATEGORIES SECTION */
-.categories {
-  padding: 60px 0;
 }
 
 .category-grid {
@@ -438,6 +431,7 @@ button {
   padding: 24px;
   box-shadow: var(--shadow-sm);
   transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
 }
 
 .category-card:hover,
@@ -470,39 +464,45 @@ button {
 }
 
 .category-link-hint {
-  font-size: 0.8rem;
+  font-size: 0.825rem;
   font-weight: 600;
   color: var(--primary);
-  margin-top: 14px;
+  margin-top: 16px;
+  display: inline-block;
 }
 
-.category-seo-link {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 0.725rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  background-color: var(--surface-hover);
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  opacity: 0.8;
-  transition: opacity var(--transition-fast);
-}
-
-.category-seo-link:hover {
-  opacity: 1;
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
-/* TOOLS SECTION */
+/* ==========================================
+   6. TOOLS GRID SECTION
+========================================== */
 .tools-section {
   padding: 60px 0;
   background-color: var(--surface);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+}
+
+.section-header-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.section-header-inline h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.filter-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
 }
 
 .tool-grid {
@@ -577,12 +577,14 @@ button {
   display: flex;
   align-items: center;
   gap: 4px;
+  transition: transform var(--transition-fast);
 }
 
 .tool-card:hover .tool-card-action {
   transform: translateX(3px);
 }
 
+/* Empty Results State */
 .no-results {
   text-align: center;
   padding: 60px 20px;
@@ -609,9 +611,16 @@ button {
   color: #ffffff;
   font-weight: 600;
   border-radius: var(--radius-full);
+  transition: background-color var(--transition-fast);
 }
 
-/* ABOUT SECTION */
+.btn-secondary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ==========================================
+   7. ABOUT SECTION
+========================================== */
 .about {
   padding: 70px 0;
 }
@@ -638,7 +647,9 @@ button {
   line-height: 1.7;
 }
 
-/* FOOTER */
+/* ==========================================
+   8. FOOTER
+========================================== */
 .footer {
   background-color: var(--secondary);
   color: #94a3b8;
@@ -691,44 +702,4 @@ button {
   padding: 20px 0;
   text-align: center;
   font-size: 0.85rem;
-}
-
-/* RESPONSIVE MEDIA QUERIES */
-@media (max-width: 900px) {
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .navigation {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    right: 0;
-    background-color: var(--surface);
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    padding: 20px;
-    gap: 16px;
-    transform: translateY(-150%);
-    transition: transform var(--transition-normal);
-  }
-
-  .navigation.open {
-    transform: translateY(0);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .mobile-menu-btn {
-    display: flex;
-  }
-
-  .footer-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .category-grid {
-    grid-template-columns: 1fr;
-  }
 }
