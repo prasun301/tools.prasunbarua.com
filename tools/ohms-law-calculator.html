@@ -1,25 +1,73 @@
-<div class="ohms-calc-container">
+<div class="ohms-calc-container" id="ohmsCalculatorApp">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 .ohms-calc-container {
-  --ohms-card: var(--surface, #ffffff);
-  --ohms-text: var(--text, #0f172a);
-  --ohms-muted: var(--text-muted, #64748b);
-  --ohms-primary: var(--primary, #2563eb);
-  --ohms-border: var(--border, #e2e8f0);
-  --ohms-result: var(--primary-light, #eff6ff);
+  --ohms-card: #ffffff;
+  --ohms-text: #0f172a;
+  --ohms-muted: #64748b;
+  --ohms-primary: #2563eb;
+  --ohms-primary-hover: #1d4ed8;
+  --ohms-border: #e2e8f0;
+  --ohms-result: #eff6ff;
+  --ohms-input-bg: #f8fafc;
   --ohms-error-bg: #fef2f2;
   --ohms-error-border: #fecaca;
   --ohms-error-text: #dc2626;
-  
+
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   padding: 15px 0;
   max-width: 720px;
   margin: auto;
+  box-sizing: border-box;
 }
 
-.ohms-calc-container * {
+/* Dark mode auto-detection and attribute support */
+@media (prefers-color-scheme: dark) {
+  .ohms-calc-container:not([data-theme="light"]) {
+    --ohms-card: #1e293b;
+    --ohms-text: #f8fafc;
+    --ohms-muted: #94a3b8;
+    --ohms-primary: #3b82f6;
+    --ohms-primary-hover: #60a5fa;
+    --ohms-border: #334155;
+    --ohms-result: #172554;
+    --ohms-input-bg: #0f172a;
+    --ohms-error-bg: #450a0a;
+    --ohms-error-border: #7f1d1d;
+    --ohms-error-text: #f87171;
+  }
+}
+
+.ohms-calc-container[data-theme="dark"] {
+  --ohms-card: #1e293b;
+  --ohms-text: #f8fafc;
+  --ohms-muted: #94a3b8;
+  --ohms-primary: #3b82f6;
+  --ohms-primary-hover: #60a5fa;
+  --ohms-border: #334155;
+  --ohms-result: #172554;
+  --ohms-input-bg: #0f172a;
+  --ohms-error-bg: #450a0a;
+  --ohms-error-border: #7f1d1d;
+  --ohms-error-text: #f87171;
+}
+
+.ohms-calc-container[data-theme="light"] {
+  --ohms-card: #ffffff;
+  --ohms-text: #0f172a;
+  --ohms-muted: #64748b;
+  --ohms-primary: #2563eb;
+  --ohms-primary-hover: #1d4ed8;
+  --ohms-border: #e2e8f0;
+  --ohms-result: #eff6ff;
+  --ohms-input-bg: #f8fafc;
+  --ohms-error-bg: #fef2f2;
+  --ohms-error-border: #fecaca;
+  --ohms-error-text: #dc2626;
+}
+
+.ohms-calc-container *, .ohms-calc-container *::before, .ohms-calc-container *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -31,14 +79,42 @@
   border-radius: 16px;
   padding: 24px;
   color: var(--ohms-text);
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(15, 23, 42, 0.05));
-  transition: background 0.3s ease, color 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.ohms-calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .ohms-calc-container p {
   color: var(--ohms-muted);
-  margin-bottom: 18px;
-  font-size: 15px;
+  font-size: 14px;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--ohms-border);
+  color: var(--ohms-text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.2s;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--ohms-border);
+}
+
+.form-group-wrapper {
+  margin-bottom: 16px;
 }
 
 .ohms-calc-container label {
@@ -55,16 +131,17 @@
   padding: 12px;
   border-radius: 10px;
   border: 1px solid var(--ohms-border);
-  background-color: var(--ohms-card);
+  background-color: var(--ohms-input-bg);
   color: var(--ohms-text);
   outline: none;
   font-size: 15px;
-  transition: border-color 0.2s, background 0.3s, color 0.3s;
+  transition: border-color 0.2s, background-color 0.3s, color 0.3s;
 }
 
 .ohms-calc-container select:focus, 
 .ohms-calc-container input:focus {
   border-color: var(--ohms-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .ohms-calc-container select option {
@@ -76,41 +153,28 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
-  margin-top: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.form-group {
-  margin-bottom: 12px;
+.btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
 }
 
-.input-with-unit {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.unit-tag {
-  position: absolute;
-  right: 12px;
-  color: var(--ohms-muted);
-  font-size: 14px;
-  pointer-events: none;
-}
-
-.ohms-calc-container button {
+.ohms-calc-container button.action-btn {
   width: 100%;
   padding: 12px;
-  margin-top: 8px;
   border: none;
   border-radius: 10px;
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
-.ohms-calc-container button:hover {
+.ohms-calc-container button.action-btn:hover {
   opacity: 0.9;
 }
 
@@ -119,10 +183,13 @@
   color: #ffffff;
 }
 
+.ohms-calc-container .calc-btn:hover {
+  background: var(--ohms-primary-hover);
+}
+
 .ohms-calc-container .reset-btn {
   background: var(--ohms-muted);
   color: #ffffff;
-  margin-top: 8px;
 }
 
 .result-box {
@@ -133,6 +200,7 @@
   border: 1px solid var(--ohms-border);
   font-size: 14px;
   color: var(--ohms-text);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .result-card-inner {
@@ -153,11 +221,6 @@
   border-bottom: none;
 }
 
-.primary-result {
-  font-weight: 700;
-  font-size: 16px;
-}
-
 .result-label {
   color: var(--ohms-muted);
 }
@@ -170,6 +233,7 @@
 .result-placeholder {
   text-align: center;
   color: var(--ohms-muted);
+  padding: 10px 0;
 }
 
 .result-error-box {
@@ -180,13 +244,14 @@
   border-radius: 10px;
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .formula-box {
   margin-top: 12px;
   padding: 12px;
   border-radius: 10px;
-  background: var(--ohms-card);
+  background: var(--ohms-input-bg);
   border: 1px solid var(--ohms-border);
   font-size: 13px;
   color: var(--ohms-muted);
@@ -195,25 +260,33 @@
 </style>
 
 <div class="ohms-calc-card">
-  <p>Select what you want to calculate using Ohm's Law and Power formulas</p>
+  <div class="ohms-calc-header">
+    <p>Ohm's Law & Power Calculator</p>
+    <button type="button" class="theme-toggle-btn" id="ohmsThemeToggle">
+      <span id="themeIcon">🌓</span> <span id="themeText">Theme</span>
+    </button>
+  </div>
 
-  <label for="calcMode">Mode</label>
-  <select id="calcMode">
-    <option value="V">Voltage (V)</option>
-    <option value="I">Current (I)</option>
-    <option value="R">Resistance (R)</option>
-    <option value="P">Power (P)</option>
-  </select>
+  <div class="form-group-wrapper">
+    <label for="calcMode">Calculate Mode</label>
+    <select id="calcMode">
+      <option value="V">Voltage (V)</option>
+      <option value="I">Current (I)</option>
+      <option value="R">Resistance (R)</option>
+      <option value="P">Power (P)</option>
+    </select>
+  </div>
 
   <div class="ohms-calc-grid" id="dynamicInputs"></div>
 
-  <button type="button" class="calc-btn" id="calcBtn">Calculate</button>
-  <button type="button" class="reset-btn" id="resetBtn">Reset</button>
+  <div class="btn-group">
+    <button type="button" class="action-btn calc-btn" id="calcBtn">Calculate</button>
+    <button type="button" class="action-btn reset-btn" id="resetBtn">Reset</button>
+  </div>
 
   <div class="result-box" id="resultBox">
     <div class="result-placeholder">
-      <span class="result-icon">⚡</span>
-      <p>Select a mode, fill in the values, and click <strong>Calculate</strong>.</p>
+      <span>⚡ Select a mode and enter values above.</span>
     </div>
   </div>
 
@@ -221,4 +294,211 @@
     Formula breakdown will appear here after calculation.
   </div>
 </div>
+
+<script>
+(function() {
+  const rootElement = document.getElementById('ohmsCalculatorApp');
+  const calcMode = rootElement.querySelector('#calcMode');
+  const dynamicInputs = rootElement.querySelector('#dynamicInputs');
+  const calcBtn = rootElement.querySelector('#calcBtn');
+  const resetBtn = rootElement.querySelector('#resetBtn');
+  const resultBox = rootElement.querySelector('#resultBox');
+  const formulaApplied = rootElement.querySelector('#formulaApplied');
+  const themeToggle = rootElement.querySelector('#ohmsThemeToggle');
+  const themeIcon = rootElement.querySelector('#themeIcon');
+
+  if (!calcMode || !dynamicInputs) return;
+
+  // Local Theme Persistence
+  const savedTheme = localStorage.getItem('ohms_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  rootElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon(savedTheme);
+
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = rootElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    rootElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('ohms_theme', newTheme);
+    updateThemeIcon(newTheme);
+  });
+
+  function updateThemeIcon(theme) {
+    if (themeIcon) {
+      themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+  }
+
+  let inputState = { V: '', I: '', R: '' };
+
+  updateInputsUI();
+
+  calcMode.addEventListener('change', updateInputsUI);
+  calcBtn.addEventListener('click', performCalculation);
+  resetBtn.addEventListener('click', resetCalculator);
+
+  function saveInputState() {
+    const v = rootElement.querySelector('#inputV');
+    const i = rootElement.querySelector('#inputI');
+    const r = rootElement.querySelector('#inputR');
+    if (v) inputState.V = v.value;
+    if (i) inputState.I = i.value;
+    if (r) inputState.R = r.value;
+  }
+
+  function updateInputsUI() {
+    saveInputState();
+    const mode = calcMode.value;
+    dynamicInputs.innerHTML = '';
+    resetResultsDisplay();
+
+    const templates = {
+      V: `
+        <div>
+          <label for="inputI">Current (I)</label>
+          <input type="number" id="inputI" step="any" placeholder="e.g. 2" value="${inputState.I}">
+        </div>
+        <div>
+          <label for="inputR">Resistance (R)</label>
+          <input type="number" id="inputR" step="any" placeholder="e.g. 6" value="${inputState.R}">
+        </div>
+      `,
+      I: `
+        <div>
+          <label for="inputV">Voltage (V)</label>
+          <input type="number" id="inputV" step="any" placeholder="e.g. 12" value="${inputState.V}">
+        </div>
+        <div>
+          <label for="inputR">Resistance (R)</label>
+          <input type="number" id="inputR" step="any" placeholder="e.g. 6" value="${inputState.R}">
+        </div>
+      `,
+      R: `
+        <div>
+          <label for="inputV">Voltage (V)</label>
+          <input type="number" id="inputV" step="any" placeholder="e.g. 12" value="${inputState.V}">
+        </div>
+        <div>
+          <label for="inputI">Current (I)</label>
+          <input type="number" id="inputI" step="any" placeholder="e.g. 2" value="${inputState.I}">
+        </div>
+      `,
+      P: `
+        <div>
+          <label for="inputV">Voltage (V)</label>
+          <input type="number" id="inputV" step="any" placeholder="e.g. 12" value="${inputState.V}">
+        </div>
+        <div>
+          <label for="inputI">Current (I)</label>
+          <input type="number" id="inputI" step="any" placeholder="e.g. 2" value="${inputState.I}">
+        </div>
+      `
+    };
+
+    dynamicInputs.innerHTML = templates[mode] || '';
+
+    dynamicInputs.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          performCalculation();
+        }
+      });
+    });
+  }
+
+  function performCalculation() {
+    const mode = calcMode.value;
+    const vVal = parseFloat(rootElement.querySelector('#inputV')?.value);
+    const iVal = parseFloat(rootElement.querySelector('#inputI')?.value);
+    const rVal = parseFloat(rootElement.querySelector('#inputR')?.value);
+
+    if (mode === 'V') {
+      if (isNaN(iVal) || isNaN(rVal)) return showError('Please enter valid numeric values for Current and Resistance.');
+      const vRes = iVal * rVal;
+      const pRes = vRes * iVal;
+      renderSuccess([
+        { label: 'Voltage (V)', value: `${formatNum(vRes)} V`, main: true },
+        { label: 'Power (P)', value: `${formatNum(pRes)} W`, main: false }
+      ]);
+      formulaApplied.innerHTML = `<strong>V = I × R</strong><br>V = ${iVal} A × ${rVal} Ω = <strong>${formatNum(vRes)} V</strong><br>P = V × I = ${formatNum(vRes)} V × ${iVal} A = <strong>${formatNum(pRes)} W</strong>`;
+    } 
+    else if (mode === 'I') {
+      if (isNaN(vVal) || isNaN(rVal)) return showError('Please enter valid numeric values for Voltage and Resistance.');
+      if (rVal === 0) return showError('Resistance cannot be zero.');
+      const iRes = vVal / rVal;
+      const pRes = vVal * iRes;
+      renderSuccess([
+        { label: 'Current (I)', value: `${formatNum(iRes)} A`, main: true },
+        { label: 'Power (P)', value: `${formatNum(pRes)} W`, main: false }
+      ]);
+      formulaApplied.innerHTML = `<strong>I = V / R</strong><br>I = ${vVal} V / ${rVal} Ω = <strong>${formatNum(iRes)} A</strong><br>P = V × I = ${vVal} V × ${formatNum(iRes)} A = <strong>${formatNum(pRes)} W</strong>`;
+    } 
+    else if (mode === 'R') {
+      if (isNaN(vVal) || isNaN(iVal)) return showError('Please enter valid numeric values for Voltage and Current.');
+      if (iVal === 0) return showError('Current cannot be zero.');
+      const rRes = vVal / iVal;
+      const pRes = vVal * iVal;
+      renderSuccess([
+        { label: 'Resistance (R)', value: `${formatNum(rRes)} Ω`, main: true },
+        { label: 'Power (P)', value: `${formatNum(pRes)} W`, main: false }
+      ]);
+      formulaApplied.innerHTML = `<strong>R = V / I</strong><br>R = ${vVal} V / ${iVal} A = <strong>${formatNum(rRes)} Ω</strong><br>P = V × I = ${vVal} V × ${iVal} A = <strong>${formatNum(pRes)} W</strong>`;
+    } 
+    else if (mode === 'P') {
+      if (isNaN(vVal) || isNaN(iVal)) return showError('Please enter valid numeric values for Voltage and Current.');
+      const pRes = vVal * iVal;
+      const rRes = iVal !== 0 ? vVal / iVal : Infinity;
+      renderSuccess([
+        { label: 'Power (P)', value: `${formatNum(pRes)} W`, main: true },
+        { label: 'Resistance (R)', value: `${iVal === 0 ? 'Infinity' : formatNum(rRes)} Ω`, main: false }
+      ]);
+      formulaApplied.innerHTML = `<strong>P = V × I</strong><br>P = ${vVal} V × ${iVal} A = <strong>${formatNum(pRes)} W</strong><br>R = V / I = ${vVal} V / ${iVal} A = <strong>${iVal === 0 ? '∞' : formatNum(rRes)} Ω</strong>`;
+    }
+  }
+
+  function renderSuccess(items) {
+    let html = `<div class="result-card-inner">`;
+    items.forEach(item => {
+      html += `
+        <div class="result-row" style="${item.main ? 'font-weight:700; font-size:16px;' : ''}">
+          <span class="result-label">${item.label}</span>
+          <span class="result-val">${item.value}</span>
+        </div>
+      `;
+    });
+    html += `</div>`;
+    resultBox.innerHTML = html;
+  }
+
+  function showError(msg) {
+    resultBox.innerHTML = `
+      <div class="result-error-box">
+        <span>⚠️</span>
+        <span>${msg}</span>
+      </div>
+    `;
+    formulaApplied.textContent = 'Calculation failed due to invalid inputs.';
+  }
+
+  function resetResultsDisplay() {
+    resultBox.innerHTML = `
+      <div class="result-placeholder">
+        <span>⚡ Select a mode and enter values above.</span>
+      </div>
+    `;
+    formulaApplied.textContent = 'Formula breakdown will appear here after calculation.';
+  }
+
+  function resetCalculator() {
+    inputState = { V: '', I: '', R: '' };
+    dynamicInputs.querySelectorAll('input').forEach(i => i.value = '');
+    resetResultsDisplay();
+  }
+
+  function formatNum(num) {
+    if (!isFinite(num)) return num.toString();
+    return parseFloat(num.toFixed(4)).toString();
+  }
+})();
+</script>
 </div>
