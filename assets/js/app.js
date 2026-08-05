@@ -144,7 +144,7 @@ function renderTools(toolsList) {
   const noResults = document.getElementById('noResultsState');
 
   if (!grid) {
-    console.error("Missing <div id='toolsGrid'></div> in your HTML.");
+    // Gracefully exit if the tool grid isn't present on the current page (e.g. subpage)
     return;
   }
 
