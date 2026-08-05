@@ -8,7 +8,7 @@
   <title>Ohm's Law Calculator - Calculate Voltage, Current, Resistance & Power</title>
 
   <meta name="description"
-    content="Free online Ohm's Law Calculator. Instantly calculate Voltage (V), Current (I), Resistance (R), and Power (P) by entering any two known values.">
+    content="Free online Ohm's Law Calculator. Instantly calculate Voltage (V), Current (I), Resistance (R), and Power (P) with step-by-step formula breakdowns.">
   <meta name="keywords"
     content="ohms law calculator, voltage calculator, current calculator, resistance calculator, power calculator, electrical engineering tool">
   <meta name="author" content="Prasun Barua">
@@ -55,7 +55,7 @@
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="separator">/</span>
-        <a href="/categories/electrical-tools.html">Electrical Tools</a>
+        <a href="/#tools">Electrical Tools</a>
         <span class="separator">/</span>
         <span class="current">Ohm's Law Calculator</span>
       </nav>
@@ -63,7 +63,7 @@
       <!-- TOOL HEADER -->
       <div class="tool-header-block">
         <h1>⚡ Ohm's Law Calculator</h1>
-        <p>Enter any <strong>two known values</strong> to automatically compute the remaining variables for Voltage, Current, Resistance, and Power.</p>
+        <p>Select what parameter you want to calculate, enter the known values, and click <strong>Calculate</strong> for instant results and formula breakdowns.</p>
       </div>
 
       <!-- WORKSPACE / CALCULATOR -->
@@ -71,75 +71,47 @@
         
         <!-- INPUTS PANEL -->
         <div class="tool-card-box">
-          <h2>Input Known Values</h2>
+          <h2>Calculator Controls</h2>
 
           <form id="ohmsForm" onsubmit="return false;">
             
             <div class="form-group">
-              <label for="voltage">Voltage (V) <span>Volts</span></label>
-              <div class="input-with-unit">
-                <input type="number" id="voltage" step="any" placeholder="e.g. 12" />
-                <span class="unit-tag">V</span>
-              </div>
+              <label for="calcMode">What do you want to calculate?</label>
+              <select id="calcMode" class="form-select">
+                <option value="V">Voltage (V) — Volts</option>
+                <option value="I">Current (I) — Amperes</option>
+                <option value="R">Resistance (R) — Ohms</option>
+                <option value="P">Power (P) — Watts</option>
+              </select>
             </div>
 
-            <div class="form-group">
-              <label for="current">Current (I) <span>Amperes</span></label>
-              <div class="input-with-unit">
-                <input type="number" id="current" step="any" placeholder="e.g. 2" />
-                <span class="unit-tag">A</span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="resistance">Resistance (R) <span>Ohms</span></label>
-              <div class="input-with-unit">
-                <input type="number" id="resistance" step="any" placeholder="e.g. 6" />
-                <span class="unit-tag">Ω</span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="power">Power (P) <span>Watts</span></label>
-              <div class="input-with-unit">
-                <input type="number" id="power" step="any" placeholder="e.g. 24" />
-                <span class="unit-tag">W</span>
-              </div>
+            <!-- Dynamic Inputs Container -->
+            <div id="dynamicInputs" class="dynamic-inputs-grid">
+              <!-- Inputs generated via JavaScript -->
             </div>
 
             <div class="form-actions">
-              <button type="button" id="resetBtn" class="btn-outline">Reset Form</button>
+              <button type="button" id="calcBtn" class="btn-primary">Calculate</button>
+              <button type="button" id="resetBtn" class="btn-outline">Reset</button>
             </div>
 
           </form>
         </div>
 
-        <!-- RESULTS & FORMULAS PANEL -->
+        <!-- RESULTS PANEL -->
         <div class="tool-card-box">
-          <h2>Calculation Breakdown</h2>
+          <h2>Calculation Result</h2>
 
-          <div class="results-card">
-            <div class="result-item">
-              <span class="result-label">Voltage (V)</span>
-              <span id="resVoltage" class="result-value">-- V</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Current (I)</span>
-              <span id="resCurrent" class="result-value">-- A</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Resistance (R)</span>
-              <span id="resResistance" class="result-value">-- Ω</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Power (P)</span>
-              <span id="resPower" class="result-value highlight">-- W</span>
+          <div class="result-display-box" id="resultBox">
+            <div class="result-placeholder">
+              <span class="result-icon">⚡</span>
+              <p>Select a mode, fill in the values, and click <strong>Calculate</strong>.</p>
             </div>
           </div>
 
           <div class="formula-box">
-            <h4>Active Formula Applied</h4>
-            <p id="formulaApplied">Fill in any two fields above to see the calculation steps.</p>
+            <h4>Formula Applied</h4>
+            <p id="formulaApplied">Formula breakdown will appear here after calculation.</p>
           </div>
 
         </div>
@@ -150,23 +122,72 @@
       <article class="tool-guide-content">
         <h2>What is Ohm's Law?</h2>
         <p>
-          Ohm's Law is one of the most fundamental principles in electrical engineering. Formulated by German physicist Georg Ohm, it defines the mathematical relationship between <strong>Voltage (V)</strong>, <strong>Current (I)</strong>, and <strong>Resistance (R)</strong> in an electrical circuit:
+          Ohm's Law is one of the most fundamental principles in electrical engineering and circuit design. Formulated by German physicist Georg Simon Ohm in 1827, it describes the mathematical relationship between <strong>Voltage (V)</strong>, <strong>Current (I)</strong>, and <strong>Resistance (R)</strong> in an electrical circuit.
         </p>
         
-        <ul>
-          <li><strong>Voltage ($V$):</strong> The electrical potential difference, measured in Volts ($V$).</li>
-          <li><strong>Current ($I$):</strong> The flow of electric charge, measured in Amperes ($A$).</li>
-          <li><strong>Resistance ($R$):</strong> The opposition to current flow, measured in Ohms ($\Omega$).</li>
-          <li><strong>Power ($P$):</strong> The rate of electrical energy consumption, measured in Watts ($W$).</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Voltage (V)</h3>
+            <p>The electrical potential difference between two points, measured in <strong>Volts (V)</strong>.</p>
+          </div>
+          <div class="info-card">
+            <h3>Current (I)</h3>
+            <p>The rate of flow of electric charge through a conductor, measured in <strong>Amperes (A)</strong>.</p>
+          </div>
+          <div class="info-card">
+            <h3>Resistance (R)</h3>
+            <p>The measure of opposition to the flow of electric current, measured in <strong>Ohms (&Omega;)</strong>.</p>
+          </div>
+          <div class="info-card">
+            <h3>Power (P)</h3>
+            <p>The rate at which electrical energy is transferred or consumed, measured in <strong>Watts (W)</strong>.</p>
+          </div>
+        </div>
 
-        <h2>Ohm's Law Formulas</h2>
-        <p>Depending on which values are known, you can use the following equations:</p>
+        <h2>Ohm's Law Formula Summary</h2>
+        <p>You can express Ohm's Law using the following standard equations depending on your target parameter:</p>
+
+        <div class="formula-table-wrapper">
+          <table class="formula-table">
+            <thead>
+              <tr>
+                <th>Target Parameter</th>
+                <th>Primary Formula</th>
+                <th>Alternative Formula (with Power)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Voltage (V)</strong></td>
+                <td><code>V = I &times; R</code></td>
+                <td><code>V = P / I</code> or <code>V = &radic;(P &times; R)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Current (I)</strong></td>
+                <td><code>I = V / R</code></td>
+                <td><code>I = P / V</code> or <code>I = &radic;(P / R)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Resistance (R)</strong></td>
+                <td><code>R = V / I</code></td>
+                <td><code>R = V<sup>2</sup> / P</code> or <code>R = P / I<sup>2</sup></code></td>
+              </tr>
+              <tr>
+                <td><strong>Power (P)</strong></td>
+                <td><code>P = V &times; I</code></td>
+                <td><code>P = I<sup>2</sup> &times; R</code> or <code>P = V<sup>2</sup> / R</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Practical Example</h2>
+        <p>
+          Suppose you have a <strong>12V DC power supply</strong> connected to a heating element with a resistance of <strong>6 &Omega;</strong>:
+        </p>
         <ul>
-          <li><strong>Voltage:</strong> $V = I \times R$ or $V = \frac{P}{I}$</li>
-          <li><strong>Current:</strong> $I = \frac{V}{R}$ or $I = \sqrt{\frac{P}{R}}$</li>
-          <li><strong>Resistance:</strong> $R = \frac{V}{I}$ or $R = \frac{V^2}{P}$</li>
-          <li><strong>Power:</strong> $P = V \times I$ or $P = I^2 \times R$</li>
+          <li><strong>Current Calculation:</strong> <code>I = V / R = 12V / 6&Omega; = 2 Amperes</code></li>
+          <li><strong>Power Consumption:</strong> <code>P = V &times; I = 12V &times; 2A = 24 Watts</code></li>
         </ul>
       </article>
 
@@ -176,7 +197,7 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-bottom">
-      <p>© 2026 Tools.PrasunBarua. All rights reserved.</p>
+      <p>&copy; 2026 Tools.PrasunBarua. All rights reserved.</p>
     </div>
   </footer>
 
