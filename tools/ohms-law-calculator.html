@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ohm's Law Calculator - Calculate Voltage, Current, Resistance & Power</title>
+
+  <meta name="description"
+    content="Free online Ohm's Law Calculator. Instantly calculate Voltage (V), Current (I), Resistance (R), and Power (P) by entering any two known values.">
+  <meta name="keywords"
+    content="ohms law calculator, voltage calculator, current calculator, resistance calculator, power calculator, electrical engineering tool">
+  <meta name="author" content="Prasun Barua">
+
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <link rel="stylesheet" href="../assets/css/tool-page.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <a href="/">Tools<span>.PrasunBarua</span></a>
+      </div>
+      <nav class="navigation" id="navMenu">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/#tools" class="nav-link">Tools</a>
+        <a href="/#categories" class="nav-link">Categories</a>
+      </nav>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="tool-page-main">
+    <div class="container">
+
+      <!-- BREADCRUMBS -->
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="separator">/</span>
+        <a href="/categories/electrical-tools.html">Electrical Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Ohm's Law Calculator</span>
+      </nav>
+
+      <!-- TOOL HEADER -->
+      <div class="tool-header-block">
+        <h1>⚡ Ohm's Law Calculator</h1>
+        <p>Enter any <strong>two known values</strong> to automatically compute the remaining variables for Voltage, Current, Resistance, and Power.</p>
+      </div>
+
+      <!-- WORKSPACE / CALCULATOR -->
+      <div class="tool-workspace">
+        
+        <!-- INPUTS PANEL -->
+        <div class="tool-card-box">
+          <h2>Input Known Values</h2>
+
+          <form id="ohmsForm" onsubmit="return false;">
+            
+            <div class="form-group">
+              <label for="voltage">Voltage (V) <span>Volts</span></label>
+              <div class="input-with-unit">
+                <input type="number" id="voltage" step="any" placeholder="e.g. 12" />
+                <span class="unit-tag">V</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="current">Current (I) <span>Amperes</span></label>
+              <div class="input-with-unit">
+                <input type="number" id="current" step="any" placeholder="e.g. 2" />
+                <span class="unit-tag">A</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="resistance">Resistance (R) <span>Ohms</span></label>
+              <div class="input-with-unit">
+                <input type="number" id="resistance" step="any" placeholder="e.g. 6" />
+                <span class="unit-tag">Ω</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="power">Power (P) <span>Watts</span></label>
+              <div class="input-with-unit">
+                <input type="number" id="power" step="any" placeholder="e.g. 24" />
+                <span class="unit-tag">W</span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="resetBtn" class="btn-outline">Reset Form</button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- RESULTS & FORMULAS PANEL -->
+        <div class="tool-card-box">
+          <h2>Calculation Breakdown</h2>
+
+          <div class="results-card">
+            <div class="result-item">
+              <span class="result-label">Voltage (V)</span>
+              <span id="resVoltage" class="result-value">-- V</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Current (I)</span>
+              <span id="resCurrent" class="result-value">-- A</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Resistance (R)</span>
+              <span id="resResistance" class="result-value">-- Ω</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Power (P)</span>
+              <span id="resPower" class="result-value highlight">-- W</span>
+            </div>
+          </div>
+
+          <div class="formula-box">
+            <h4>Active Formula Applied</h4>
+            <p id="formulaApplied">Fill in any two fields above to see the calculation steps.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO / EDUCATIONAL CONTENT -->
+      <article class="tool-guide-content">
+        <h2>What is Ohm's Law?</h2>
+        <p>
+          Ohm's Law is one of the most fundamental principles in electrical engineering. Formulated by German physicist Georg Ohm, it defines the mathematical relationship between <strong>Voltage (V)</strong>, <strong>Current (I)</strong>, and <strong>Resistance (R)</strong> in an electrical circuit:
+        </p>
+        
+        <ul>
+          <li><strong>Voltage ($V$):</strong> The electrical potential difference, measured in Volts ($V$).</li>
+          <li><strong>Current ($I$):</strong> The flow of electric charge, measured in Amperes ($A$).</li>
+          <li><strong>Resistance ($R$):</strong> The opposition to current flow, measured in Ohms ($\Omega$).</li>
+          <li><strong>Power ($P$):</strong> The rate of electrical energy consumption, measured in Watts ($W$).</li>
+        </ul>
+
+        <h2>Ohm's Law Formulas</h2>
+        <p>Depending on which values are known, you can use the following equations:</p>
+        <ul>
+          <li><strong>Voltage:</strong> $V = I \times R$ or $V = \frac{P}{I}$</li>
+          <li><strong>Current:</strong> $I = \frac{V}{R}$ or $I = \sqrt{\frac{P}{R}}$</li>
+          <li><strong>Resistance:</strong> $R = \frac{V}{I}$ or $R = \frac{V^2}{P}$</li>
+          <li><strong>Power:</strong> $P = V \times I$ or $P = I^2 \times R$</li>
+        </ul>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>© 2026 Tools.PrasunBarua. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/tools/ohms-law-calculator.js"></script>
+</body>
+
+</html>
