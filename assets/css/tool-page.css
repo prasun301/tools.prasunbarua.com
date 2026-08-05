@@ -88,22 +88,24 @@
 .form-group label {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 8px;
 }
 
-.input-with-unit {
-  position: relative;
-  display: flex;
-  align-items: center;
+.unit-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
+.form-select,
 .input-with-unit input {
   width: 100%;
   height: 48px;
-  padding: 0 50px 0 16px;
+  padding: 0 16px;
   font-size: 1rem;
   font-weight: 500;
   color: var(--text);
@@ -114,15 +116,24 @@
   transition: var(--transition-fast);
 }
 
+.form-select {
+  cursor: pointer;
+}
+
+.input-with-unit {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-unit input {
+  padding-right: 50px;
+}
+
+.form-select:focus,
 .input-with-unit input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-ring);
-}
-
-.input-with-unit input.calculated-field {
-  background-color: var(--primary-light);
-  border-color: var(--primary);
-  font-weight: 700;
 }
 
 .unit-tag {
@@ -132,6 +143,12 @@
   font-weight: 600;
   color: var(--text-muted);
   pointer-events: none;
+}
+
+.dynamic-inputs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .form-actions {
@@ -146,7 +163,10 @@
   font-weight: 600;
   padding: 12px 24px;
   border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
   transition: var(--transition-fast);
+  flex: 1;
 }
 
 .btn-primary:hover {
@@ -160,6 +180,7 @@
   font-weight: 600;
   padding: 12px 20px;
   border-radius: var(--radius-md);
+  cursor: pointer;
   transition: var(--transition-fast);
 }
 
@@ -167,16 +188,35 @@
   background-color: var(--surface-hover);
 }
 
-/* Results Card */
-.results-card {
+/* Results Card & States */
+.result-display-box {
   background-color: var(--background);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 24px;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
-.result-item {
+.result-placeholder {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.result-placeholder .result-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.result-card-inner {
+  width: 100%;
+}
+
+.result-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -184,23 +224,49 @@
   border-bottom: 1px dashed var(--border);
 }
 
-.result-item:last-child {
+.result-row:last-child {
   border-bottom: none;
 }
 
+.result-row.primary-result {
+  background-color: var(--primary-light);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border-bottom: none;
+  margin-bottom: 8px;
+}
+
+.result-row.primary-result .result-label {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.result-row.primary-result .result-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
 .result-label {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
 }
 
-.result-value {
-  font-size: 1.15rem;
+.result-val {
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
 }
 
-.result-value.highlight {
-  color: var(--primary);
+.result-error-box {
+  text-align: center;
+  color: #ef4444;
+}
+
+.result-error-box .error-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 6px;
 }
 
 /* Formula Helper Box */
@@ -209,9 +275,9 @@
   border: 1px solid var(--primary-ring);
   border-radius: var(--radius-md);
   padding: 16px;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--text);
-  margin-top: 20px;
+  line-height: 1.6;
 }
 
 .formula-box h4 {
@@ -232,7 +298,7 @@
 .tool-guide-content h2 {
   font-size: 1.5rem;
   margin-bottom: 16px;
-  margin-top: 28px;
+  margin-top: 32px;
 }
 
 .tool-guide-content h2:first-child {
@@ -242,6 +308,64 @@
 .tool-guide-content p {
   color: var(--text-muted);
   margin-bottom: 16px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.info-card {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+.info-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.info-card p {
+  font-size: 0.875rem;
+  margin-bottom: 0;
+}
+
+/* Formula Table */
+.formula-table-wrapper {
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.formula-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.formula-table th,
+.formula-table td {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+
+.formula-table th {
+  background-color: var(--background);
+  font-weight: 700;
+}
+
+.formula-table code {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-family: monospace;
+  font-size: 0.95rem;
 }
 
 .tool-guide-content ul {
