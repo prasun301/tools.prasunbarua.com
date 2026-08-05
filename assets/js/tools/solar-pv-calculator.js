@@ -1,6 +1,9 @@
 /**
  * Solar PV System Calculator
  * Path: assets/js/solar-pv-calculator.js
+ * 
+ * Updates: Improved string-sizing algorithm, standardized temperature coefficient math,
+ * better error handling, and robust input validation.
  */
 document.addEventListener('DOMContentLoaded', () => {
   const pvMode = document.getElementById('pvMode');
@@ -24,12 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Calculate Action
+  // Calculate Action (Button Click)
   calcBtn.addEventListener('click', (e) => {
     e.preventDefault();
     performCalculation();
   });
 
+  // Calculate Action (Form Submit/Enter Key)
   if (pvForm) {
     pvForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -45,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Helper to get numeric values safely
   function getNum(id) {
     const el = document.getElementById(id);
     if (!el) return 0;
@@ -75,26 +80,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const psh = getNum('psh');
     const lossPct = getNum('loss');
 
-    // Validation
+    // Basic Validation
     if (Voc <= 0 || Vmp <= 0 || Pmax <= 0 || invRating <= 0) {
-      showError("Please enter valid positive values for all PV Module and Inverter specs.");
-      return;
+      return showError("Please enter valid positive values for all PV Module and Inverter specs.");
     }
-
     if (Vmp >= Voc) {
-      showError("Maximum Power Voltage (Vmp) must be less than Open Circuit Voltage (Voc).");
-      return;
+      return showError("Maximum Power Voltage (Vmp) must be less than Open Circuit Voltage (Voc).");
+    }
+    if (mpptMin >= mpptMax) {
+      return showError("Inverter MPPT Minimum voltage must be lower than Maximum voltage.");
     }
 
-    // Temperature Correction
-    const VocColdModule = Voc * (1 + 0.0028 * (25 - Tmin));
-    const VmpColdModule = Vmp * (1 + 0.0035 * (25 - Tmin));
-    const cellHotTemp = Tmax + 25;
-    const VmpHotModule = Vmp * (1 - 0.0035 * (cellHotTemp - 25));
+    // Standardized Temperature Corrections
+    // Assuming typical Poly/Mono coefficients: Voc = -0.28%/°C, Vmp = -0.35%/°C
+    const TEMP_COEFF_VOC = -0.0028; 
+    const TEMP_COEFF_VMP = -0.0035;
+    
+    // Rule of thumb: Cell temp sits ~25°C to 30°C above ambient under peak irradiance
+    const CELL_TEMP_MARGIN = 25; 
+    const cellHotTemp = Tmax + CELL_TEMP_MARGIN; 
+    
+    // Formula: V_T = V_STC * (1 + Coeff * (T - 25))
+    const VocColdModule = Voc * (1 + TEMP_COEFF_VOC * (Tmin - 25));
+    const VmpColdModule = Vmp * (1 + TEMP_COEFF_VMP * (Tmin - 25));
+    const VmpHotModule  = Vmp * (1 + TEMP_COEFF_VMP * (cellHotTemp - 25));
 
-    // Target Sizing (1.2 DC/AC Target Ratio)
+    // Target Sizing (1.2 DC/AC Target Ratio is standard industry practice)
     const targetDcPower = invRating * 1.20;
-    const targetModules = Math.ceil((targetDcPower * 1000) / Pmax);
+    const targetModules = (targetDcPower * 1000) / Pmax;
 
     // String Voltage Constraints
     const maxModulesByVoc = Math.floor(dcmax / VocColdModule);
@@ -105,65 +118,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxStringLength = Math.min(maxModulesByVoc, maxModulesByMppt);
 
     if (minStringLength > maxStringLength) {
-      showError("No valid string layout possible. Cold Voc exceeds Inverter Max DC Voltage or Hot Vmp drops below MPPT min.");
-      return;
+      return showError(`No valid string layout possible. Minimum required length (${minStringLength}) exceeds maximum safe length (${maxStringLength}). Check inverter voltage window vs module voltage.`);
     }
 
-    // Find Best String Configuration
+    // Find Best String Configuration (Smart Loop)
     const maxStrings = mpptCount * stringsPerMppt;
     let bestDesign = null;
+    let minDiff = Infinity;
 
     for (let strings = 1; strings <= maxStrings; strings++) {
-      const modulesPerString = Math.ceil(targetModules / strings);
+      // Find the ideal string length to hit our DC/AC ratio target
+      const idealLength = targetModules / strings;
+      
+      // Test both flooring and ceiling the ideal length to find the closest match
+      const options = [Math.floor(idealLength), Math.ceil(idealLength)];
 
-      if (modulesPerString >= minStringLength && modulesPerString <= maxStringLength) {
-        const actualModules = modulesPerString * strings;
-        const extraModules = actualModules - targetModules;
-
-        if (!bestDesign || extraModules < bestDesign.extraModules) {
-          bestDesign = { strings, modulesPerString, actualModules, extraModules };
+      for (const len of options) {
+        if (len >= minStringLength && len <= maxStringLength) {
+          const actualMods = len * strings;
+          const diff = Math.abs(actualMods - targetModules);
+          
+          // Save configuration if it's the closest one to our target DC power so far
+          if (diff < minDiff) {
+            minDiff = diff;
+            bestDesign = { strings, modulesPerString: len, actualModules: actualMods };
+          }
         }
       }
     }
 
     if (!bestDesign) {
-      showError("Could not balance modules into parallel strings within MPPT inputs. Adjust MPPT or module power limits.");
-      return;
+      return showError(`Could not fit strings into inverter limits. To achieve ~1.2 DC/AC ratio, the module count falls outside the inverter's input bounds. Try an inverter with a wider MPPT range or a different module power class.`);
     }
 
     const { strings, modulesPerString, actualModules } = bestDesign;
 
-    // Recalculate Performance Metrics
+    // Recalculate Performance Metrics based on the chosen design
     const dcSize = (actualModules * Pmax) / 1000;
     const dcac = dcSize / invRating;
     const stringVocCold = VocColdModule * modulesPerString;
     const stringVmpHot = VmpHotModule * modulesPerString;
 
-    // Status Checks
+    // Status Checks & Warnings
     let status = "PASS";
-    let badgeClass = "pass";
+    let badgeClass = "pass"; // Assumes you have CSS .badge.pass { background: #dcfce7; color: #166534; }
     let statusNote = "PV string operating parameters are optimal.";
 
     if (stringVocCold > dcmax) {
       status = "FAIL";
-      badgeClass = "fail";
-      statusNote = "Cold string Voc exceeds Maximum DC Input Voltage!";
+      badgeClass = "fail"; // Assumes CSS .badge.fail { background: #fee2e2; color: #991b1b; }
+      statusNote = "Cold string Voc exceeds Maximum DC Input Voltage! Will damage inverter.";
     } else if (stringVmpHot < mpptMin) {
       status = "FAIL";
       badgeClass = "fail";
-      statusNote = "Hot string Vmp drops below Inverter Minimum MPPT Voltage!";
+      statusNote = "Hot string Vmp drops below Inverter Minimum MPPT Voltage! System will shut down in heat.";
     } else if (dcac > 1.40) {
       status = "WARNING";
-      badgeClass = "warn";
-      statusNote = "DC/AC ratio exceeds 1.40. Expect power clipping during peak solar hours.";
+      badgeClass = "warn"; // Assumes CSS .badge.warn { background: #fef9c3; color: #854d0e; }
+      statusNote = "DC/AC ratio exceeds 1.40. Expect significant power clipping during peak solar hours.";
     }
 
     // Yield Estimates
-    const pr = Math.max(0.40, Math.min(0.95, (100 - lossPct) / 100));
+    const pr = Math.max(0.40, Math.min(0.95, (100 - lossPct) / 100)); // Constrain PR between 40% and 95%
     const annualYield = dcSize * psh * 365 * pr;
     const dailyYield = annualYield / 365;
 
-    // Off-Grid Battery Calculation
+    // Off-Grid Battery Calculation (Optional Block)
     let batteryHtml = "";
     if (mode === "offgrid") {
       const load = getNum('dailyLoad');
@@ -172,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const dod = getNum('dod') / 100;
 
       if (load > 0 && autonomy > 0 && batteryV > 0 && dod > 0) {
+        // Required storage logic incorporates 15% safety margin, 93% Inverter eff, 92% Batt eff
         const requiredStorage = (load * autonomy * 1.15) / (dod * 0.93 * 0.92);
         const batteryAh = (requiredStorage * 1000) / batteryV;
 
@@ -179,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="pv-result-card">
             <span class="pv-card-title">Off-Grid Battery System</span>
             <div class="pv-metric-row"><span>Required Storage:</span><strong>${requiredStorage.toFixed(2)} kWh</strong></div>
-            <div class="pv-metric-row"><span>Bank Capacity:</span><strong>${Math.round(batteryAh)} Ah @ ${batteryV}V</strong></div>
-            <div class="pv-metric-row"><span>Autonomy:</span><strong>${autonomy} Days</strong></div>
+            <div class="pv-metric-row"><span>Bank Capacity:</span><strong>${Math.round(batteryAh).toLocaleString()} Ah @ ${batteryV}V</strong></div>
+            <div class="pv-metric-row"><span>Autonomy Limit:</span><strong>${autonomy} Days</strong></div>
           </div>
         `;
       }
@@ -223,25 +244,28 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Render Calculation Details
+    // Render Calculation Detail Breakdown
     if (formulaApplied) {
       formulaApplied.innerHTML = `
-        <strong>Cold Weather Correction (Tmin: ${Tmin}°C):</strong> String Voc = ${stringVocCold.toFixed(1)}V (Limit: ${dcmax}V)<br>
-        <strong>Hot Weather Correction (Tmax: ${Tmax}°C):</strong> String Vmp = ${stringVmpHot.toFixed(1)}V (Window: ${mpptMin}V – ${mpptMax}V)<br>
-        <strong>Array Config:</strong> ${strings} String(s) × ${modulesPerString} Modules (${Pmax}W) = ${dcSize.toFixed(2)} kWp
+        <strong>Cold Weather Extremes (Tmin: ${Tmin}°C):</strong> String Voc = ${stringVocCold.toFixed(1)}V (Limit: ${dcmax}V)<br>
+        <strong>Hot Weather Extremes (Cell Tmax: ${cellHotTemp}°C):</strong> String Vmp = ${stringVmpHot.toFixed(1)}V (MPPT Min: ${mpptMin}V)<br>
+        <strong>Array Config:</strong> ${strings} String(s) &times; ${modulesPerString} Modules (${Pmax}W) = ${dcSize.toFixed(2)} kWp
       `;
     }
   }
 
+  // Error Rendering Function
   function showError(msg) {
     resultBox.innerHTML = `
-      <div class="warning-box" style="border-left-color:#dc2626; background:#fef2f2; color:#991b1b;">
-        <strong>Validation Error:</strong> ${msg}
+      <div class="result-error-box warning-box" style="margin-top: 1rem;">
+        <span class="error-icon">⚠️</span>
+        <p style="display:inline; margin-left: 8px;"><strong>Validation Error:</strong> ${msg}</p>
       </div>
     `;
     if (formulaApplied) formulaApplied.textContent = "Calculation stopped due to input validation error.";
   }
 
+  // Reset Default Values
   function resetDefaults() {
     document.getElementById('voc').value = 49.5;
     document.getElementById('vmp').value = 41.2;
@@ -261,14 +285,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('autonomy').value = 2;
     document.getElementById('batteryV').value = 48;
     document.getElementById('dod').value = 80;
+    
     pvMode.value = "grid";
 
     if (offgridSection) offgridSection.style.display = "none";
+    
     resultBox.innerHTML = `
       <div class="result-placeholder" style="text-align:center; padding:30px; color:var(--text-muted,#64748b);">
         <p>Adjust parameters and click <strong>Calculate System</strong> to display results.</p>
       </div>
     `;
+    
     if (formulaApplied) formulaApplied.textContent = "Calculations will appear here after clicking Calculate.";
   }
 });
