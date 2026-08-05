@@ -1,1 +1,168 @@
-/* Responsive design */
+/* ==================================================
+   Tools.PrasunBarua.com - Responsive Stylesheet
+   Media Queries for Mobile, Tablet & High-DPI Displays
+================================================== */
+
+/* ==========================================
+   1. LARGE TABLETS & SMALL LAPTOPS (<= 1024px)
+========================================== */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 28px;
+  }
+}
+
+/* ==========================================
+   2. TABLETS & PORTRAIT SCREENS (<= 900px)
+========================================== */
+@media (max-width: 900px) {
+  .hero {
+    padding: 50px 0 40px;
+  }
+
+  .hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    margin-bottom: 28px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .brand-col {
+    grid-column: span 2;
+  }
+}
+
+/* ==========================================
+   3. MOBILE DEVICES & NAVIGATION (<= 640px)
+========================================== */
+@media (max-width: 640px) {
+  /* Header & Mobile Drawer */
+  .header-inner {
+    height: 64px;
+  }
+
+  .navigation {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 24px;
+    gap: 20px;
+    transform: translateY(-150%);
+    transition: transform var(--transition-normal);
+    z-index: 90;
+  }
+
+  .navigation.open {
+    transform: translateY(0);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav-link {
+    font-size: 1.05rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  /* Hero & Google Search */
+  .hero {
+    padding: 40px 0 30px;
+  }
+
+  .search-wrapper input[type="search"] {
+    height: 50px;
+    font-size: 0.95rem;
+    padding-left: 46px;
+  }
+
+  .search-icon {
+    left: 16px;
+  }
+
+  .search-results-dropdown {
+    top: 58px;
+  }
+
+  /* Grid Layouts */
+  .category-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .section-header-inline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .about-card {
+    padding: 24px 18px;
+  }
+
+  /* Footer Mobile Layout */
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .brand-col {
+    grid-column: span 1;
+  }
+}
+
+/* ==========================================
+   4. ULTRA-SMALL SCREENS (<= 380px)
+========================================== */
+@media (max-width: 380px) {
+  .logo a {
+    font-size: 1.15rem;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .tool-card {
+    padding: 18px;
+  }
+}
+
+/* ==========================================
+   5. PRINT STYLESHEET
+========================================== */
+@media print {
+  .header, 
+  .google-search, 
+  .theme-toggle, 
+  .footer {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
