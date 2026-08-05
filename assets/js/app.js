@@ -15,17 +15,17 @@ const TOOLS_DATA = [
     categorySlug: "electrical",
     description: "Calculate voltage, current, resistance, and power instantly.",
     keywords: ["ohm", "law", "voltage", "current", "resistance", "power", "amps", "volts", "watts", "electrical"],
-    url: "tools/ohms-law-calculator.html"
+    url: "/tools/ohms-law-calculator.html"
   },
   {
-    id: "solar-pv-calculator",
+    id: "solar-calculator",
     title: "Solar PV Calculator",
     icon: "☀️",
     category: "Solar PV Tools",
     categorySlug: "solar",
     description: "Estimate solar capacity, battery sizing, and daily energy output.",
     keywords: ["solar", "pv", "panel", "energy", "battery", "inverter", "renewable", "kw", "kwh", "sun"],
-    url: "tools/solar-pv-calculator.html"
+    url: "/tools/solar-calculator.html"
   },
   {
     id: "json-formatter",
@@ -35,7 +35,7 @@ const TOOLS_DATA = [
     categorySlug: "developer",
     description: "Format, validate, beautify, and minify JSON data online.",
     keywords: ["json", "formatter", "developer", "validator", "beautify", "minify", "code", "programming"],
-    url: "tools/json-formatter.html"
+    url: "/tools/json-formatter.html"
   },
   {
     id: "unit-converter",
@@ -45,7 +45,7 @@ const TOOLS_DATA = [
     categorySlug: "converter",
     description: "Convert engineering units, lengths, masses, temperatures, and areas.",
     keywords: ["unit", "converter", "engineering", "conversion", "measurement", "metric", "imperial"],
-    url: "tools/unit-converter.html"
+    url: "/tools/unit-converter.html"
   },
   {
     id: "password-generator",
@@ -55,7 +55,7 @@ const TOOLS_DATA = [
     categorySlug: "utility",
     description: "Generate cryptographically secure random passwords.",
     keywords: ["password", "generator", "security", "random", "privacy", "lock", "safety"],
-    url: "tools/password-generator.html"
+    url: "/tools/password-generator.html"
   },
   {
     id: "word-counter",
@@ -65,27 +65,35 @@ const TOOLS_DATA = [
     categorySlug: "text",
     description: "Count words, characters, sentences, and estimated reading time.",
     keywords: ["word", "counter", "character", "text", "writing", "editor", "reading time"],
-    url: "tools/word-counter.html"
+    url: "/tools/word-counter.html"
   }
 ];
 
 // ==========================================
-// APPLICATION INITIALIZATION
+// APPLICATION INITIALIZATION (Bulletproof)
 // ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-  initThemeSystem();
-  initMobileMenu();
-  initToolRenderer();
-  initCategoryFilter();
-  initGoogleSearch();
-});
+function initApp() {
+  // Wrapped in try-catch so if one module fails, the rest still load
+  try { initThemeSystem(); } catch(e) { console.warn("Theme module skipped:", e.message); }
+  try { initMobileMenu(); } catch(e) { console.warn("Menu module skipped:", e.message); }
+  try { initToolRenderer(); } catch(e) { console.warn("Renderer module skipped:", e.message); }
+  try { initCategoryFilter(); } catch(e) { console.warn("Filter module skipped:", e.message); }
+  try { initGoogleSearch(); } catch(e) { console.warn("Search module skipped:", e.message); }
+}
+
+// Ensures script runs regardless of where it's placed in the HTML (head or body)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 // ==========================================
 // 1. THEME SWITCHER (Light / Dark Mode)
 // ==========================================
 function initThemeSystem() {
   const themeToggleBtn = document.getElementById('themeToggle');
-  if (!themeToggleBtn) return;
+  if (!themeToggleBtn) return; // Fails silently if button isn't in HTML
 
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -117,7 +125,6 @@ function initMobileMenu() {
     navMenu.classList.toggle('open');
   });
 
-  // Close nav when clicking any link
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => navMenu.classList.remove('open'));
   });
@@ -136,7 +143,10 @@ function renderTools(toolsList) {
   const grid = document.getElementById('toolsGrid');
   const noResults = document.getElementById('noResultsState');
 
-  if (!grid) return;
+  if (!grid) {
+    console.error("Missing <div id='toolsGrid'></div> in your HTML.");
+    return;
+  }
 
   grid.innerHTML = '';
 
@@ -179,6 +189,8 @@ function initCategoryFilter() {
   const resetBtn = document.getElementById('resetFilterBtn');
   const toolsSection = document.getElementById('tools');
 
+  if (categoryCards.length === 0) return;
+
   categoryCards.forEach(card => {
     card.addEventListener('click', () => {
       const category = card.getAttribute('data-category');
@@ -188,7 +200,6 @@ function initCategoryFilter() {
 
       filterCategory(category);
 
-      // Auto-scroll smoothly to the tools grid section
       if (toolsSection) {
         toolsSection.scrollIntoView({ behavior: 'smooth' });
       }
@@ -229,11 +240,12 @@ function initGoogleSearch() {
   const searchResults = document.getElementById('searchResults');
   const clearBtn = document.getElementById('clearSearch');
 
-  if (!searchInput || !searchResults) return;
+  if (!searchInput || !searchResults) {
+    return; // Silently aborts if search HTML is missing
+  }
 
   let highlightedIndex = -1;
 
-  // Search Input Event Listener
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.trim().toLowerCase();
 
@@ -246,7 +258,6 @@ function initGoogleSearch() {
     }
   });
 
-  // Clear Search Button
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
       searchInput.value = '';
@@ -256,7 +267,6 @@ function initGoogleSearch() {
     });
   }
 
-  // Keyboard Navigation (Arrow keys, Enter, Escape)
   searchInput.addEventListener('keydown', (e) => {
     const items = searchResults.querySelectorAll('.search-result-item');
 
@@ -282,7 +292,6 @@ function initGoogleSearch() {
     }
   });
 
-  // Hide dropdown when clicking outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.google-search')) {
       hideDropdown();
