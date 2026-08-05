@@ -5,58 +5,91 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Safe DOM Element Initialization
   const pvMode = document.getElementById('pvMode');
   const offgridSection = document.getElementById('offgridSection');
   const calcBtn = document.getElementById('calcBtn');
   const resetBtn = document.getElementById('resetBtn');
   const resultBox = document.getElementById('resultBox');
   const formulaApplied = document.getElementById('formulaApplied');
+  const pvForm = document.getElementById('pvForm');
+
+  // Guard Clause: Ensure core elements exist before proceeding
+  if (!calcBtn || !resultBox || !pvMode) {
+    console.error('Solar PV Calculator: Required DOM elements (calcBtn, resultBox, pvMode) are missing.');
+    return;
+  }
 
   // Toggle Off-Grid Inputs Visibility
   pvMode.addEventListener('change', () => {
-    if (pvMode.value === 'offgrid') {
-      offgridSection.style.display = 'block';
-    } else {
-      offgridSection.style.display = 'none';
+    if (offgridSection) {
+      offgridSection.style.display = pvMode.value === 'offgrid' ? 'block' : 'none';
     }
   });
 
-  calcBtn.addEventListener('click', performCalculation);
-  resetBtn.addEventListener('click', resetCalculator);
+  // Calculate & Reset Action Handlers (Prevent Form Reloads)
+  calcBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    performCalculation();
+  });
 
-  // Helper function to safely read numeric input
+  if (resetBtn) {
+    resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetCalculator();
+    });
+  }
+
+  if (pvForm) {
+    pvForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      performCalculation();
+    });
+  }
+
+  // Helper function: Safely read numeric input value
   function num(id) {
-    const val = parseFloat(document.getElementById(id)?.value);
+    const el = document.getElementById(id);
+    if (!el) return 0;
+    const val = parseFloat(el.value);
     return isNaN(val) ? 0 : val;
+  }
+
+  // Helper function: Safely write value to input field
+  function setVal(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
   }
 
   function performCalculation() {
     const mode = pvMode.value;
 
-    // Inputs
+    // Read Module Inputs
     const Voc = num('voc');
     const Vmp = num('vmp');
     const Imp = num('imp');
     const Pmax = num('pmax');
 
+    // Read Inverter Inputs
     const invRating = num('invRating');
     const dcmax = num('dcmax');
     const mpptMin = num('mpptMin');
     const mpptMax = num('mpptMax');
 
+    // Read Environment Inputs
     const Tmin = num('tmin');
     const Tmax = num('tmax');
     const psh = num('psh');
     const lossPct = num('loss');
 
-    // Basic Validations
+    // Basic Validation Checks
     if (Voc <= 0 || Vmp <= 0 || Pmax <= 0 || invRating <= 0 || dcmax <= 0) {
       showError('Please enter positive non-zero values for PV module and inverter ratings.');
       return;
     }
 
     if (Vmp >= Voc) {
-      showError('Vmp (Max Power Voltage) must be less than Voc (Open Circuit Voltage).');
+      showError('Vmp (Max Power Voltage) must be strictly less than Voc (Open Circuit Voltage).');
       return;
     }
 
@@ -71,14 +104,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Vmp drops in warm temperatures (-0.35%/°C factor relative to 25°C STC)
     const VmpHot = Vmp * (1 - 0.0035 * (Tmax - 25));
 
-    // String Limits
+    if (VocCold <= 0 || VmpHot <= 0) {
+      showError('Temperature values resulted in invalid voltage levels. Check temperature inputs.');
+      return;
+    }
+
+    // String Sizing Logic
     const maxVocModules = Math.floor(dcmax / VocCold);
     const minMpptModules = Math.ceil(mpptMin / VmpHot);
     const maxMpptModules = Math.floor(mpptMax / VmpHot);
 
-    let modulesPerString = Math.max(minMpptModules, Math.min(maxVocModules, maxMpptModules));
-    if (isNaN(modulesPerString) || !isFinite(modulesPerString) || modulesPerString < 0) {
-      modulesPerString = 0;
+    const upperLimit = Math.min(maxVocModules, maxMpptModules);
+    const lowerLimit = minMpptModules;
+
+    let modulesPerString = 0;
+    let voltageMismatch = false;
+
+    if (upperLimit >= lowerLimit && lowerLimit > 0) {
+      modulesPerString = upperLimit;
+    } else {
+      modulesPerString = Math.max(1, maxVocModules);
+      voltageMismatch = true;
     }
 
     // System Sizing
@@ -88,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dcSize = (totalModules * Pmax) / 1000; // kW
     const dcac = invRating > 0 ? dcSize / invRating : 0;
 
-    // Performance Ratio (PR) Calculation
+    // Performance Ratio (PR) & Energy Yield
     const inverterEff = 0.97;
     const wiringLoss = 0.02;
     const soilingLoss = 0.03;
@@ -96,10 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const generalLossFactor = lossPct / 100;
 
     const PR = 1 - (generalLossFactor + (1 - inverterEff) + wiringLoss + soilingLoss + mismatchLoss);
-    const PRClamped = Math.max(0.4, Math.min(0.95, PR));
+    const PRClamped = Math.max(0.4, Math.min(0.95, isNaN(PR) ? 0.75 : PR));
     const annualEnergy = dcSize * psh * 365 * PRClamped;
 
-    // System Status Assessment
+    // Status Assessment
     let status = 'PASS';
     let badgeClass = 'pass';
     let statusNote = 'System configuration meets inverter electrical limits and MPPT voltage windows.';
@@ -110,10 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
       statusNote = 'High DC to AC ratio (> 1.5). Inverter may experience power clipping during peak solar irradiance.';
     }
 
-    if (maxVocModules < minMpptModules || modulesPerString === 0 || VocCold > dcmax) {
+    if (voltageMismatch || maxVocModules < minMpptModules || modulesPerString === 0 || (modulesPerString * VocCold) > dcmax) {
       status = 'FAIL';
       badgeClass = 'fail';
-      statusNote = 'Voltage window mismatch. Array cold voltage exceeds DC max or hot Vmp falls below MPPT minimum limit.';
+      statusNote = 'Voltage window mismatch. Array cold voltage exceeds DC max or hot Vmp falls outside MPPT limits.';
     }
 
     // Optional Off-Grid Battery Sizing
@@ -184,64 +230,73 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Formula helper breakdown
-    formulaApplied.innerHTML = `
-      <strong>Temperature Voltage Limits:</strong><br>
-      • Cold Voc (@ ${Tmin}&deg;C) = ${Voc}V &times; [1 + 0.0028 &times; (25 - ${Tmin})] = <strong>${formatNum(VocCold)}V</strong> (Max Limit: ${dcmax}V)<br>
-      • Hot Vmp (@ ${Tmax}&deg;C) = ${Vmp}V &times; [1 - 0.0035 &times; (${Tmax} - 25)] = <strong>${formatNum(VmpHot)}V</strong> (Min MPPT: ${mpptMin}V)<br>
-      • Selected String Size = <strong>${modulesPerString} panels/string</strong>
-    `;
+    if (formulaApplied) {
+      formulaApplied.innerHTML = `
+        <strong>Temperature Voltage Limits:</strong><br>
+        • Cold Voc (@ ${Tmin}&deg;C) = ${Voc}V &times; [1 + 0.0028 &times; (25 - ${Tmin})] = <strong>${formatNum(VocCold)}V</strong> (Max Limit: ${dcmax}V)<br>
+        • Hot Vmp (@ ${Tmax}&deg;C) = ${Vmp}V &times; [1 - 0.0035 &times; (${Tmax} - 25)] = <strong>${formatNum(VmpHot)}V</strong> (Min MPPT: ${mpptMin}V)<br>
+        • Selected String Size = <strong>${modulesPerString} panels/string</strong>
+      `;
+    }
   }
 
   function showError(msg) {
-    resultBox.innerHTML = `
-      <div class="result-error-box">
-        <span class="error-icon">⚠️</span>
-        <p>${msg}</p>
-      </div>
-    `;
-    formulaApplied.textContent = 'Calculation failed due to invalid or missing input values.';
+    if (resultBox) {
+      resultBox.innerHTML = `
+        <div class="result-error-box" style="padding:14px; background:#fef2f2; border:1px solid #fca5a5; border-radius:6px; color:#991b1b;">
+          <span class="error-icon" style="font-size:1.2rem; margin-right:6px;">⚠️</span>
+          <strong>Error:</strong> ${msg}
+        </div>
+      `;
+    }
+    if (formulaApplied) {
+      formulaApplied.textContent = 'Calculation failed due to invalid or missing input values.';
+    }
   }
 
   function resetResultsDisplay() {
-    resultBox.innerHTML = `
-      <div class="result-placeholder">
-        <span class="result-icon">☀️</span>
-        <p>Adjust parameters and click <strong>Calculate System</strong> to view detailed PV array sizing and validation.</p>
-      </div>
-    `;
-    formulaApplied.textContent = 'Validation and temperature window calculations will appear here after calculation.';
+    if (resultBox) {
+      resultBox.innerHTML = `
+        <div class="result-placeholder" style="text-align: center; padding: 30px; color: #64748b;">
+          <span class="result-icon" style="font-size:2rem; display:block; margin-bottom:8px;">☀️</span>
+          <p>Adjust parameters and click <strong>Calculate System</strong> to view detailed PV array sizing and validation.</p>
+        </div>
+      `;
+    }
+    if (formulaApplied) {
+      formulaApplied.textContent = 'Validation and temperature window calculations will appear here after calculation.';
+    }
   }
 
   function resetCalculator() {
-    document.getElementById('voc').value = 49.5;
-    document.getElementById('vmp').value = 41.2;
-    document.getElementById('imp').value = 10.8;
-    document.getElementById('pmax').value = 450;
+    setVal('voc', 49.5);
+    setVal('vmp', 41.2);
+    setVal('imp', 10.8);
+    setVal('pmax', 450);
 
-    document.getElementById('invRating').value = 10;
-    document.getElementById('dcmax').value = 1000;
-    document.getElementById('mpptMin').value = 200;
-    document.getElementById('mpptMax').value = 800;
+    setVal('invRating', 10);
+    setVal('dcmax', 1000);
+    setVal('mpptMin', 200);
+    setVal('mpptMax', 800);
 
-    document.getElementById('tmin').value = 10;
-    document.getElementById('tmax').value = 45;
-    document.getElementById('psh').value = 5.5;
-    document.getElementById('loss').value = 14;
+    setVal('tmin', 10);
+    setVal('tmax', 45);
+    setVal('psh', 5.5);
+    setVal('loss', 14);
 
-    document.getElementById('dailyLoad').value = 12;
-    document.getElementById('autonomy').value = 2;
-    document.getElementById('batteryV').value = 48;
-    document.getElementById('dod').value = 80;
+    setVal('dailyLoad', 12);
+    setVal('autonomy', 2);
+    setVal('batteryV', 48);
+    setVal('dod', 80);
 
-    pvMode.value = 'grid';
-    offgridSection.style.display = 'none';
+    if (pvMode) pvMode.value = 'grid';
+    if (offgridSection) offgridSection.style.display = 'none';
 
     resetResultsDisplay();
   }
 
   function formatNum(num, decimals = 2) {
-    if (isNaN(num)) return '0';
+    if (isNaN(num) || num === null || num === undefined) return '0';
     return Number(num).toLocaleString('en-US', {
       minimumFractionDigits: 0,
       maximumFractionDigits: decimals
