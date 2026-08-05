@@ -25,7 +25,7 @@ const TOOLS_DATA = [
     categorySlug: "solar",
     description: "Estimate solar capacity, battery sizing, and daily energy output.",
     keywords: ["solar", "pv", "panel", "energy", "battery", "inverter", "renewable", "kw", "kwh", "sun"],
-    url: "/tools/solar-calculator.html"
+    url: "/tools/solar-pv-calculator.html"
   },
   {
     id: "json-formatter",
