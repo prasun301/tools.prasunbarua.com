@@ -41,6 +41,39 @@ body {
     padding: 0 1.5rem;
 }
 
+/* Global Hyperlink Styles */
+a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease, background-color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+a:link {
+    color: var(--accent-color);
+}
+
+a:visited {
+    color: var(--accent-color);
+}
+
+a:hover {
+    color: var(--text-primary);
+    background-color: var(--hover-bg);
+}
+
+a:focus {
+    color: var(--text-primary);
+    background-color: var(--hover-bg);
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+a:active {
+    color: var(--text-primary);
+    background-color: var(--hover-bg);
+}
+
 /* Header */
 .site-header {
     border-bottom: 1px solid var(--border-color);
@@ -67,6 +100,15 @@ body {
     gap: 0.5rem;
 }
 
+.logo:hover,
+.logo:focus,
+.logo:active,
+.logo:visited {
+    color: var(--text-primary);
+    text-decoration: none;
+    background-color: transparent;
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -77,11 +119,28 @@ body {
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.2s, background-color 0.2s;
 }
 
-.nav-links a:hover {
+.nav-links a:link,
+.nav-links a:visited {
+    color: var(--text-secondary);
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
     color: var(--accent-color);
+    text-decoration: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.nav-links a:active {
+    color: var(--accent-color);
+    text-decoration: none;
+    background-color: transparent;
 }
 
 #theme-toggle {
@@ -184,6 +243,16 @@ main {
     position: relative;
 }
 
+.tool-card:link,
+.tool-card:visited,
+.tool-card:hover,
+.tool-card:focus,
+.tool-card:active {
+    text-decoration: none;
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+}
+
 .tool-card:hover {
     transform: translateY(-3px);
     border-color: var(--accent-color);
@@ -215,6 +284,61 @@ main {
     font-weight: 500;
 }
 
+/* Content Card & Legal Pages Styles */
+.content-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    color: var(--text-primary);
+}
+
+.content-card h1,
+.content-card h2,
+.content-card h3,
+.content-card h4,
+.content-card h5,
+.content-card h6 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.content-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.content-card ul,
+.content-card ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.content-card li {
+    margin-bottom: 0.5rem;
+}
+
+.content-card a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.content-card a:link,
+.content-card a:visited {
+    color: var(--accent-color);
+}
+
+.content-card a:hover,
+.content-card a:focus,
+.content-card a:active {
+    color: var(--text-primary);
+    background-color: var(--hover-bg);
+}
+
 /* Footer */
 .site-footer {
     border-top: 1px solid var(--border-color);
@@ -238,6 +362,7 @@ main {
     gap: 0.25rem;
     font-size: 0.8rem;
 }
+
 /* Google Material Design Standard for Primary Filled Buttons */
 .primary-btn {
     background-color: var(--accent-color);
