@@ -506,7 +506,7 @@
             line-height: 1.5;
         }
 
-        /* FAQ Accordion / List */
+        /* FAQ Section */
         .faq-list {
             display: flex;
             flex-direction: column;
@@ -732,19 +732,14 @@
                     </div>
 
                     <!-- Success / Error Message Placeholders -->
-                    <div id="formSuccess" class="form-message success" aria-live="polite">
+                    <div id="formSuccess" class="form-message success" aria-live="polite" style="display: none;">
                         Thank you! Your message has been sent successfully. We will get back to you within 1-2 business days.
                     </div>
-                    <div id="formError" class="form-message error" aria-live="polite">
+                    <div id="formError" class="form-message error" aria-live="polite" style="display: none;">
                         Please fill out all required fields correctly and agree to the privacy policy.
                     </div>
 
                     <!-- Contact Form -->
-                    <!-- 
-                      Backend Integration Note: 
-                      Configure the 'action' attribute below to point to your backend endpoint 
-                      (e.g., Cloudflare Worker endpoint, Formspree URL, or AJAX submission handler).
-                    -->
                     <form id="contactForm" method="POST" action="https://formspree.io/f/your-form-endpoint" novalidate>
                         
                         <div class="form-row">
@@ -785,11 +780,6 @@
                         </div>
 
                         <!-- Anti-Spam Placeholder -->
-                        <!-- 
-                          Cloudflare Turnstile Integration Placeholder:
-                          Insert your Cloudflare Turnstile widget container or verification script here.
-                          Example: <div class="cf-turnstile" data-sitekey="your-site-key"></div>
-                        -->
                         <div id="turnstilePlaceholder" style="margin-bottom: 1.25rem;">
                             <!-- Turnstile widget will render here when integrated with Cloudflare Workers -->
                         </div>
@@ -894,44 +884,32 @@
                     <div class="help-icon"><span class="material-symbols-outlined">forum</span></div>
                     <div class="help-content">
                         <h4>General Feedback</h4>
-                        <p>Share your overall experience or recommendations to improve Prasun Tools.</p>
+                        <p>Share your thoughts on design, usability, or how we can make Prasun Tools even better.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Frequently Asked Questions Section -->
-        <section class="content-card">
+        <!-- FAQ Section -->
+        <section class="content-card" style="margin-top: 2rem;">
             <div class="section-header">
                 <div class="section-icon"><span class="material-symbols-outlined">quiz</span></div>
                 <h2>Frequently Asked Questions</h2>
             </div>
-            <p>Quick answers to common questions about Prasun Tools:</p>
+            <p>Quick answers to common questions about our platform and services.</p>
 
             <div class="faq-list">
                 <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> Do I need an account to use the tools?</h4>
-                    <p>No account or registration is required. All online tools are freely accessible directly within your web browser without signing up.</p>
+                    <h4><span class="material-symbols-outlined">help</span> Are all tools on Prasun Tools free to use?</h4>
+                    <p>Yes! All utilities and calculators provided on this platform are completely free to use with no hidden paywalls or forced registrations.</p>
                 </div>
-
                 <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> Are the tools free to use?</h4>
-                    <p>Yes! All calculators, converters, and developer utilities on Prasun Tools are 100% free for personal and professional use.</p>
+                    <h4><span class="material-symbols-outlined">help</span> Do you save data entered into the calculators?</h4>
+                    <p>No. Most calculations and text manipulations are performed entirely client-side within your browser to ensure maximum privacy and data security.</p>
                 </div>
-
                 <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> Can I request a new tool or calculator?</h4>
-                    <p>Absolutely. Use our contact form and select "Feature Request" or "Engineering Tool Suggestions" to submit your ideas.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> How do I report a bug or calculation error?</h4>
-                    <p>Select "Bug Report" in the contact form category, and please provide specific details regarding the input values and expected outcome.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> Can I suggest website improvements?</h4>
-                    <p>We welcome all constructive feedback and design suggestions to make our platform faster and easier to use.</p>
+                    <h4><span class="material-symbols-outlined">help</span> How can I suggest a new engineering calculator?</h4>
+                    <p>You can use the contact form above and select "Feature Request" or "Engineering Tool Suggestions" as your inquiry category.</p>
                 </div>
             </div>
         </section>
@@ -941,70 +919,99 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-content">
-            <p class="privacy-badge">
-                <span class="material-symbols-outlined">lock</span> Thank you for visiting Prasun Tools.
-            </p>
+            <div class="privacy-badge">
+                <span class="material-symbols-outlined">verified_user</span>
+                <span>Privacy-First Online Utilities</span>
+            </div>
             <nav class="footer-nav">
-                <a href="/about.html">About Us</a>
+                <a href="/">Home</a>
                 <a href="/privacy-policy.html">Privacy Policy</a>
-                <a href="/terms.html">Terms & Conditions</a>
+                <a href="/terms.html">Terms of Service</a>
                 <a href="/contact.html">Contact Us</a>
             </nav>
-            <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+            <p>&copy; 2026 Prasun Tools. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Minimal Client-Side Script for Form Handling & AJAX Simulation -->
+    <!-- Form Handler Script -->
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const form = this;
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
             const submitBtn = document.getElementById('submitBtn');
             const btnText = document.getElementById('btnText');
             const btnSpinner = document.getElementById('btnSpinner');
             const btnIcon = document.getElementById('btnIcon');
-            const successBox = document.getElementById('formSuccess');
-            const errorBox = document.getElementById('formError');
+            const formSuccess = document.getElementById('formSuccess');
+            const formError = document.getElementById('formError');
 
-            // Reset messages
-            successBox.style.display = 'none';
-            errorBox.style.display = 'none';
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Reset message displays
+                    formSuccess.style.display = 'none';
+                    formError.style.display = 'none';
 
-            // Validate form using HTML5 checkValidity
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                errorBox.style.display = 'block';
-                return;
+                    // Validate HTML5 form constraints
+                    if (!form.checkValidity()) {
+                        formError.style.display = 'block';
+                        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        return;
+                    }
+
+                    // Activate loading spinner state
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'Sending...';
+                    btnSpinner.style.display = 'block';
+                    btnIcon.style.display = 'none';
+
+                    const formData = new FormData(form);
+
+                    try {
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            formSuccess.style.display = 'block';
+                            form.reset();
+                            formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        } else {
+                            formError.style.display = 'block';
+                            formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    } catch (error) {
+                        // Fallback handling for static previews/placeholders
+                        if (form.action.includes('your-form-endpoint')) {
+                            setTimeout(() => {
+                                formSuccess.style.display = 'block';
+                                form.reset();
+                                formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                resetState();
+                            }, 1000);
+                            return;
+                        }
+                        formError.style.display = 'block';
+                        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } finally {
+                        if (!form.action.includes('your-form-endpoint')) {
+                            resetState();
+                        }
+                    }
+                });
             }
 
-            // Set loading state
-            submitBtn.disabled = true;
-            btnText.textContent = 'Sending...';
-            btnSpinner.style.display = 'block';
-            btnIcon.style.display = 'none';
-
-            // AJAX Submission Simulation (Ready for Cloudflare Worker or Formspree endpoint)
-            const formData = new FormData(form);
-            
-            // Future AJAX Integration point example:
-            // fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
-            
-            setTimeout(() => {
-                // Simulate successful response
+            function resetState() {
                 submitBtn.disabled = false;
                 btnText.textContent = 'Send Message';
                 btnSpinner.style.display = 'none';
                 btnIcon.style.display = 'inline-block';
-
-                successBox.style.display = 'block';
-                form.reset();
-
-                // Scroll success message into view smoothly
-                successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 1200);
+            }
         });
     </script>
-
 </body>
 </html>
