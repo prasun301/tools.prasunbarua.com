@@ -15,7 +15,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     
-    <!-- Google Material Symbols -->
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
     <!-- Stylesheets -->
@@ -34,13 +37,14 @@
     <!-- Header Section -->
     <header class="site-header">
         <div class="container header-inner">
-            <a href="/" class="logo">
-                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span> Prasun Tools
+            <a href="/" class="logo" aria-label="Prasun Tools Home">
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span>
+                <span>Prasun Tools</span>
             </a>
             <nav class="nav-links" aria-label="Main Navigation">
                 <a href="/">Home</a>
                 <a href="/#tools-grid">All Tools</a>
-                <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark and light mode">
                     <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
                 </button>
             </nav>
@@ -50,7 +54,10 @@
     <!-- Main Tool Container -->
     <main class="container tool-main">
         <div class="tool-header">
-            <span class="material-symbols-outlined tool-badge-icon" aria-hidden="true">solar_power</span>
+            <div class="tool-badge-pill">
+                <span class="material-symbols-outlined" aria-hidden="true">solar_power</span>
+                <span>Renewable Energy Engineering</span>
+            </div>
             <h1>Solar PV & Battery Engineering Calculator</h1>
             <p>Comprehensive professional tool for sizing solar arrays, inverter matching, MPPT voltage windows, temperature-corrected string limits, and battery storage autonomy.</p>
         </div>
@@ -62,7 +69,9 @@
                     
                     <!-- Section 1: System Architecture -->
                     <fieldset class="form-section-group">
-                        <legend class="section-title-tag">1. System Architecture & Load</legend>
+                        <legend class="section-title-tag">
+                            <span class="step-number">1</span> System Architecture & Load
+                        </legend>
                         
                         <div class="input-row-card">
                             <div class="select-group">
@@ -70,11 +79,12 @@
                                 <span class="input-hint">Grid-Tied vs Stand-Alone Off-Grid</span>
                             </div>
                             <div class="input-group">
-                                <div class="input-field-wrapper">
+                                <div class="input-field-wrapper select-wrapper">
                                     <select id="system-mode" name="system-mode">
                                         <option value="grid-tied" selected>Grid-Tied (On-Grid)</option>
                                         <option value="off-grid">Off-Grid (Standalone + Battery)</option>
                                     </select>
+                                    <span class="material-symbols-outlined select-arrow" aria-hidden="true">expand_more</span>
                                 </div>
                             </div>
                         </div>
@@ -105,8 +115,8 @@
                             </div>
                         </div>
 
-                        <!-- Off-Grid Conditional Group (Fixed inline style conflicting states) -->
-                        <div id="offgrid-options" class="conditional-group" style="display: none; flex-direction: column; gap: 1.25rem;">
+                        <!-- Off-Grid Conditional Group -->
+                        <div id="offgrid-options" class="conditional-group" style="display: none;">
                             <div class="input-row-card">
                                 <div class="select-group">
                                     <label for="autonomy-days">Days of Autonomy</label>
@@ -136,7 +146,9 @@
 
                     <!-- Section 2: PV Module Specifications -->
                     <fieldset class="form-section-group">
-                        <legend class="section-title-tag">2. PV Module Specifications (STC)</legend>
+                        <legend class="section-title-tag">
+                            <span class="step-number">2</span> PV Module Specifications (STC)
+                        </legend>
 
                         <div class="input-row-card">
                             <div class="select-group">
@@ -193,7 +205,9 @@
 
                     <!-- Section 3: Site Temperature & Inverter Constraints -->
                     <fieldset class="form-section-group">
-                        <legend class="section-title-tag">3. Site Environment & Inverter Specs</legend>
+                        <legend class="section-title-tag">
+                            <span class="step-number">3</span> Site Environment & Inverter Specs
+                        </legend>
 
                         <div class="input-row-card">
                             <div class="select-group">
@@ -254,7 +268,7 @@
                             <span class="material-symbols-outlined" aria-hidden="true">calculate</span> Run Engineering Design
                         </button>
                         <button type="reset" id="reset-btn" class="btn secondary-btn">
-                            <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span> Reset
+                            <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span> Reset Defaults
                         </button>
                     </div>
 
@@ -263,7 +277,7 @@
                 <!-- Results Display Section -->
                 <div id="results-section" class="results-box" style="display: none;" aria-live="polite">
                     <div class="results-header">
-                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                        <span class="material-symbols-outlined success-icon" aria-hidden="true">check_circle</span>
                         <h3>Professional Engineering Design Report</h3>
                     </div>
                     <div class="results-grid">
@@ -295,16 +309,16 @@
                             <span class="result-label">Required Battery Bank Energy</span>
                             <span class="result-value" id="res-battery-bank">--</span>
                         </div>
-                        <div class="result-item">
+                        <div class="result-item full-width-result">
                             <span class="result-label">MPPT Configuration Check</span>
-                            <span class="result-value" id="res-mppt-status" style="font-size: 1rem; color: var(--accent-color);">--</span>
+                            <span class="result-value status-badge" id="res-mppt-status">--</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Formula Reference Sidebar Card -->
-            <div class="info-card">
+            <aside class="info-card">
                 <div class="info-header">
                     <span class="material-symbols-outlined" aria-hidden="true">engineering</span>
                     <h3>Engineering Standards & Formulas</h3>
@@ -327,7 +341,7 @@
                         <span class="formula-eq">(Daily Load × Days of Autonomy) / DoD</span>
                     </li>
                 </ul>
-            </div>
+            </aside>
         </div>
     </main>
 
@@ -341,7 +355,7 @@
         </div>
     </footer>
 
-    <!-- Tool Logic Script -->
+    <!-- Tool Logic Scripts -->
     <script src="../assets/js/tools/solar-pv-calculator.js" defer></script>
     <script src="../assets/js/app.js" defer></script>
 </body>
