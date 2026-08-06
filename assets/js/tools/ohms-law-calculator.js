@@ -1,3 +1,5 @@
+'use strict';
+
 document.addEventListener('DOMContentLoaded', () => {
     const p1Select = document.getElementById('param1-select');
     const p1Value = document.getElementById('param1-value');
@@ -15,6 +17,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!calcBtn) return; // Safety check if element doesn't exist
 
+    // Helper to highlight invalid input fields professionally
+    const setFieldError = (inputEl, isError) => {
+        if (isError) {
+            inputEl.classList.add('input-error');
+        } else {
+            inputEl.classList.remove('input-error');
+        }
+    };
+
+    // Helper to show inline warning banner instead of blocking alert popup
+    const showNotification = (message, isError = true) => {
+        let existingBanner = document.getElementById('ohms-alert-banner');
+        if (!existingBanner) {
+            existingBanner = document.createElement('div');
+            existingBanner.id = 'ohms-alert-banner';
+            existingBanner.className = isError ? 'error-banner' : 'success-banner';
+            calcBtn.closest('form').prepend(existingBanner);
+            existingBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        existingBanner.innerHTML = `<span class="material-symbols-outlined" aria-hidden="true">${isError ? 'error' : 'info'}</span> ${message}`;
+        setTimeout(() => existingBanner.remove(), 6000);
+    };
+
     // Calculate Button Click Event
     calcBtn.addEventListener('click', () => {
         const type1 = p1Select.value;
@@ -22,13 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const val1 = parseFloat(p1Value.value);
         const val2 = parseFloat(p2Value.value);
 
+        // Remove previous banner if any
+        const existingBanner = document.getElementById('ohms-alert-banner');
+        if (existingBanner) existingBanner.remove();
+
+        setFieldError(p1Value, false);
+        setFieldError(p2Value, false);
+
         if (type1 === type2) {
-            alert('Please select two different parameters.');
+            setFieldError(p1Value, true);
+            setFieldError(p2Value, true);
+            showNotification('Please select two different parameters for calculation.');
             return;
         }
 
-        if (isNaN(val1) || isNaN(val2)) {
-            alert('Please enter valid numeric values for both known parameters.');
+        const isVal1Invalid = isNaN(val1);
+        const isVal2Invalid = isNaN(val2);
+
+        setFieldError(p1Value, isVal1Invalid);
+        setFieldError(p2Value, isVal2Invalid);
+
+        if (isVal1Invalid || isVal2Invalid) {
+            showNotification('Please enter valid numeric values for both known parameters.');
             return;
         }
 
@@ -85,9 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 resLabel2.textContent = keys[1];
                 resVal2.textContent = results[keys[1]];
                 resultsSection.style.display = 'block';
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         } catch (err) {
-            alert('Invalid calculation parameters (check for division by zero or negative values).');
+            showNotification('Invalid calculation parameters (check for division by zero, negative resistance, or invalid ranges).');
         }
     });
 
@@ -96,6 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
         p1Value.value = '';
         p2Value.value = '';
         resultsSection.style.display = 'none';
+        
+        document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+        const banner = document.getElementById('ohms-alert-banner');
+        if (banner) banner.remove();
+
         p1Value.focus();
     });
 });
