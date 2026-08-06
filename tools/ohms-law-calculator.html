@@ -45,64 +45,78 @@
         <div class="tool-header">
             <span class="material-symbols-outlined tool-badge-icon">electrical_services</span>
             <h1>Ohm's Law Calculator</h1>
-            <p>Enter any two known values to automatically calculate the remaining electrical parameters.</p>
+            <p>Select any two known parameters and enter their values to instantly calculate the rest.</p>
         </div>
 
         <div class="tool-workspace">
             <!-- Calculator Card -->
             <div class="calculator-card">
-                <div class="input-grid">
-                    <!-- Voltage -->
-                    <div class="input-group">
-                        <label for="voltage">Voltage (V)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="voltage" placeholder="e.g., 12" step="any">
-                            <span class="unit">Volts</span>
+                <div class="input-grid-dual">
+                    <!-- Known Parameter 1 -->
+                    <div class="input-row">
+                        <div class="select-group">
+                            <label for="param1-select">Known 1</label>
+                            <select id="param1-select">
+                                <option value="voltage" selected>Voltage (V)</option>
+                                <option value="current">Current (I)</option>
+                                <option value="resistance">Resistance (R)</option>
+                                <option value="power">Power (P)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="param1-value">Value</label>
+                            <input type="number" id="param1-value" placeholder="Enter value" step="any">
                         </div>
                     </div>
 
-                    <!-- Current -->
-                    <div class="input-group">
-                        <label for="current">Current (I)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="current" placeholder="e.g., 2" step="any">
-                            <span class="unit">Amps</span>
+                    <!-- Known Parameter 2 -->
+                    <div class="input-row">
+                        <div class="select-group">
+                            <label for="param2-select">Known 2</label>
+                            <select id="param2-select">
+                                <option value="voltage">Voltage (V)</option>
+                                <option value="current" selected>Current (I)</option>
+                                <option value="resistance">Resistance (R)</option>
+                                <option value="power">Power (P)</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <!-- Resistance -->
-                    <div class="input-group">
-                        <label for="resistance">Resistance (R)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="resistance" placeholder="e.g., 6" step="any">
-                            <span class="unit">Ohms</span>
-                        </div>
-                    </div>
-
-                    <!-- Power -->
-                    <div class="input-group">
-                        <label for="power">Power (P)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="power" placeholder="e.g., 24" step="any">
-                            <span class="unit">Watts</span>
+                        <div class="input-group">
+                            <label for="param2-value">Value</label>
+                            <input type="number" id="param2-value" placeholder="Enter value" step="any">
                         </div>
                     </div>
                 </div>
 
+                <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button id="calc-btn" class="btn primary-btn">Calculate</button>
-                    <button id="reset-btn" class="btn secondary-btn">Clear Form</button>
+                    <button id="reset-btn" class="btn secondary-btn">Reset</button>
+                </div>
+
+                <!-- Results Display Section -->
+                <div id="results-section" class="results-box" style="display: none;">
+                    <h3>Calculation Results</h3>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <span class="result-label" id="res-label-1">Voltage (V)</span>
+                            <span class="result-value" id="res-val-1">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label" id="res-label-2">Resistance (R)</span>
+                            <span class="result-value" id="res-val-2">--</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Formula Reference Sidebar/Card -->
+            <!-- Formula Reference Sidebar Card -->
             <div class="info-card">
                 <h3>Ohm's Law Formulas</h3>
                 <ul>
-                    <li><strong>Voltage ($V$):</strong> $V = I \times R$ or $V = \frac{P}{I}$</li>
-                    <li><strong>Current ($I$):</strong> $I = \frac{V}{R}$ or $I = \frac{P}{V}$</li>
-                    <li><strong>Resistance ($R$):</strong> $R = \frac{V}{I}$ or $R = \frac{V^2}{P}$</li>
-                    <li><strong>Power ($P$):</strong> $P = V \times I$ or $P = I^2 \times R$</li>
+                    <li><strong>Voltage (V):</strong> V = I × R &nbsp;|&nbsp; V = P / I</li>
+                    <li><strong>Current (I):</strong> I = V / R &nbsp;|&nbsp; I = P / V</li>
+                    <li><strong>Resistance (R):</strong> R = V / I &nbsp;|&nbsp; R = V² / P</li>
+                    <li><strong>Power (P):</strong> P = V × I &nbsp;|&nbsp; P = I² × R</li>
                 </ul>
             </div>
         </div>
