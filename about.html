@@ -5,25 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us — Prasun Tools</title>
     <meta name="description" content="Learn more about Prasun Tools — a collection of fast, free, and privacy-friendly utilities built for developers, engineers, and professionals.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 <body>
-    <main class="container" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
-        <h1>About Prasun Tools</h1>
-        <p>Welcome to <strong>Prasun Tools</strong>, your destination for fast, free, and privacy-friendly online utilities designed for developers, engineers, students, and digital professionals.</p>
-        
-        <h2>Our Mission</h2>
-        <p>In a world where many online tools require server uploads and complex registration steps, Prasun Tools takes a different approach. Our core mission is to provide lightning-fast web utilities that run <strong>entirely client-side</strong> inside your browser. This means your data stays on your device, ensuring maximum privacy and instant results.</p>
-        
-        <h2>Why Choose Us?</h2>
-        <ul>
-            <li><strong>Privacy-First:</strong> Processing happens locally in your browser. We do not store or track your sensitive input data on our servers.</li>
-            <li><strong>Built for Speed:</strong> Optimized lightweight scripts ensure tools load instantly without bloat.</li>
-            <li><strong>Completely Free:</strong> All calculators and utilities are 100% free to use with no hidden subscription fees.</li>
-        </ul>
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <span class="material-symbols-outlined">bolt</span>
+                <span>Prasun Tools</span>
+            </a>
+            <a href="/" class="btn-secondary" style="text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 14px;">← Back to Home</a>
+        </div>
+    </header>
 
-        <h2>Contact Us</h2>
-        <p>Have a suggestion for a new tool or found a bug? Feel free to reach out via our <a href="/contact.html">Contact Page</a>.</p>
+    <main class="container" style="max-width: 850px; margin: 60px auto; padding: 0 20px;">
+        <div class="content-card" style="background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e2e8f0); border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+            <h1 style="font-size: 2.5rem; margin-bottom: 15px; font-weight: 800;">About Prasun Tools</h1>
+            <p style="font-size: 1.1rem; color: var(--text-muted, #64748b); line-height: 1.7; margin-bottom: 30px;">
+                Welcome to <strong>Prasun Tools</strong>, your destination for fast, free, and privacy-friendly online utilities designed for developers, engineers, students, and digital professionals.
+            </p>
+
+            <hr style="border: none; border-top: 1px solid var(--border-color, #e2e8f0); margin: 30px 0;">
+
+            <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Our Mission</h2>
+            <p style="line-height: 1.7; margin-bottom: 25px; color: var(--text-main, #334155);">
+                In a world where many online tools require server uploads and complex registration steps, Prasun Tools takes a different approach. Our core mission is to provide lightning-fast web utilities that run <strong>entirely client-side</strong> inside your browser. This means your data stays strictly on your device, ensuring maximum privacy and instant execution.
+            </p>
+
+            <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Why Choose Us?</h2>
+            <ul style="list-style: none; padding: 0; display: grid; gap: 15px; margin-bottom: 30px;">
+                <li style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span class="material-symbols-outlined" style="color: var(--accent, #3b82f6);">verified_user</span>
+                    <div><strong>Privacy-First:</strong> Processing happens locally in your browser. We never track or store your sensitive input data on our servers.</div>
+                </li>
+                <li style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span class="material-symbols-outlined" style="color: var(--accent, #3b82f6);">speed</span>
+                    <div><strong>Built for Speed:</strong> Optimized lightweight code ensures tools load instantaneously without bloat.</div>
+                </li>
+                <li style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span class="material-symbols-outlined" style="color: var(--accent, #3b82f6);">card_giftcard</span>
+                    <div><strong>Completely Free:</strong> All calculators and utilities are 100% free to use with zero hidden subscriptions.</div>
+                </li>
+            </ul>
+
+            <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Get in Touch</h2>
+            <p style="line-height: 1.7;">Have a suggestion for a new tool or found a bug? Feel free to reach out via our <a href="/contact.html" style="color: var(--accent, #3b82f6); text-decoration: none; font-weight: 600;">Contact Page</a>.</p>
+        </div>
     </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p class="privacy-badge">
+                <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
+            </p>
+            <p class="footer-nav" style="margin: 15px 0; font-size: 14px;">
+                <a href="/about.html">About Us</a> | 
+                <a href="/privacy-policy.html">Privacy Policy</a> | 
+                <a href="/terms.html">Terms & Conditions</a> | 
+                <a href="/contact.html">Contact Us</a>
+            </p>
+            <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
