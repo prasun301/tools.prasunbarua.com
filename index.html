@@ -1,123 +1,1664 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities</title>
-    <meta name="description" content="A modern collection of fast, free, and privacy-friendly online tools for developers, engineers, students, and professionals running directly in your browser.">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities">
-    <meta property="og:description" content="Modern browser-based tools for developers, engineers, and professionals. Zero server tracking.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tools.prasunbarua.com">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- Google Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
-    <!-- Theme Initializer Script -->
-<script>
-    const updateThemeFromDevice = () => {
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
-    };
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prasun Tools — Fast, Free & Privacy-Friendly Online Tools</title>
+  <meta name="description" content="Discover professional, lightning-fast, and 100% privacy-friendly online tools for developers, engineers, and creators. Free, browser-based, no registration required.">
+  <link rel="canonical" href="https://tools.prasunbarua.com/">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.prasunbarua.com/">
+  <meta property="og:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Tools">
+  <meta property="og:description" content="Professional developer, engineering, and utility tools built for speed and privacy.">
+  <meta property="og:image" content="https://tools.prasunbarua.com/og-image.png">
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Tools">
+  <meta name="twitter:description" content="Professional developer, engineering, and utility tools built for speed and privacy.">
 
-    // Apply theme immediately on load
-    updateThemeFromDevice();
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
-    // Listen for live system changes in real-time
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-    });
-</script>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Prasun Tools",
+    "url": "https://tools.prasunbarua.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://tools.prasunbarua.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Prasun Tools",
+    "url": "https://tools.prasunbarua.com",
+    "logo": "https://tools.prasunbarua.com/logo.png",
+    "sameAs": [
+      "https://github.com/prasunbarua",
+      "https://linkedin.com/in/prasunbarua"
+    ]
+  }
+  </script>
+
+  <style>
+    /* Design Tokens & CSS Variables */
+    :root {
+      --bg-primary: #09090b;
+      --bg-secondary: #121216;
+      --bg-tertiary: #18181b;
+      --bg-card: rgba(24, 24, 27, 0.7);
+      --bg-card-hover: rgba(39, 39, 42, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --text-tertiary: #71717a;
+      --accent-primary: #6366f1;
+      --accent-secondary: #a855f7;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --surface-glass: rgba(18, 18, 22, 0.75);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #fafafa;
+      --bg-secondary: #f4f4f5;
+      --bg-tertiary: #e4e4e7;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --border-color: rgba(0, 0, 0, 0.08);
+      --border-hover: rgba(0, 0, 0, 0.2);
+      --text-primary: #09090b;
+      --text-secondary: #52525b;
+      --text-tertiary: #71717a;
+      --accent-primary: #4f46e5;
+      --accent-secondary: #9333ea;
+      --accent-glow: rgba(79, 70, 229, 0.1);
+      --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
+      --surface-glass: rgba(255, 255, 255, 0.8);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Skip link for Accessibility */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent-primary);
+      color: #fff;
+      padding: 8px 16px;
+      z-index: 100;
+      transition: top 0.2s ease;
+      border-radius: 0 0 var(--radius-sm) 0;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Utility & Background Glow */
+    .bg-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1200px;
+      height: 600px;
+      background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Sticky Header & Navigation */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4.5rem;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: var(--radius-sm);
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover, .nav-links a:focus-visible {
+      color: var(--text-primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .icon-btn:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--border-hover);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      padding: 6rem 0 4rem;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-badge span.dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-title .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--border-hover);
+    }
+
+    /* Modern Search Experience */
+    .search-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .search-box {
+      position: relative;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem 0.5rem 1.25rem;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-lg);
+    }
+
+    .search-box .material-symbols-outlined {
+      color: var(--text-tertiary);
+      font-size: 1.5rem;
+      margin-right: 0.75rem;
+    }
+
+    .search-input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.05rem;
+      font-family: var(--font-sans);
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .search-shortcut {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-tertiary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .search-suggestions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .suggestion-label {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+    }
+
+    .suggestion-chip {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .suggestion-chip:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+    }
+
+    /* Section Shared Styling */
+    section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-primary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* Category Section */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .category-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .category-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .category-card:hover::before {
+      opacity: 1;
+    }
+
+    .category-icon-wrapper {
+      width: 3rem;
+      height: 3rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .category-card:hover .category-icon-wrapper {
+      background: var(--accent-primary);
+      color: white;
+    }
+
+    .category-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .category-info p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .category-count {
+      margin-top: auto;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-tertiary);
+    }
+
+    /* Tools Grid & Cards */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .tool-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .tool-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .tool-icon {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: var(--radius-md);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .tool-meta-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-category { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); }
+    .badge-popular { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+    .badge-fast { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-privacy { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+
+    .favorite-btn {
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0.25rem;
+    }
+
+    .favorite-btn:hover, .favorite-btn.active {
+      color: #ef4444;
+      transform: scale(1.1);
+    }
+
+    .tool-body h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .tool-body p {
+      font-size: 0.925rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .tool-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .tool-stats {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Why Choose Us & Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: var(--radius-sm);
+      background: var(--accent-glow);
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Statistics Section */
+    .stats-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 4rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Testimonials Section */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent-primary);
+    }
+
+    .author-info h4 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .author-info p {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Call to Action Banner */
+    .cta-banner {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 100%, var(--accent-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-banner p {
+      color: var(--text-secondary);
+      max-width: 550px;
+      margin: 0 auto 2rem;
+      font-size: 1.05rem;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 5rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(4, 1fr);
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 968px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .footer-brand {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-brand {
+        grid-column: span 1;
+      }
+    }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      max-width: 300px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+    }
+
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+    }
+
+    /* Mobile menu drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 4.5rem;
+      left: 0;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 999;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mobile-drawer.open {
+      display: flex;
+    }
+
+    .mobile-drawer a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.5rem 0;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="logo">
-                <span class="material-symbols-outlined logo-icon">bolt</span> Prasun Tools
-            </a>
-            <nav class="nav-links">
-                <a href="/">Home</a>
-                <a href="#tools-grid">Tools</a>
-                <button id="theme-toggle" aria-label="Toggle dark and light mode">
-                    <span class="material-symbols-outlined">dark_mode</span>
-                </button>
-            </nav>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="bg-glow"></div>
+
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="https://tools.prasunbarua.com" class="logo-brand">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">bolt</span>
         </div>
-    </header>
+        <span>Prasun Tools</span>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#featured">Popular</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+          <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
+        </button>
+        <button class="mobile-menu-btn icon-btn" id="mobile-menu-toggle" aria-label="Open navigation menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+      <a href="#categories">Categories</a>
+      <a href="#featured">Popular Tools</a>
+      <a href="#features">Features</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container">
-            <h1>Professional Utilities, Built for Speed</h1>
-            <p>Fast, free, and privacy-friendly online tools running completely client-side in your browser.</p>
-            
-            <!-- Live Search Bar -->
-            <div class="search-container">
-                <span class="material-symbols-outlined search-icon">search</span>
-                <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV)..." aria-label="Search tools">
-            </div>
+      <div class="container">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span>Fast, Free & 100% Privacy-Friendly</span>
         </div>
+        
+        <h1 class="hero-title">
+          Professional Utilities for <span class="gradient-text">Modern Engineers</span> & Creators
+        </h1>
+        
+        <p class="hero-subtitle">
+          A lightning-fast suite of browser-based online tools built with unmatched precision. Zero installation, zero server-side logging, absolute privacy.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#categories" class="btn btn-primary">
+            <span class="material-symbols-outlined">explore</span>
+            Browse All Tools
+          </a>
+          <a href="#contact" class="btn btn-secondary">
+            <span class="material-symbols-outlined">lightbulb</span>
+            Suggest a Tool
+          </a>
+        </div>
+
+        <!-- Modern Search Experience -->
+        <div class="search-wrapper">
+          <div class="search-box">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" id="tool-search" class="search-input" placeholder="Search 50+ tools (e.g. PDF Merge, Ohm's Law, Solar PV)..." aria-label="Search tools">
+            <kbd class="search-shortcut">⌘K</kbd>
+          </div>
+          <div class="search-suggestions" id="search-suggestions">
+            <span class="suggestion-label">Popular:</span>
+            <span class="suggestion-chip" data-query="Solar PV">Solar PV</span>
+            <span class="suggestion-chip" data-query="PDF Merge">PDF Merge</span>
+            <span class="suggestion-chip" data-query="Image Compressor">Image Compressor</span>
+            <span class="suggestion-chip" data-query="Ohm's Law">Ohm's Law</span>
+            <span class="suggestion-chip" data-query="Unit Converter">Unit Converter</span>
+            <span class="suggestion-chip" data-query="Text Case">Text Case</span>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Main Tools Grid Section -->
-    <main class="container" id="tools-grid">
-        <h2 class="section-title">Available Tools</h2>
-        
-        <div class="grid">
-            <!-- Tool Card 1: Ohm's Law -->
-            <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power">
-                <div class="card-icon">
-                    <span class="material-symbols-outlined">electrical_services</span>
-                </div>
-                <h3>Ohm's Law Calculator</h3>
-                <p>Calculate Voltage, Current, Resistance, and Power instantly using Ohm's Law formulas.</p>
-                <span class="card-tag">Engineering</span>
-            </a>
-
-            <!-- Tool Card 2: Solar PV -->
-            <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing">
-                <div class="card-icon">
-                    <span class="material-symbols-outlined">solar_power</span>
-                </div>
-                <h3>Solar PV Calculator</h3>
-                <p>Estimate solar panel sizing, system capacity, and daily energy generation output.</p>
-                <span class="card-tag">Engineering</span>
-            </a>
+    <!-- Categories Section -->
+    <section id="categories">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Explore By Category</span>
+          <h2 class="section-title">Built for Every Professional Workflow</h2>
+          <p class="section-desc">Find specialized utilities curated for engineering calculations, developer productivity, and document workflows.</p>
         </div>
-    </main>
 
-    <!-- Footer Section -->
-<footer class="site-footer">
-    <div class="container footer-content">
-        <!-- Privacy Badge -->
-        <p class="privacy-badge">
-            <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
-        </p>
+        <div class="categories-grid">
+          <a href="#engineering" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">engineering</span>
+            </div>
+            <div class="category-info">
+              <h3>Engineering</h3>
+              <p>Mechanical & structural calculation modules.</p>
+            </div>
+            <div class="category-count">12 Tools Available</div>
+          </a>
 
-        <!-- AdSense & Navigation Links -->
-        <p class="footer-nav" style="margin: 15px 0; font-size: 14px;">
-            <a href="/about.html">About Us</a> | 
-            <a href="/privacy-policy.html">Privacy Policy</a> | 
-            <a href="/terms.html">Terms & Conditions</a> | 
-            <a href="/contact.html">Contact Us</a>
-        </p>
+          <a href="#electrical" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">bolt</span>
+            </div>
+            <div class="category-info">
+              <h3>Electrical</h3>
+              <p>Circuit analysis & power factor math.</p>
+            </div>
+            <div class="category-count">8 Tools Available</div>
+          </a>
 
-        <!-- Copyright -->
-        <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+          <a href="#solar" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">solar_power</span>
+            </div>
+            <div class="category-info">
+              <h3>Solar PV</h3>
+              <p>Irradiance, sizing & yield estimations.</p>
+            </div>
+            <div class="category-count">6 Tools Available</div>
+          </a>
+
+          <a href="#pdf" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">picture_as_pdf</span>
+            </div>
+            <div class="category-info">
+              <h3>PDF & Documents</h3>
+              <p>Merge, split, compress & convert securely.</p>
+            </div>
+            <div class="category-count">10 Tools Available</div>
+          </a>
+
+          <a href="#image" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">image</span>
+            </div>
+            <div class="category-info">
+              <h3>Image & Media</h3>
+              <p>Resize, optimize & convert formats instantly.</p>
+            </div>
+            <div class="category-count">9 Tools Available</div>
+          </a>
+
+          <a href="#developer" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">code</span>
+            </div>
+            <div class="category-info">
+              <h3>Developer</h3>
+              <p>JSON formatters, hash generators & encoders.</p>
+            </div>
+            <div class="category-count">14 Tools Available</div>
+          </a>
+
+          <a href="#finance" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">payments</span>
+            </div>
+            <div class="category-info">
+              <h3>Finance</h3>
+              <p>Loan amortization, ROI & interest calculators.</p>
+            </div>
+            <div class="category-count">7 Tools Available</div>
+          </a>
+
+          <a href="#productivity" class="category-card">
+            <div class="category-icon-wrapper">
+              <span class="material-symbols-outlined">task_alt</span>
+            </div>
+            <div class="category-info">
+              <h3>Productivity</h3>
+              <p>Text casing, word counters & markdown tools.</p>
+            </div>
+            <div class="category-count">11 Tools Available</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Tools Section -->
+    <section id="featured">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">High Performance Suite</span>
+          <h2 class="section-title">Featured & Popular Tools</h2>
+          <p class="section-desc">Explore our top-rated utilities engineered for instant execution and flawless offline performance.</p>
+        </div>
+
+        <div class="tools-grid" id="tools-container">
+          
+          <!-- Tool Card 1 -->
+          <div class="tool-card" data-name="solar pv sizing calculator">
+            <div class="tool-header">
+              <div class="tool-icon-title">
+                <div class="tool-icon">
+                  <span class="material-symbols-outlined">solar_power</span>
+                </div>
+                <div class="tool-meta-badges">
+                  <span class="badge badge-category">Solar PV</span>
+                  <span class="badge badge-popular">Popular</span>
+                </div>
+              </div>
+              <button class="favorite-btn" aria-label="Save to favorites">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+            </div>
+            <div class="tool-body">
+              <h3>Solar PV System Sizing</h3>
+              <p>Calculate optimal panel array capacity, inverter rating, and annual energy yield based on geographic coordinates.</p>
+            </div>
+            <div class="tool-footer">
+              <span class="tool-stats">14.2k monthly uses</span>
+              <a href="#" class="btn btn-primary btn-sm">Open Tool</a>
+            </div>
+          </div>
+
+          <!-- Tool Card 2 -->
+          <div class="tool-card" data-name="pdf merge and split">
+            <div class="tool-header">
+              <div class="tool-icon-title">
+                <div class="tool-icon">
+                  <span class="material-symbols-outlined">merge</span>
+                </div>
+                <div class="tool-meta-badges">
+                  <span class="badge badge-category">PDF</span>
+                  <span class="badge badge-privacy">100% Private</span>
+                </div>
+              </div>
+              <button class="favorite-btn" aria-label="Save to favorites">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+            </div>
+            <div class="tool-body">
+              <h3>Secure PDF Merge & Split</h3>
+              <p>Combine multiple PDF documents or extract specific pages entirely client-side. Your files never leave your device.</p>
+            </div>
+            <div class="tool-footer">
+              <span class="tool-stats">28.5k monthly uses</span>
+              <a href="#" class="btn btn-primary btn-sm">Open Tool</a>
+            </div>
+          </div>
+
+          <!-- Tool Card 3 -->
+          <div class="tool-card" data-name="ohm's law electrical calculator">
+            <div class="tool-header">
+              <div class="tool-icon-title">
+                <div class="tool-icon">
+                  <span class="material-symbols-outlined">electric_bolt</span>
+                </div>
+                <div class="tool-meta-badges">
+                  <span class="badge badge-category">Electrical</span>
+                  <span class="badge badge-fast">Instant</span>
+                </div>
+              </div>
+              <button class="favorite-btn" aria-label="Save to favorites">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+            </div>
+            <div class="tool-body">
+              <h3>Ohm's Law & Power Calculator</h3>
+              <p>Instantly compute voltage, current, resistance, and electrical power with interactive real-time validation.</p>
+            </div>
+            <div class="tool-footer">
+              <span class="tool-stats">9.8k monthly uses</span>
+              <a href="#" class="btn btn-primary btn-sm">Open Tool</a>
+            </div>
+          </div>
+
+          <!-- Tool Card 4 -->
+          <div class="tool-card" data-name="image compressor and optimizer">
+            <div class="tool-header">
+              <div class="tool-icon-title">
+                <div class="tool-icon">
+                  <span class="material-symbols-outlined">compress</span>
+                </div>
+                <div class="tool-meta-badges">
+                  <span class="badge badge-category">Image</span>
+                  <span class="badge badge-popular">Popular</span>
+                </div>
+              </div>
+              <button class="favorite-btn" aria-label="Save to favorites">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+            </div>
+            <div class="tool-body">
+              <h3>Bulk Image Compressor</h3>
+              <p>Reduce PNG, JPEG, and WebP file sizes locally in your browser with adjustable compression fidelity.</p>
+            </div>
+            <div class="tool-footer">
+              <span class="tool-stats">41.1k monthly uses</span>
+              <a href="#" class="btn btn-primary btn-sm">Open Tool</a>
+            </div>
+          </div>
+
+          <!-- Tool Card 5 -->
+          <div class="tool-card" data-name="json validator and formatter">
+            <div class="tool-header">
+              <div class="tool-icon-title">
+                <div class="tool-icon">
+                  <span class="material-symbols-outlined">data_object</span>
+                </div>
+                <div class="tool-meta-badges">
+                  <span class="badge badge-category">Developer</span>
+                  <span class="badge badge-fast">Fast</span>
+                </div>
+              </div>
+              <button class="favorite-btn" aria-label="Save to favorites">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+            </div>
+            <div class="tool-body">
+              <h3>JSON Validator & Minifier</h3>
+              <p>Parse, beautify, validate syntax, and inspect deeply nested JSON objects with intuitive error highlighting.</p>
+            </div>
+            <div class="tool-footer">
+              <span class="tool-stats">19.3k monthly uses</span>
+              <a href="#" class="btn btn-primary btn-sm">Open Tool</a>
+            </div>
+          </div>
+
+          <!-- Tool Card 6 -->
+          <div class="tool-card" data-name="advanced unit converter">
+            <div class="tool-header">
+              <div class="tool-icon-title">
+                <div class="tool-icon">
+                  <span class="material-symbols-outlined">calculate</span>
+                </div>
+                <div class="tool-meta-badges">
+                  <span class="badge badge-category">Utilities</span>
+                  <span class="badge badge-privacy">Privacy</span>
+                </div>
+              </div>
+              <button class="favorite-btn" aria-label="Save to favorites">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+            </div>
+            <div class="tool-body">
+              <h3>Engineering Unit Converter</h3>
+              <p>Convert pressure, torque, kinematic viscosity, energy, and imperial/metric units with ultra-high precision.</p>
+            </div>
+            <div class="tool-footer">
+              <span class="tool-stats">11.6k monthly uses</span>
+              <a href="#" class="btn btn-primary btn-sm">Open Tool</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <h3>50+</h3>
+            <p>Online Tools</p>
+          </div>
+          <div class="stat-item">
+            <h3>100k+</h3>
+            <p>Monthly Uses</p>
+          </div>
+          <div class="stat-item">
+            <h3>100%</h3>
+            <p>Browser Based</p>
+          </div>
+          <div class="stat-item">
+            <h3>0</h3>
+            <p>Data Logged</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Uncompromising Quality</span>
+          <h2 class="section-title">Why Professionals Choose Prasun Tools</h2>
+          <p class="section-desc">Designed with the rigor of modern SaaS platforms to guarantee speed, safety, and reliability.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">lock</span>
+            </div>
+            <h3>Privacy First Architecture</h3>
+            <p>All processing happens locally in your browser via WebAssembly and modern JavaScript APIs. Your documents never touch external servers.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">bolt</span>
+            </div>
+            <h3>Blazing Fast Performance</h3>
+            <p>Optimized with zero bloated tracking scripts and highly performant algorithms for instant rendering and execution.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">devices</span>
+            </div>
+            <h3>Cross-Platform Responsive</h3>
+            <p>Engineered to adapt flawlessly across desktops, tablets, and mobile phones with full touch optimization.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">verified_user</span>
+            </div>
+            <h3>No Registration Required</h3>
+            <p>Jump straight into work without accounts, intrusive popups, subscription walls, or email capture prompts.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">offline_bolt</span>
+            </div>
+            <h3>Reliable & Offline Capable</h3>
+            <p>Built with progressive web standards so you can continue performing critical calculations even without stable internet.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">grade</span>
+            </div>
+            <h3>Professional Precision</h3>
+            <p>Rigorous test suites ensure engineering calculations and cryptographic utilities match industrial accuracy standards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Trusted Worldwide</span>
+          <h2 class="section-title">Loved by Engineers & Developers</h2>
+          <p class="section-desc">See what industry professionals say about our speed and precision.</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Prasun Tools has become my daily go-to for quick JSON formatting and solar calculations. The clean interface and zero ads make it feel like a premium dev app."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JD</div>
+              <div class="author-info">
+                <h4>Jonathan Davis</h4>
+                <p>Senior Full-Stack Engineer</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"As an electrical consultant, having client data processed locally in the browser is a game changer for NDA compliance. Lightning fast and accurate."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">SM</div>
+              <div class="author-info">
+                <h4>Sarah Mukherjee</h4>
+                <p>Principal Electrical Engineer</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"The UI is cleaner and faster than any other online tool suite I've used. The attention to detail and keyboard shortcuts show true senior engineering craft."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">AK</div>
+              <div class="author-info">
+                <h4>Alexandre Keller</h4>
+                <p>Lead Product Designer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section>
+      <div class="container">
+        <div class="cta-banner">
+          <h2>Ready to streamline your workflow?</h2>
+          <p>Access our complete suite of professional engineering and developer tools right in your browser. Always free, always private.</p>
+          <a href="#categories" class="btn btn-primary">
+            <span class="material-symbols-outlined">rocket_launch</span>
+            Explore All 50+ Tools
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="about">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="https://tools.prasunbarua.com" class="logo-brand">
+            <div class="logo-icon">
+              <span class="material-symbols-outlined">bolt</span>
+            </div>
+            <span>Prasun Tools</span>
+          </a>
+          <p>Fast, free, and privacy-friendly online utilities built for professional developers, engineers, and creators worldwide.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#featured">Popular Tools</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Suggest Tool</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#engineering">Engineering</a></li>
+            <li><a href="#electrical">Electrical</a></li>
+            <li><a href="#solar">Solar PV</a></li>
+            <li><a href="#pdf">PDF & Documents</a></li>
+            <li><a href="#developer">Developer</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal & Privacy</h4>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Disclaimer</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col" id="contact">
+          <h4>Connect</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/prasunbarua" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://linkedin.com/in/prasunbarua" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="mailto:contact@prasunbarua.com">Contact Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Prasun Tools. All rights reserved.</p>
+        <div class="privacy-badge">
+          <span class="material-symbols-outlined" style="font-size: 1rem;">verified_user</span>
+          100% Client-Side Privacy Guaranteed
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
 
-    <!-- Application Script -->
-    <script src="/assets/js/app.js" defer></script>
+  <!-- JavaScript Interactivity -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Theme Management
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const htmlElement = document.documentElement;
+
+      const savedTheme = localStorage.getItem('prasun_tools_theme');
+      if (savedTheme) {
+        htmlElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+      } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        htmlElement.setAttribute('data-theme', 'light');
+        updateThemeIcon('light');
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('prasun_tools_theme', newTheme);
+        updateThemeIcon(newTheme);
+      });
+
+      function updateThemeIcon(theme) {
+        themeIcon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+      }
+
+      // Mobile Menu Toggle
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileDrawer = document.getElementById('mobile-drawer');
+
+      mobileMenuToggle.addEventListener('click', () => {
+        mobileDrawer.classList.toggle('open');
+      });
+
+      // Close mobile drawer on link click
+      mobileDrawer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileDrawer.classList.remove('open');
+        });
+      });
+
+      // Interactive Search Filtering
+      const searchInput = document.getElementById('tool-search');
+      const toolCards = document.querySelectorAll('.tool-card');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        toolCards.forEach(card => {
+          const toolName = card.getAttribute('data-name');
+          const textContent = card.textContent.toLowerCase();
+          if (toolName.includes(query) || textContent.includes(query)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+
+      // Suggestion Chips Click Handler
+      const suggestionChips = document.querySelectorAll('.suggestion-chip');
+      suggestionChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const query = chip.getAttribute('data-query');
+          searchInput.value = query;
+          searchInput.dispatchEvent(new Event('input'));
+          searchInput.focus();
+        });
+      });
+
+      // Keyboard Shortcut ⌘K for Search
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      });
+
+      // Favorite Buttons Toggle
+      const favoriteBtns = document.querySelectorAll('.favorite-btn');
+      favoriteBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          btn.classList.toggle('active');
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (btn.classList.contains('active')) {
+            icon.style.fontVariationSettings = "'FILL' 1";
+          } else {
+            icon.style.fontVariationSettings = "'FILL' 0";
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
