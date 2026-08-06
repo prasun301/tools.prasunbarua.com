@@ -6,32 +6,51 @@
     <title>Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities</title>
     <meta name="description" content="A modern collection of fast, free, and privacy-friendly online tools for developers, engineers, students, and professionals running directly in your browser.">
     
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://tools.prasunbarua.com/">
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities">
     <meta property="og:description" content="Modern browser-based tools for developers, engineers, and professionals. Zero server tracking.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tools.prasunbarua.com">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities">
+    <meta name="twitter:description" content="Modern browser-based tools for developers, engineers, and professionals. Zero server tracking.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- Google Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
-    
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Prasun Tools",
+      "url": "https://tools.prasunbarua.com",
+      "description": "Fast, free, and privacy-friendly online utilities for professionals and engineers."
+    }
+    </script>
+
     <!-- Theme Initializer Script -->
     <script>
         const updateThemeFromDevice = () => {
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
         };
-
+        
         // Apply theme immediately on load
         updateThemeFromDevice();
-
+        
         // Listen for live system changes in real-time
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
@@ -44,7 +63,8 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="/" class="logo">
-                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span> Prasun Tools
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span>
+                <span>Prasun Tools</span>
             </a>
             <nav class="nav-links" aria-label="Main Navigation">
                 <a href="/">Home</a>
@@ -58,12 +78,15 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container">
+        <div class="container hero-content">
+            <div class="hero-badge" aria-label="Platform badge">
+                <span class="material-symbols-outlined" aria-hidden="true">verified</span> 100% Client-Side Processing
+            </div>
             <h1>Professional Utilities, Built for Speed</h1>
             <p>Fast, free, and privacy-friendly online tools running completely client-side in your browser.</p>
             
             <!-- Live Search Bar -->
-            <div class="search-container">
+            <div class="search-container" role="search">
                 <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
                 <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV)..." aria-label="Search tools">
             </div>
@@ -72,27 +95,42 @@
 
     <!-- Main Tools Grid Section -->
     <main class="container" id="tools-grid">
-        <h2 class="section-title">Available Tools</h2>
+        <div class="section-header">
+            <h2 class="section-title">Available Tools</h2>
+            <p class="section-subtitle">Explore our growing collection of robust browser utilities.</p>
+        </div>
         
         <div class="grid">
             <!-- Tool Card 1: Ohm's Law -->
             <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power">
-               <div class="card-icon">
-                   <span class="material-symbols-outlined" aria-hidden="true">electrical_services</span>
-               </div>
-               <h3>Ohm's Law Calculator</h3>
-               <p>Calculate Voltage, Current, Resistance, and Power instantly using Ohm's Law formulas.</p>
-               <span class="card-tag">Engineering</span>
+                <div class="card-header-row">
+                    <div class="card-icon" aria-hidden="true">
+                        <span class="material-symbols-outlined">electrical_services</span>
+                    </div>
+                    <span class="card-tag">Engineering</span>
+                </div>
+                <h3>Ohm's Law Calculator</h3>
+                <p>Calculate Voltage, Current, Resistance, and Power instantly using Ohm's Law formulas.</p>
+                <div class="card-footer-action">
+                    <span>Launch Tool</span>
+                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
+                </div>
             </a>
 
             <!-- Tool Card 2: Solar PV -->
             <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing">
-               <div class="card-icon">
-                   <span class="material-symbols-outlined" aria-hidden="true">solar_power</span>
-               </div>
-               <h3>Solar PV Calculator</h3>
-               <p>Estimate solar panel sizing, system capacity, and daily energy generation output.</p>
-               <span class="card-tag">Engineering</span>
+                <div class="card-header-row">
+                    <div class="card-icon" aria-hidden="true">
+                        <span class="material-symbols-outlined">solar_power</span>
+                    </div>
+                    <span class="card-tag">Engineering</span>
+                </div>
+                <h3>Solar PV Calculator</h3>
+                <p>Estimate solar panel sizing, system capacity, and daily energy generation output.</p>
+                <div class="card-footer-action">
+                    <span>Launch Tool</span>
+                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
+                </div>
             </a>
         </div>
     </main>
@@ -105,16 +143,19 @@
                 <span class="material-symbols-outlined" aria-hidden="true">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
             </p>
 
-            <!-- AdSense & Navigation Links -->
-            <p class="footer-nav" style="margin: 15px 0; font-size: 14px;">
-                <a href="/about.html">About Us</a> | 
-                <a href="/privacy-policy.html">Privacy Policy</a> | 
-                <a href="/terms.html">Terms & Conditions</a> | 
+            <!-- Navigation Links -->
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <a href="/about.html">About Us</a>
+                <span class="separator" aria-hidden="true">•</span>
+                <a href="/privacy-policy.html">Privacy Policy</a>
+                <span class="separator" aria-hidden="true">•</span>
+                <a href="/terms.html">Terms & Conditions</a>
+                <span class="separator" aria-hidden="true">•</span>
                 <a href="/contact.html">Contact Us</a>
-            </p>
+            </nav>
 
             <!-- Copyright -->
-            <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+            <p class="copyright">&copy; 2026 Prasun Barua. All rights reserved.</p>
         </div>
     </footer>
 
