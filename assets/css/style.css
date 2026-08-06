@@ -1,145 +1,190 @@
+/* =========================================================
+   PROFESSIONAL DESIGN SYSTEM STYLESHEET
+   Architecture: Root Variables -> Reset -> Base -> Components
+========================================================= */
+
+/* =========================================================
+   01. Root Variables & Design Tokens
+========================================================= */
 :root {
+    /* --- Colors: Surfaces & Backgrounds --- */
+    --surface-1: #0f172a;
+    --surface-2: #1e293b;
+    
+    /* --- Colors: Text --- */
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+    --text-inverse: #ffffff; /* Explicitly for buttons/elements needing strict contrast */
 
-    --bg-color: #0f172a;
+    /* --- Colors: Brand & Accents --- */
+    --primary: #38bdf8;
+    --primary-hover: #2563eb;
+    --primary-rgb: 56, 189, 248; /* RGB extracted for alpha transparency calculations */
+    
+    /* --- Colors: Structural --- */
+    --border: #334155;
 
-    --card-bg: #1e293b;
+    /* --- Legacy Aliases (Maintained for strict backward compatibility) --- */
+    --bg-color: var(--surface-1);
+    --card-bg: var(--surface-2);
+    --text-primary: var(--text-main);
+    --text-secondary: var(--text-sub);
+    --accent-color: var(--primary);
+    --hover-bg: var(--primary-hover);
+    --border-color: var(--border);
 
-    --text-primary: #f8fafc;
+    /* --- Border Radius --- */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-pill: 9999px;
 
-    --text-secondary: #94a3b8;
+    /* --- Shadows --- */
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
+    --shadow-btn: 0 8px 20px rgba(0, 0, 0, 0.15);
 
-    --accent-color: #38bdf8;
+    /* --- Transitions --- */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.25s ease;
 
-    --border-color: #334155;
-
-    --hover-bg: #2563eb;
-
+    /* --- Layout & Spacing --- */
+    --container-width: 1200px;
+    --header-height: 70px;
 }
 
-
+/* Light Theme Overrides */
 [data-theme="light"] {
-
-    --bg-color: #f8fafc;
-
-    --card-bg: #ffffff;
-
-    --text-primary: #0f172a;
-
-    --text-secondary: #64748b;
-
-    --accent-color: #0284c7;
-
-    --border-color: #e2e8f0;
-
-    --hover-bg: #0ea5e9;
-
-}
-
-
-* {
-
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-
-}
-
-
-body {
-
-    background-color: var(--bg-color);
-
-    color: var(--text-primary);
-
-    line-height: 1.6;
-
-    min-height: 100vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-}
-
-
-.container {
-
-    width: 100%;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    padding: 0 1.5rem;
-
+    --surface-1: #f8fafc;
+    --surface-2: #ffffff;
+    
+    --text-main: #0f172a;
+    --text-sub: #64748b;
+    
+    --primary: #0284c7;
+    --primary-hover: #0ea5e9;
+    --primary-rgb: 2, 132, 199;
+    
+    --border: #e2e8f0;
 }
 
 /* =========================================================
-   Global Hyperlink Styles
+   02. CSS Reset
 ========================================================= */
-
-/* Normal links only */
-a:not(.btn-primary):not(.primary-btn) {
-    color: var(--accent-color);
-    text-decoration: none;
-    transition:
-        color 0.2s ease,
-        text-decoration-color 0.2s ease;
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-a:not(.btn-primary):not(.primary-btn):hover {
-    color: var(--hover-bg);
+body {
+    background-color: var(--surface-1);
+    color: var(--text-main);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================
+   03. Accessibility
+========================================================= */
+/* Focus styles for keyboard navigation */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* =========================================================
+   04. Typography & Global Links
+========================================================= */
+/* Exclude all button classes from normal hyperlink styles to prevent override leaks */
+a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary) {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary):hover {
+    color: var(--primary-hover);
     text-decoration: underline;
 }
 
-a:not(.btn-primary):not(.primary-btn):visited {
-    color: var(--accent-color);
+a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary):visited {
+    color: var(--primary);
 }
 
-a:not(.btn-primary):not(.primary-btn):focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 3px;
-    border-radius: 4px;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main);
+    line-height: 1.2;
 }
 
-/* Header */
+/* =========================================================
+   05. Layout
+========================================================= */
+main {
+    flex: 1;
+    padding: 2rem 0 4rem;
+}
 
+/* =========================================================
+   06. Containers
+========================================================= */
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.section {
+    margin-bottom: 4rem;
+}
+
+/* =========================================================
+   07. Header
+========================================================= */
 .site-header {
-
-    border-bottom: 1px solid var(--border-color);
-
+    border-bottom: 1px solid var(--border);
     padding: 1rem 0;
-
-    background-color: var(--card-bg);
-
+    background-color: var(--surface-2);
     position: sticky;
-
     top: 0;
-
     z-index: 100;
-
 }
-
 
 .header-inner {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
 }
 
 .logo {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--text-primary);
-    text-decoration: none;
+    color: var(--text-main);
+    text-decoration: none !important;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -147,293 +192,214 @@ a:not(.btn-primary):not(.primary-btn):focus-visible {
 
 .logo:hover,
 .logo:focus {
-    color: var(--text-primary);
-    text-decoration: none;
+    color: var(--text-main);
 }
 
-
+/* =========================================================
+   08. Navigation
+========================================================= */
 .nav-links {
-
     display: flex;
-
     align-items: center;
-
     gap: 1.5rem;
-
 }
-
 
 .nav-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
+    color: var(--text-sub) !important;
     font-weight: 500;
-    transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: var(--accent-color);
-    text-decoration: none;
+    color: var(--primary) !important;
+    text-decoration: none !important;
 }
-
 
 #theme-toggle {
-
     background: none;
-
-    border: 1px solid var(--border-color);
-
+    border: 1px solid var(--border);
     border-radius: 50%;
-
     width: 38px;
-
     height: 38px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     cursor: pointer;
-
-    color: var(--text-primary);
-
-    transition: background-color 0.2s;
-
+    color: var(--text-main);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
-
 
 #theme-toggle:hover {
-
-    background-color: var(--border-color);
-
+    background-color: var(--border);
 }
 
-
-/* Hero Section */
-
-.hero-section {
-
-    padding: 4rem 0 2rem;
-
-    text-align: center;
-
-}
-
-
-.hero-section h1 {
-
-    font-size: 2.5rem;
-
-    font-weight: 800;
-
-    margin-bottom: 1rem;
-
-    letter-spacing: -0.025em;
-
-}
-
-
-.hero-section p {
-
-    color: var(--text-secondary);
-
-    font-size: 1.125rem;
-
-    max-width: 600px;
-
-    margin: 0 auto 2rem;
-
-}
-
-
-/* Search Bar */
-
-.search-container {
-
-    position: relative;
-
-    max-width: 500px;
-
-    margin: 0 auto;
-
-}
-
-
-.search-icon {
-
-    position: absolute;
-
-    left: 1rem;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    color: var(--text-secondary);
-
-}
-
-
-#tool-search {
-
-    width: 100%;
-
-    padding: 0.875rem 1rem 0.875rem 3rem;
-
-    background-color: var(--card-bg);
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 8px;
-
-    color: var(--text-primary);
-
-    font-size: 1rem;
-
-    outline: none;
-
-    transition: border-color 0.2s;
-
-}
-
-
-#tool-search:focus {
-
-    border-color: var(--accent-color);
-
-}
-
-
-/* Tools Grid */
-
-main {
-
-    flex: 1;
-
-    padding: 2rem 0 4rem;
-
-}
-
-
-.section-title {
-
-    font-size: 1.5rem;
-
-    margin-bottom: 1.5rem;
-
+/* =========================================================
+   09. Buttons (Design System Core)
+========================================================= */
+/* Base button class */
+.btn,
+.btn-primary,
+.primary-btn,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.4rem;
     font-weight: 600;
-
+    text-decoration: none !important; /* Force override to protect from 'a' tags */
+    cursor: pointer;
+    transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
+/* Primary Button Variant */
+.btn-primary,
+.primary-btn {
+    background: var(--primary);
+    color: var(--text-inverse) !important; /* Ensure text stays white in all themes */
+}
 
+.btn-primary:hover,
+.primary-btn:hover {
+    color: var(--text-inverse) !important;
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-btn);
+}
+
+.btn-primary .material-symbols-outlined,
+.primary-btn .material-symbols-outlined,
+.btn-primary .icon,
+.primary-btn .icon {
+    color: var(--text-inverse);
+}
+
+/* Secondary Button Variant (Future Proofing) */
+.btn-secondary {
+    background: var(--surface-2);
+    color: var(--text-main) !important;
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--border);
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   10. Forms & Search
+========================================================= */
+.form-group,
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.icon,
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-sub);
+    pointer-events: none;
+}
+
+.input,
+#tool-search {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.input:focus,
+#tool-search:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15); /* Modern accessibility focus ring */
+}
+
+/* =========================================================
+   11. Cards (Grid & Tools)
+========================================================= */
 .grid {
-
     display: grid;
-
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-
     gap: 1.5rem;
-
 }
 
+/* Base Card Attributes */
+.card,
+.tool-card,
+.content-card {
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+}
 
+/* Tool Card Specifics */
 .tool-card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: 1.5rem;
-    text-decoration: none;
-    color: var(--text-primary);
+    text-decoration: none !important;
+    color: var(--text-main);
     display: flex;
     flex-direction: column;
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
     position: relative;
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .tool-card:hover {
     transform: translateY(-4px);
-    border-color: var(--accent-color);
-    box-shadow: 0 12px 28px rgba(0,0,0,.12);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
 }
 
 .tool-card:hover h3 {
-    color: var(--accent-color);
+    color: var(--primary);
 }
-
 
 .card-icon {
-
     margin-bottom: 1rem;
-
 }
-
 
 .tool-card h3 {
-
     font-size: 1.125rem;
-
     margin-bottom: 0.5rem;
-
+    transition: color var(--transition-fast);
 }
-
 
 .tool-card p {
-
-    color: var(--text-secondary);
-
+    color: var(--text-sub);
     font-size: 0.875rem;
-
     margin-bottom: 1.5rem;
-
     flex: 1;
-
-}
-
-
-.card-tag {
-
-    align-self: flex-start;
-
-    font-size: 0.75rem;
-
-    background-color: rgba(56, 189, 248, 0.1);
-
-    color: var(--accent-color);
-
-    padding: 0.25rem 0.75rem;
-
-    border-radius: 9999px;
-
-    font-weight: 500;
-
 }
 
 /* =========================================================
-   Content Pages (About / Privacy / Terms / Contact)
+   12. Content Pages (About / Privacy / Terms / Contact)
 ========================================================= */
-
 .content-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--radius-xl);
     padding: 2.5rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,.05);
+    box-shadow: var(--shadow-md);
 }
 
 .content-card h1,
 .content-card h2,
 .content-card h3 {
-    color: var(--text-primary);
     margin-bottom: 1rem;
 }
 
 .content-card p,
 .content-card li {
-    color: var(--text-secondary);
+    color: var(--text-sub);
     line-height: 1.8;
 }
 
@@ -445,110 +411,138 @@ main {
 
 .content-card hr {
     border: none;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border);
     margin: 2rem 0;
 }
 
 .content-card blockquote {
-    border-left: 4px solid var(--accent-color);
+    border-left: 4px solid var(--primary);
     padding: 1rem 1.25rem;
-    background: rgba(2,132,199,.08);
+    background: rgba(var(--primary-rgb), 0.08); /* Dynamic alpha adapting to theme */
     border-radius: 0 10px 10px 0;
 }
 
-.content-card a {
-    color: var(--accent-color);
+/* Anchor styling specific to text blocks to prevent generic leaks */
+.content-card a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary) {
+    color: var(--primary);
     font-weight: 600;
     text-decoration: underline;
 }
 
-.content-card a:hover {
-    color: var(--hover-bg);
+.content-card a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary):hover {
+    color: var(--primary-hover);
 }
 
-.content-card a:visited {
-    color: var(--accent-color);
-}
-
-
-/* Footer */
-
+/* =========================================================
+   13. Footer
+========================================================= */
 .site-footer {
-
-    border-top: 1px solid var(--border-color);
-
+    border-top: 1px solid var(--border);
     padding: 2rem 0;
-
-    background-color: var(--card-bg);
-
+    background-color: var(--surface-2);
     text-align: center;
-
     font-size: 0.875rem;
-
-    color: var(--text-secondary);
-
+    color: var(--text-sub);
 }
-
 
 .footer-content {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 0.5rem;
-
     align-items: center;
-
 }
-
 
 .privacy-badge {
-
     display: flex;
-
     align-items: center;
-
     gap: 0.25rem;
-
     font-size: 0.8rem;
-
 }
 
-/* Google Material Design Standard for Primary Filled Buttons */
+/* =========================================================
+   14. Utilities & Helpers
+========================================================= */
+.hero-section {
+    padding: 4rem 0 2rem;
+    text-align: center;
+}
 
-.primary-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
+.page-title,
+.hero-section h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em;
+}
 
-    background: var(--accent-color);
-    color: #fff !important;
+.hero-section p {
+    color: var(--text-sub);
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
 
-    border: none;
-    border-radius: 10px;
-
-    padding: .75rem 1.4rem;
-
+.heading,
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     font-weight: 600;
-    text-decoration: none;
-
-    transition:
-        transform .2s ease,
-        filter .2s ease,
-        box-shadow .2s ease;
-
-    cursor: pointer;
 }
 
-.primary-btn:hover {
-    color: #fff !important;
-    filter: brightness(.95);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+.text-muted {
+    color: var(--text-sub);
 }
 
-.primary-btn .material-symbols-outlined {
-    color: #fff;
+.text-center {
+    text-align: center;
+}
+
+.badge,
+.card-tag {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    background-color: rgba(var(--primary-rgb), 0.1); /* Dynamic theme-adaptive alpha */
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+}
+
+/* =========================================================
+   15. Animations & Transitions
+========================================================= */
+/* Animations are intrinsically handled within components via the --transition-* variables */
+
+/* =========================================================
+   16. Responsive & Media Queries
+========================================================= */
+/* Boilerplate for future responsive growth without breaking existing architecture */
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 0 1.5rem;
+    }
+    
+    .page-title,
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .content-card {
+        padding: 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr; /* Switch to 1 column on mobile natively */
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.125rem;
+    }
 }
