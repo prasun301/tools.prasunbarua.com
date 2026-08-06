@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +21,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/tool-page.css">
+    
     <!-- Theme Initializer Script -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 
@@ -34,13 +35,13 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="/" class="logo">
-                <span class="material-symbols-outlined logo-icon">bolt</span> Prasun Tools
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span> Prasun Tools
             </a>
-            <nav class="nav-links">
+            <nav class="nav-links" aria-label="Main Navigation">
                 <a href="/">Home</a>
                 <a href="/#tools-grid">All Tools</a>
                 <button id="theme-toggle" aria-label="Toggle dark and light mode">
-                    <span class="material-symbols-outlined">dark_mode</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
                 </button>
             </nav>
         </div>
@@ -49,7 +50,7 @@
     <!-- Main Tool Container -->
     <main class="container tool-main">
         <div class="tool-header">
-            <span class="material-symbols-outlined tool-badge-icon">electrical_services</span>
+            <span class="material-symbols-outlined tool-badge-icon" aria-hidden="true">electrical_services</span>
             <h1>Ohm's Law Calculator</h1>
             <p>Select any two known parameters and enter their numerical values to compute the remaining metrics.</p>
         </div>
@@ -57,60 +58,64 @@
         <div class="tool-workspace">
             <!-- Calculator Card -->
             <div class="calculator-card">
-                <div class="calculator-inner">
-                    <!-- Known Parameter 1 -->
-                    <div class="input-row-card">
-                        <div class="select-group">
-                            <label for="param1-select">First Known Parameter</label>
-                            <select id="param1-select">
-                                <option value="voltage" selected>Voltage (V)</option>
-                                <option value="current">Current (I)</option>
-                                <option value="resistance">Resistance (R)</option>
-                                <option value="power">Power (P)</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="param1-value">Value</label>
-                            <div class="input-field-wrapper">
-                                <input type="number" id="param1-value" placeholder="0.00" step="any">
+                <form class="calculator-inner" id="ohms-form" onsubmit="return false;">
+                    <fieldset class="form-section-group">
+                        <legend class="section-title-tag">Known Parameters</legend>
+
+                        <!-- Known Parameter 1 -->
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="param1-select">First Known Parameter</label>
+                                <select id="param1-select" name="param1-select">
+                                    <option value="voltage" selected>Voltage (V)</option>
+                                    <option value="current">Current (I)</option>
+                                    <option value="resistance">Resistance (R)</option>
+                                    <option value="power">Power (P)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="param1-value">Value</label>
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="param1-value" name="param1-value" placeholder="0.00" step="any" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Known Parameter 2 -->
-                    <div class="input-row-card">
-                        <div class="select-group">
-                            <label for="param2-select">Second Known Parameter</label>
-                            <select id="param2-select">
-                                <option value="voltage">Voltage (V)</option>
-                                <option value="current" selected>Current (I)</option>
-                                <option value="resistance">Resistance (R)</option>
-                                <option value="power">Power (P)</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="param2-value">Value</label>
-                            <div class="input-field-wrapper">
-                                <input type="number" id="param2-value" placeholder="0.00" step="any">
+                        <!-- Known Parameter 2 -->
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="param2-select">Second Known Parameter</label>
+                                <select id="param2-select" name="param2-select">
+                                    <option value="voltage">Voltage (V)</option>
+                                    <option value="current" selected>Current (I)</option>
+                                    <option value="resistance">Resistance (R)</option>
+                                    <option value="power">Power (P)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="param2-value">Value</label>
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="param2-value" name="param2-value" placeholder="0.00" step="any" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </fieldset>
 
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <button id="calc-btn" class="btn primary-btn">
-                        <span class="material-symbols-outlined">calculate</span> Calculate
-                    </button>
-                    <button id="reset-btn" class="btn secondary-btn">
-                        <span class="material-symbols-outlined">restart_alt</span> Reset
-                    </button>
-                </div>
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button type="button" id="calc-btn" class="btn primary-btn">
+                            <span class="material-symbols-outlined" aria-hidden="true">calculate</span> Calculate
+                        </button>
+                        <button type="reset" id="reset-btn" class="btn secondary-btn">
+                            <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span> Reset
+                        </button>
+                    </div>
+                </form>
 
                 <!-- Results Display Section -->
-                <div id="results-section" class="results-box" style="display: none;">
+                <div id="results-section" class="results-box" style="display: none;" aria-live="polite">
                     <div class="results-header">
-                        <span class="material-symbols-outlined">check_circle</span>
+                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
                         <h3>Calculated Results</h3>
                     </div>
                     <div class="results-grid">
@@ -129,7 +134,7 @@
             <!-- Formula Reference Sidebar Card -->
             <div class="info-card">
                 <div class="info-header">
-                    <span class="material-symbols-outlined">info</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">info</span>
                     <h3>Ohm's Law Formulas</h3>
                 </div>
                 <ul class="formula-list">
@@ -159,7 +164,7 @@
         <div class="container footer-content">
             <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
             <p class="privacy-badge">
-                <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
+                <span class="material-symbols-outlined" aria-hidden="true">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
             </p>
         </div>
     </footer>
