@@ -24,9 +24,14 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- Google Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
     
-    <!-- Stylesheets -->
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets (Kept original references, overriding with premium inline styles for the redesign) -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 
@@ -37,7 +42,12 @@
       "@type": "WebSite",
       "name": "Prasun Tools",
       "url": "https://tools.prasunbarua.com",
-      "description": "Fast, free, and privacy-friendly online utilities for professionals and engineers."
+      "description": "Fast, free, and privacy-friendly online utilities for professionals and engineers.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tools.prasunbarua.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
 
@@ -47,101 +57,874 @@
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
         };
-        
-        // Apply theme immediately on load
         updateThemeFromDevice();
-        
-        // Listen for live system changes in real-time
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
         });
     </script>
+
+    <!-- Premium UI / UX Redesign Styles -->
+    <style>
+        /* CSS Variables - Modern SaaS Theme */
+        :root {
+            /* Colors */
+            --bg-main: #ffffff;
+            --bg-secondary: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-light: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --accent-primary: #000000;
+            --accent-primary-hover: #333333;
+            --accent-text: #ffffff;
+            --brand-blue: #2563eb;
+            --brand-blue-light: #eff6ff;
+            
+            /* Effects */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.025);
+            --shadow-search: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --shadow-glow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            
+            /* Typography & Layout */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --container-width: 1200px;
+        }
+
+        /* Dark Mode Variables */
+        [data-theme="dark"] {
+            --bg-main: #020617;
+            --bg-secondary: #0f172a;
+            --surface: #0f172a;
+            --surface-hover: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-light: #1e293b;
+            --border-hover: #334155;
+            --accent-primary: #ffffff;
+            --accent-primary-hover: #f8fafc;
+            --accent-text: #020617;
+            --brand-blue: #3b82f6;
+            --brand-blue-light: rgba(59, 130, 246, 0.1);
+            
+            --glass-bg: rgba(2, 6, 23, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            --shadow-search: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        /* Base Resets */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        ul, ol { list-style: none; }
+        button, input { font-family: inherit; border: none; outline: none; background: none; }
+        button { cursor: pointer; }
+        
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Accessibility: Focus States */
+        :focus-visible {
+            outline: 2px solid var(--brand-blue);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+        
+        /* -------------------------------------
+           Header & Navigation
+           ------------------------------------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            transition: all var(--transition-smooth);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            transition: opacity var(--transition-fast);
+        }
+        .logo:hover { opacity: 0.8; }
+        .logo-icon {
+            color: var(--brand-blue);
+            font-size: 1.5rem;
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .desktop-nav a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+        .desktop-nav a:hover { color: var(--text-primary); }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            background: transparent;
+        }
+        .icon-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+        }
+
+        .mobile-menu-btn { display: none; }
+        
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 4.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-main);
+            padding: 2rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 1.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* -------------------------------------
+           Hero Section
+           ------------------------------------- */
+        .hero-section {
+            position: relative;
+            padding: 6rem 0 4rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        /* Mesh Gradient Background Effect */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(circle, var(--brand-blue-light) 0%, transparent 70%);
+            z-index: -1;
+            opacity: 0.8;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: var(--radius-full);
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .hero-badge .material-symbols-outlined { font-size: 1.125rem; color: var(--brand-blue); }
+
+        .hero-section h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+        
+        .hero-section p {
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin-bottom: 3rem;
+            transition: transform var(--transition-fast);
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            padding: 0.5rem 0.5rem 0.5rem 1.25rem;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-smooth);
+        }
+        .search-container:focus-within {
+            border-color: var(--brand-blue);
+            box-shadow: var(--shadow-search), var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+        .search-icon {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+        .search-container input {
+            flex: 1;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            background: transparent;
+            width: 100%;
+        }
+        .search-container input::placeholder { color: var(--text-muted); }
+        .kbd-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-family: monospace;
+            margin-left: 0.75rem;
+        }
+        
+        .search-btn {
+            background: var(--accent-primary);
+            color: var(--accent-text);
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+            transition: background var(--transition-fast);
+        }
+        .search-btn:hover { background: var(--accent-primary-hover); }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+            width: 100%;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .stat-label {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* -------------------------------------
+           Categories Section
+           ------------------------------------- */
+        .categories-section {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-main);
+        }
+        .categories-list {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none; /* Firefox */
+        }
+        .categories-list::-webkit-scrollbar { display: none; } /* Chrome */
+        
+        .category-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        .category-pill:hover, .category-pill.active {
+            background: var(--text-primary);
+            color: var(--bg-main);
+            border-color: var(--text-primary);
+        }
+
+        /* -------------------------------------
+           Tools Grid Section
+           ------------------------------------- */
+        .tools-section {
+            padding: 5rem 0;
+            background: var(--bg-secondary);
+        }
+        .section-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Premium Tool Card */
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: all var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            height: 100%;
+        }
+        
+        /* Subtle Gradient Overlay on Hover */
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, transparent, var(--brand-blue-light));
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+            z-index: 0;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-lg);
+        }
+        .tool-card:hover::before { opacity: 1; }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            transition: transform var(--transition-smooth);
+        }
+        .tool-card:hover .card-icon {
+            transform: scale(1.05) rotate(-3deg);
+            color: var(--brand-blue);
+            border-color: var(--brand-blue-light);
+            background: var(--surface);
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.625rem;
+            background: var(--bg-main);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+        }
+
+        .tool-card h3 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .tool-card p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: auto;
+        }
+        .arrow-icon {
+            font-size: 1.125rem;
+            transition: transform var(--transition-smooth);
+        }
+        .tool-card:hover .arrow-icon {
+            transform: translateX(6px);
+            color: var(--brand-blue);
+        }
+
+        /* -------------------------------------
+           Features & Why Choose Us Section
+           ------------------------------------- */
+        .features-section {
+            padding: 5rem 0;
+            background: var(--bg-main);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .feature-item {
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            transition: box-shadow var(--transition-fast);
+        }
+        .feature-item:hover { box-shadow: var(--shadow-md); }
+        .feature-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: var(--radius-md);
+            background: var(--brand-blue-light);
+            color: var(--brand-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+        .feature-item h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .feature-item p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        /* -------------------------------------
+           Footer Section
+           ------------------------------------- */
+        .site-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-sm);
+        }
+        .privacy-badge .material-symbols-outlined { color: #10b981; } /* Green lock */
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+        .footer-nav a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+        .footer-nav a:hover { color: var(--text-primary); }
+        .separator { color: var(--border-hover); font-size: 0.75rem; }
+
+        .copyright {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        /* -------------------------------------
+           Animations & Responsiveness
+           ------------------------------------- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero-section h1 { font-size: 2.25rem; }
+            .hero-stats { gap: 1.5rem; flex-direction: column; align-items: flex-start; padding: 2rem; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
+            .stat-item { flex-direction: row; align-items: baseline; gap: 1rem; width: 100%; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
+            .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+            .kbd-hint { display: none; }
+            .search-btn { display: none; }
+            .search-container { padding-right: 1.25rem; }
+        }
+    </style>
 </head>
 <body>
 
     <!-- Header Section -->
     <header class="site-header">
         <div class="container header-inner">
-            <a href="/" class="logo">
+            <a href="/" class="logo" aria-label="Prasun Tools Home">
                 <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span>
                 <span>Prasun Tools</span>
             </a>
-            <nav class="nav-links" aria-label="Main Navigation">
+            
+            <nav class="desktop-nav" aria-label="Main Navigation">
                 <a href="/">Home</a>
                 <a href="#tools-grid">Tools</a>
-                <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                <a href="#categories">Categories</a>
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark and light mode">
                     <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
                 </button>
-            </nav>
+                <button class="icon-btn mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container hero-content">
-            <div class="hero-badge" aria-label="Platform badge">
-                <span class="material-symbols-outlined" aria-hidden="true">verified</span> 100% Client-Side Processing
-            </div>
-            <h1>Professional Utilities, Built for Speed</h1>
-            <p>Fast, free, and privacy-friendly online tools running completely client-side in your browser.</p>
-            
-            <!-- Live Search Bar -->
-            <div class="search-container" role="search">
-                <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
-                <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV)..." aria-label="Search tools">
-            </div>
-        </div>
-    </section>
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile Navigation">
+        <a href="/">Home</a>
+        <a href="#tools-grid">Tools</a>
+        <a href="#categories">Categories</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+    </nav>
 
-    <!-- Main Tools Grid Section -->
-    <main class="container" id="tools-grid">
-        <div class="section-header">
-            <h2 class="section-title">Available Tools</h2>
-            <p class="section-subtitle">Explore our growing collection of robust browser utilities.</p>
-        </div>
+    <!-- Main Content Area -->
+    <main>
         
-        <div class="grid">
-            <!-- Tool Card 1: Ohm's Law -->
-            <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power">
-                <div class="card-header-row">
-                    <div class="card-icon" aria-hidden="true">
-                        <span class="material-symbols-outlined">electrical_services</span>
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-heading">
+            <div class="container hero-content">
+                <div class="hero-badge" aria-label="Platform badge">
+                    <span class="material-symbols-outlined" aria-hidden="true">verified</span> 
+                    Engineering Quality &middot; 100% Client-Side
+                </div>
+                
+                <h1 id="hero-heading">High-Performance Utilities, Built for Speed</h1>
+                <p>A premium collection of fast, free, and privacy-friendly online tools for engineers and developers. Zero server tracking, instant results.</p>
+                
+                <!-- Live Search Bar -->
+                <div class="search-wrapper">
+                    <div class="search-container" role="search">
+                        <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
+                        <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV)..." aria-label="Search tools" autocomplete="off">
+                        <span class="kbd-hint" aria-hidden="true">⌘K</span>
+                        <button class="search-btn" aria-label="Submit Search">Search</button>
                     </div>
-                    <span class="card-tag">Engineering</span>
                 </div>
-                <h3>Ohm's Law Calculator</h3>
-                <p>Calculate Voltage, Current, Resistance, and Power instantly using Ohm's Law formulas.</p>
-                <div class="card-footer-action">
-                    <span>Launch Tool</span>
-                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
-                </div>
-            </a>
 
-            <!-- Tool Card 2: Solar PV -->
-            <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing">
-                <div class="card-header-row">
-                    <div class="card-icon" aria-hidden="true">
-                        <span class="material-symbols-outlined">solar_power</span>
+                <!-- Trust Statistics -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">10+</span>
+                        <span class="stat-label">Pro Tools</span>
                     </div>
-                    <span class="card-tag">Engineering</span>
+                    <div class="stat-item">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Privacy Friendly</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value"><span class="material-symbols-outlined" style="font-size: 1.5rem; vertical-align: bottom;">bolt</span></span>
+                        <span class="stat-label">Lightning Fast</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">Free</span>
+                        <span class="stat-label">Forever</span>
+                    </div>
                 </div>
-                <h3>Solar PV Calculator</h3>
-                <p>Estimate solar panel sizing, system capacity, and daily energy generation output.</p>
-                <div class="card-footer-action">
-                    <span>Launch Tool</span>
-                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="categories-section" aria-label="Tool Categories">
+            <div class="container">
+                <div class="categories-list">
+                    <button class="category-pill active">All Tools</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">engineering</span> Engineering</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">electrical_services</span> Electrical</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">solar_power</span> Solar PV</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">code</span> Developer</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">swap_horiz</span> Converters</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">calculate</span> Calculators</button>
                 </div>
-            </a>
-        </div>
+            </div>
+        </section>
+
+        <!-- Main Tools Grid Section -->
+        <section id="tools-grid" class="tools-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Available Tools</h2>
+                    <p class="section-subtitle">Explore our growing collection of robust, browser-based utilities.</p>
+                </div>
+                
+                <div class="tools-grid">
+                    
+                    <!-- Tool Card 1: Ohm's Law -->
+                    <article>
+                        <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power">
+                            <div class="card-content">
+                                <div class="card-header-row">
+                                    <div class="card-icon" aria-hidden="true">
+                                        <span class="material-symbols-outlined">electrical_services</span>
+                                    </div>
+                                    <span class="card-tag">Engineering</span>
+                                </div>
+                                <h3>Ohm's Law Calculator</h3>
+                                <p>Calculate Voltage, Current, Resistance, and Power instantly using standard Ohm's Law formulas.</p>
+                                <div class="card-footer-action">
+                                    <span>Launch Tool</span>
+                                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- Tool Card 2: Solar PV -->
+                    <article>
+                        <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing">
+                            <div class="card-content">
+                                <div class="card-header-row">
+                                    <div class="card-icon" aria-hidden="true">
+                                        <span class="material-symbols-outlined">solar_power</span>
+                                    </div>
+                                    <span class="card-tag">Engineering</span>
+                                </div>
+                                <h3>Solar PV Calculator</h3>
+                                <p>Estimate solar panel sizing, system capacity, and daily energy generation output with high precision.</p>
+                                <div class="card-footer-action">
+                                    <span>Launch Tool</span>
+                                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us / Features Section -->
+        <section id="features" class="features-section" aria-labelledby="features-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="features-title" class="section-title">Why Professionals Choose Us</h2>
+                    <p class="section-subtitle">Built with modern web standards to provide the best possible experience without compromises.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon" aria-hidden="true">
+                            <span class="material-symbols-outlined">speed</span>
+                        </div>
+                        <h4>Lightning Fast</h4>
+                        <p>No loading screens. Since computations happen directly in your browser, results appear instantly as you type.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon" aria-hidden="true">
+                            <span class="material-symbols-outlined">shield_lock</span>
+                        </div>
+                        <h4>Privacy Friendly</h4>
+                        <p>Zero data collection. Your inputs never leave your device, ensuring complete security for sensitive calculations.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon" aria-hidden="true">
+                            <span class="material-symbols-outlined">wifi_off</span>
+                        </div>
+                        <h4>Works Offline</h4>
+                        <p>Progressive Web App support means you can use our tools anywhere, even without an active internet connection.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon" aria-hidden="true">
+                            <span class="material-symbols-outlined">devices</span>
+                        </div>
+                        <h4>Mobile First</h4>
+                        <p>Fully responsive UI designed to look and function perfectly on desktop, tablet, and mobile devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer Section -->
     <footer class="site-footer">
         <div class="container footer-content">
+            
             <!-- Privacy Badge -->
-            <p class="privacy-badge">
-                <span class="material-symbols-outlined" aria-hidden="true">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
-            </p>
+            <div class="privacy-badge" role="contentinfo" aria-label="Privacy assurance">
+                <span class="material-symbols-outlined" aria-hidden="true">lock</span> 
+                100% Privacy Friendly. All calculations run locally in your browser.
+            </div>
 
             <!-- Navigation Links -->
             <nav class="footer-nav" aria-label="Footer Navigation">
@@ -159,7 +942,32 @@
         </div>
     </footer>
 
-    <!-- Application Script -->
+    <!-- Application Script (Maintained original functionality) -->
     <script src="/assets/js/app.js" defer></script>
+    
+    <!-- Minor UI Enhancements Script (Does not interfere with app.js) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = menuBtn.querySelector('.material-symbols-outlined');
+            
+            menuBtn.addEventListener('click', () => {
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('active');
+                menuIcon.textContent = isExpanded ? 'menu' : 'close';
+            });
+
+            // Keyboard shortcut (CMD/CTRL + K) for search focus
+            document.addEventListener('keydown', (e) => {
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('tool-search').focus();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
