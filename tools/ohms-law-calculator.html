@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohm's Law Calculator — Prasun Tools</title>
+    <meta name="description" content="Calculate Voltage, Current, Resistance, and Power instantly using Ohm's Law formulas. Free, fast, and runs completely in your browser.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ohm's Law Calculator — Prasun Tools">
+    <meta property="og:description" content="Instant browser-based calculator for Voltage, Current, Resistance, and Power.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tools.prasunbarua.com/tools/ohms-law-calculator.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/tool-page.css">
+</head>
+<body>
 
+    <!-- Header Section -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="material-symbols-outlined logo-icon">bolt</span> Prasun Tools
+            </a>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/#tools-grid">All Tools</a>
+                <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Tool Container -->
+    <main class="container tool-main">
+        <div class="tool-header">
+            <span class="material-symbols-outlined tool-badge-icon">electrical_services</span>
+            <h1>Ohm's Law Calculator</h1>
+            <p>Enter any two known values to automatically calculate the remaining electrical parameters.</p>
+        </div>
+
+        <div class="tool-workspace">
+            <!-- Calculator Card -->
+            <div class="calculator-card">
+                <div class="input-grid">
+                    <!-- Voltage -->
+                    <div class="input-group">
+                        <label for="voltage">Voltage (V)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="voltage" placeholder="e.g., 12" step="any">
+                            <span class="unit">Volts</span>
+                        </div>
+                    </div>
+
+                    <!-- Current -->
+                    <div class="input-group">
+                        <label for="current">Current (I)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="current" placeholder="e.g., 2" step="any">
+                            <span class="unit">Amps</span>
+                        </div>
+                    </div>
+
+                    <!-- Resistance -->
+                    <div class="input-group">
+                        <label for="resistance">Resistance (R)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="resistance" placeholder="e.g., 6" step="any">
+                            <span class="unit">Ohms</span>
+                        </div>
+                    </div>
+
+                    <!-- Power -->
+                    <div class="input-group">
+                        <label for="power">Power (P)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="power" placeholder="e.g., 24" step="any">
+                            <span class="unit">Watts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="calc-btn" class="btn primary-btn">Calculate</button>
+                    <button id="reset-btn" class="btn secondary-btn">Clear Form</button>
+                </div>
+            </div>
+
+            <!-- Formula Reference Sidebar/Card -->
+            <div class="info-card">
+                <h3>Ohm's Law Formulas</h3>
+                <ul>
+                    <li><strong>Voltage ($V$):</strong> $V = I \times R$ or $V = \frac{P}{I}$</li>
+                    <li><strong>Current ($I$):</strong> $I = \frac{V}{R}$ or $I = \frac{P}{V}$</li>
+                    <li><strong>Resistance ($R$):</strong> $R = \frac{V}{I}$ or $R = \frac{V^2}{P}$</li>
+                    <li><strong>Power ($P$):</strong> $P = V \times I$ or $P = I^2 \times R$</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+            <p class="privacy-badge">
+                <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Tool Logic Script -->
+    <script src="../assets/js/tools/ohms-law-calculator.js" defer></script>
+    <script src="../assets/js/app.js" defer></script>
+</body>
+</html>
