@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar PV System Calculator — Prasun Tools</title>
-    <meta name="description" content="Calculate required solar panel system size, total panel count, and estimated daily power generation instantly. Free, fast, and runs locally in your browser.">
+    <title>Advanced Solar PV & Battery Sizing Calculator — Prasun Tools</title>
+    <meta name="description" content="Professional-grade solar PV system designer featuring grid-tied and off-grid modes, battery autonomy, inverter sizing, MPPT tracking, and temperature-corrected Voc/Vmp calculations.">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Solar PV System Calculator — Prasun Tools">
-    <meta property="og:description" content="Instant browser-based solar energy and system sizing calculator.">
+    <meta property="og:title" content="Advanced Solar PV & Battery Sizing Calculator — Prasun Tools">
+    <meta property="og:description" content="Enterprise-grade browser-based solar energy and engineering design calculator.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tools.prasunbarua.com/tools/solar-pv-calculator.html">
     
@@ -51,75 +51,204 @@
     <main class="container tool-main">
         <div class="tool-header">
             <span class="material-symbols-outlined tool-badge-icon">solar_power</span>
-            <h1>Solar PV System Calculator</h1>
-            <p>Estimate your required solar system capacity, panel count, and daily energy generation based on your household or business load.</p>
+            <h1>Solar PV & Battery Engineering Calculator</h1>
+            <p>Comprehensive professional tool for sizing solar arrays, inverter matching, MPPT voltage windows, temperature-corrected string limits, and battery storage autonomy.</p>
         </div>
 
         <div class="tool-workspace">
             <!-- Calculator Card -->
             <div class="calculator-card">
                 <div class="calculator-inner">
-                    <!-- Input 1: Daily Energy Consumption -->
+                    
+                    <!-- Section 1: System Architecture -->
+                    <div class="section-title-tag">1. System Architecture & Load</div>
+                    
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="system-mode">System Type</label>
+                            <span class="input-hint">Grid-Tied vs Stand-Alone Off-Grid</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="system-mode">Operating Mode</label>
+                            <div class="input-field-wrapper">
+                                <select id="system-mode">
+                                    <option value="grid-tied" selected>Grid-Tied (On-Grid)</option>
+                                    <option value="off-grid">Off-Grid (Standalone + Battery)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="input-row-card">
                         <div class="select-group">
                             <label for="daily-energy">Daily Energy Usage</label>
-                            <span class="input-hint">Average consumption</span>
+                            <span class="input-hint">Average household load</span>
                         </div>
                         <div class="input-group">
                             <label for="daily-energy">Value (kWh / day)</label>
                             <div class="input-field-wrapper">
-                                <input type="number" id="daily-energy" placeholder="e.g., 15" step="any" min="0.1">
+                                <input type="number" id="daily-energy" value="15" step="any" min="0.1">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Input 2: Peak Sun Hours -->
                     <div class="input-row-card">
                         <div class="select-group">
-                            <label for="sun-hours">Peak Sun Hours</label>
-                            <span class="input-hint">Daily average peak sunlight</span>
+                            <label for="sun-hours">Peak Sun Hours (PSH)</label>
+                            <span class="input-hint">Daily average solar irradiance</span>
                         </div>
                         <div class="input-group">
                             <label for="sun-hours">Value (Hours/Day)</label>
                             <div class="input-field-wrapper">
-                                <input type="number" id="sun-hours" placeholder="e.g., 5.0" step="any" min="0.5" value="5">
+                                <input type="number" id="sun-hours" value="5.0" step="any" min="0.5">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Input 3: Solar Panel Wattage -->
+                    <!-- Off-Grid Conditional Group -->
+                    <div id="offgrid-options" style="display: none; display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="autonomy-days">Days of Autonomy</label>
+                                <span class="input-hint">Backup days without sunlight</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="autonomy-days">Value (Days)</label>
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="autonomy-days" value="2" step="1" min="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="battery-dod">Battery Depth of Discharge (DoD)</label>
+                                <span class="input-hint">Recommended: 80% for LiFePO4</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="battery-dod">Value (%)</label>
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="battery-dod" value="80" step="any" min="10" max="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: PV Module Specifications -->
+                    <div class="section-title-tag" style="margin-top: 1rem;">2. PV Module Specifications (STC)</div>
+
                     <div class="input-row-card">
                         <div class="select-group">
-                            <label for="panel-wattage">Panel Power Rating</label>
-                            <span class="input-hint">Single solar panel output</span>
+                            <label for="panel-wattage">Panel Rated Power (Pmp)</label>
+                            <span class="input-hint">Single module Wattage</span>
                         </div>
                         <div class="input-group">
                             <label for="panel-wattage">Value (Watts)</label>
                             <div class="input-field-wrapper">
-                                <input type="number" id="panel-wattage" placeholder="e.g., 400" step="any" min="50" value="400">
+                                <input type="number" id="panel-wattage" value="400" step="any" min="50">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Input 4: System Efficiency -->
                     <div class="input-row-card">
                         <div class="select-group">
-                            <label for="system-efficiency">System Efficiency Loss</label>
-                            <span class="input-hint">Inverter, wiring & temp losses</span>
+                            <label for="panel-voc">Open Circuit Voltage (Voc)</label>
+                            <span class="input-hint">At Standard Test Conditions (25°C)</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="panel-voc">Value (Volts)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="panel-voc" value="48.5" step="any" min="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="panel-vmp">Voltage at Max Power (Vmp)</label>
+                            <span class="input-hint">At Standard Test Conditions (25°C)</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="panel-vmp">Value (Volts)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="panel-vmp" value="40.2" step="any" min="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="voc-temp-coeff">Voc Temperature Coefficient</label>
+                            <span class="input-hint">Typical silicon: -0.27 to -0.35 %/°C</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="voc-temp-coeff">Value (%/°C)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="voc-temp-coeff" value="-0.29" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Site Temperature & Inverter Constraints -->
+                    <div class="section-title-tag" style="margin-top: 1rem;">3. Site Environment & Inverter Specs</div>
+
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="min-temp">Minimum Ambient Temperature</label>
+                            <span class="input-hint">Lowest historical cold morning temp</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="min-temp">Value (°C)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="min-temp" value="-5" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="max-temp">Maximum Ambient Temperature</label>
+                            <span class="input-hint">Peak hot day ambient temp</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="max-temp">Value (°C)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="max-temp" value="45" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="inverter-max-v">Inverter Max DC Voltage</label>
+                            <span class="input-hint">Absolute safe DC input limit</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="inverter-max-v">Value (Volts)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="inverter-max-v" value="600" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="system-efficiency">Overall System Efficiency Loss</label>
+                            <span class="input-hint">Inverter, wiring, dust & temp losses</span>
                         </div>
                         <div class="input-group">
                             <label for="system-efficiency">Value (%)</label>
                             <div class="input-field-wrapper">
-                                <input type="number" id="system-efficiency" placeholder="e.g., 80" step="any" min="10" max="100" value="80">
+                                <input type="number" id="system-efficiency" value="80" step="any" min="10" max="100">
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button id="calc-btn" class="btn primary-btn">
-                        <span class="material-symbols-outlined">calculate</span> Calculate System
+                        <span class="material-symbols-outlined">calculate</span> Run Engineering Design
                     </button>
                     <button id="reset-btn" class="btn secondary-btn">
                         <span class="material-symbols-outlined">restart_alt</span> Reset
@@ -130,51 +259,67 @@
                 <div id="results-section" class="results-box" style="display: none;">
                     <div class="results-header">
                         <span class="material-symbols-outlined">check_circle</span>
-                        <h3>System Sizing Results</h3>
+                        <h3>Professional Engineering Design Report</h3>
                     </div>
                     <div class="results-grid">
                         <div class="result-item">
-                            <span class="result-label">Recommended System Size</span>
+                            <span class="result-label">Recommended Array Size</span>
                             <span class="result-value" id="res-system-size">--</span>
                         </div>
                         <div class="result-item">
-                            <span class="result-label">Total Panels Required</span>
+                            <span class="result-label">Total Panel Count</span>
                             <span class="result-value" id="res-panel-count">--</span>
                         </div>
                         <div class="result-item">
-                            <span class="result-label">Est. Daily Generation</span>
+                            <span class="result-label">Inverter Capacity Recommendation</span>
+                            <span class="result-value" id="res-inverter-size">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Est. Daily Energy Yield</span>
                             <span class="result-value" id="res-daily-gen">--</span>
                         </div>
                         <div class="result-item">
-                            <span class="result-label">Est. Monthly Generation</span>
-                            <span class="result-value" id="res-monthly-gen">--</span>
+                            <span class="result-label">Cold-Temp Max Voc (String Limit)</span>
+                            <span class="result-value" id="res-cold-voc">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Hot-Temp Min Vmp (MPPT Check)</span>
+                            <span class="result-value" id="res-hot-vmp">--</span>
+                        </div>
+                        <div class="result-item" id="battery-result-box" style="display: none;">
+                            <span class="result-label">Required Battery Bank Energy</span>
+                            <span class="result-value" id="res-battery-bank">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">MPPT Configuration Check</span>
+                            <span class="result-value" id="res-mppt-status" style="font-size: 1rem; color: var(--accent-color);">--</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Formula & Guide Reference Sidebar Card -->
+            <!-- Formula Reference Sidebar Card -->
             <div class="info-card">
                 <div class="info-header">
-                    <span class="material-symbols-outlined">lightbulb</span>
-                    <h3>Solar Sizing Formulas</h3>
+                    <span class="material-symbols-outlined">engineering</span>
+                    <h3>Engineering Standards & Formulas</h3>
                 </div>
                 <ul class="formula-list">
                     <li>
-                        <span class="formula-name">System Size (kW)</span>
+                        <span class="formula-name">Array Capacity (kWp)</span>
                         <span class="formula-eq">Daily Load / (Sun Hours × Efficiency)</span>
                     </li>
                     <li>
-                        <span class="formula-name">Number of Panels</span>
-                        <span class="formula-eq">(System Size × 1000) / Panel Wattage</span>
+                        <span class="formula-name">Cold-Weather Voc (NEC 690.7)</span>
+                        <span class="formula-eq">Voc × [1 + (β / 100) × (T_min - 25)]</span>
                     </li>
                     <li>
-                        <span class="formula-name">Daily Generation</span>
-                        <span class="formula-eq">System Size × Sun Hours × Efficiency</span>
+                        <span class="formula-name">Hot-Weather Vmp</span>
+                        <span class="formula-eq">Vmp adjusted for cell temperature rise under max ambient</span>
                     </li>
                     <li>
-                        <span class="formula-name">System Efficiency</span>
-                        <span class="formula-eq">Typically accounts for 75% to 85% total system loss factors.</span>
+                        <span class="formula-name">Off-Grid Storage (kWh)</span>
+                        <span class="formula-eq">(Daily Load × Days of Autonomy) / DoD</span>
                     </li>
                 </ul>
             </div>
