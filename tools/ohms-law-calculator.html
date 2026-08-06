@@ -15,14 +15,17 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     
-    <!-- Google Material Symbols -->
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/tool-page.css">
     
-    <!-- Theme Initializer Script -->
+    <!-- Global Theme Initializer Script -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -34,13 +37,14 @@
     <!-- Header Section -->
     <header class="site-header">
         <div class="container header-inner">
-            <a href="/" class="logo">
-                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span> Prasun Tools
+            <a href="/" class="logo" aria-label="Prasun Tools Home">
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span>
+                <span>Prasun Tools</span>
             </a>
             <nav class="nav-links" aria-label="Main Navigation">
                 <a href="/">Home</a>
                 <a href="/#tools-grid">All Tools</a>
-                <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark and light mode">
                     <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
                 </button>
             </nav>
@@ -50,9 +54,12 @@
     <!-- Main Tool Container -->
     <main class="container tool-main">
         <div class="tool-header">
-            <span class="material-symbols-outlined tool-badge-icon" aria-hidden="true">electrical_services</span>
+            <div class="tool-badge-pill">
+                <span class="material-symbols-outlined" aria-hidden="true">electrical_services</span>
+                <span>Electrical Engineering</span>
+            </div>
             <h1>Ohm's Law Calculator</h1>
-            <p>Select any two known parameters and enter their numerical values to compute the remaining metrics.</p>
+            <p>Select any two known electrical parameters and enter their numerical values to compute the remaining metrics instantly.</p>
         </div>
 
         <div class="tool-workspace">
@@ -60,21 +67,35 @@
             <div class="calculator-card">
                 <form class="calculator-inner" id="ohms-form" onsubmit="return false;">
                     <fieldset class="form-section-group">
-                        <legend class="section-title-tag">Known Parameters</legend>
+                        <legend class="section-title-tag">
+                            <span class="step-number">1</span> Known Parameters
+                        </legend>
 
                         <!-- Known Parameter 1 -->
                         <div class="input-row-card">
                             <div class="select-group">
                                 <label for="param1-select">First Known Parameter</label>
-                                <select id="param1-select" name="param1-select">
-                                    <option value="voltage" selected>Voltage (V)</option>
-                                    <option value="current">Current (I)</option>
-                                    <option value="resistance">Resistance (R)</option>
-                                    <option value="power">Power (P)</option>
-                                </select>
+                                <span class="input-hint">Select primary known metric</span>
                             </div>
                             <div class="input-group">
-                                <label for="param1-value">Value</label>
+                                <div class="input-field-wrapper select-wrapper">
+                                    <select id="param1-select" name="param1-select">
+                                        <option value="voltage" selected>Voltage (V)</option>
+                                        <option value="current">Current (I)</option>
+                                        <option value="resistance">Resistance (R)</option>
+                                        <option value="power">Power (P)</option>
+                                    </select>
+                                    <span class="material-symbols-outlined select-arrow" aria-hidden="true">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="param1-value">First Value</label>
+                                <span class="input-hint">Enter numerical magnitude</span>
+                            </div>
+                            <div class="input-group">
                                 <div class="input-field-wrapper">
                                     <input type="number" id="param1-value" name="param1-value" placeholder="0.00" step="any" required>
                                 </div>
@@ -85,15 +106,27 @@
                         <div class="input-row-card">
                             <div class="select-group">
                                 <label for="param2-select">Second Known Parameter</label>
-                                <select id="param2-select" name="param2-select">
-                                    <option value="voltage">Voltage (V)</option>
-                                    <option value="current" selected>Current (I)</option>
-                                    <option value="resistance">Resistance (R)</option>
-                                    <option value="power">Power (P)</option>
-                                </select>
+                                <span class="input-hint">Select secondary known metric</span>
                             </div>
                             <div class="input-group">
-                                <label for="param2-value">Value</label>
+                                <div class="input-field-wrapper select-wrapper">
+                                    <select id="param2-select" name="param2-select">
+                                        <option value="voltage">Voltage (V)</option>
+                                        <option value="current" selected>Current (I)</option>
+                                        <option value="resistance">Resistance (R)</option>
+                                        <option value="power">Power (P)</option>
+                                    </select>
+                                    <span class="material-symbols-outlined select-arrow" aria-hidden="true">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="param2-value">Second Value</label>
+                                <span class="input-hint">Enter numerical magnitude</span>
+                            </div>
+                            <div class="input-group">
                                 <div class="input-field-wrapper">
                                     <input type="number" id="param2-value" name="param2-value" placeholder="0.00" step="any" required>
                                 </div>
@@ -104,10 +137,10 @@
                     <!-- Action Buttons -->
                     <div class="action-buttons">
                         <button type="button" id="calc-btn" class="btn primary-btn">
-                            <span class="material-symbols-outlined" aria-hidden="true">calculate</span> Calculate
+                            <span class="material-symbols-outlined" aria-hidden="true">calculate</span> Calculate Results
                         </button>
                         <button type="reset" id="reset-btn" class="btn secondary-btn">
-                            <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span> Reset
+                            <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span> Reset Values
                         </button>
                     </div>
                 </form>
@@ -115,7 +148,7 @@
                 <!-- Results Display Section -->
                 <div id="results-section" class="results-box" style="display: none;" aria-live="polite">
                     <div class="results-header">
-                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                        <span class="material-symbols-outlined success-icon" aria-hidden="true">check_circle</span>
                         <h3>Calculated Results</h3>
                     </div>
                     <div class="results-grid">
@@ -132,9 +165,9 @@
             </div>
 
             <!-- Formula Reference Sidebar Card -->
-            <div class="info-card">
+            <aside class="info-card">
                 <div class="info-header">
-                    <span class="material-symbols-outlined" aria-hidden="true">info</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">engineering</span>
                     <h3>Ohm's Law Formulas</h3>
                 </div>
                 <ul class="formula-list">
@@ -155,7 +188,7 @@
                         <span class="formula-eq">P = V × I &nbsp;|&nbsp; P = I² × R</span>
                     </li>
                 </ul>
-            </div>
+            </aside>
         </div>
     </main>
 
@@ -169,7 +202,7 @@
         </div>
     </footer>
 
-    <!-- Tool Logic Script -->
+    <!-- Tool Logic Scripts -->
     <script src="../assets/js/tools/ohms-law-calculator.js" defer></script>
     <script src="../assets/js/app.js" defer></script>
 </body>
