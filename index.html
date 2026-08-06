@@ -30,6 +30,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -50,21 +54,20 @@
     <!-- Theme Initializer Script -->
     <script>
         const updateThemeFromDevice = () => {
-            const savedTheme = localStorage.getItem('prasun_theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-            } else {
-                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
-            }
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
         };
         updateThemeFromDevice();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        });
     </script>
 
     <!-- Premium UI / UX Redesign Styles -->
     <style>
         /* CSS Variables - Modern SaaS Theme */
         :root {
+            /* Colors */
             --bg-main: #ffffff;
             --bg-secondary: #f8fafc;
             --surface: #ffffff;
@@ -74,13 +77,14 @@
             --text-muted: #94a3b8;
             --border-light: #e2e8f0;
             --border-hover: #cbd5e1;
-            --accent-primary: #0f172a;
-            --accent-primary-hover: #334155;
+            --accent-primary: #000000;
+            --accent-primary-hover: #333333;
             --accent-text: #ffffff;
             --brand-blue: #2563eb;
             --brand-blue-light: #eff6ff;
             
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            /* Effects */
+            --glass-bg: rgba(255, 255, 255, 0.7);
             --glass-border: rgba(255, 255, 255, 0.4);
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -88,6 +92,7 @@
             --shadow-search: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
             --shadow-glow: 0 0 0 3px rgba(37, 99, 235, 0.15);
             
+            /* Typography & Layout */
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --radius-sm: 8px;
             --radius-md: 12px;
@@ -95,13 +100,13 @@
             --radius-full: 9999px;
             --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            --container-width: 1280px;
+            --container-width: 1200px;
         }
 
         /* Dark Mode Variables */
         [data-theme="dark"] {
             --bg-main: #020617;
-            --bg-secondary: #090d16;
+            --bg-secondary: #0f172a;
             --surface: #0f172a;
             --surface-hover: #1e293b;
             --text-primary: #f8fafc;
@@ -109,14 +114,14 @@
             --text-muted: #64748b;
             --border-light: #1e293b;
             --border-hover: #334155;
-            --accent-primary: #f8fafc;
-            --accent-primary-hover: #ffffff;
+            --accent-primary: #ffffff;
+            --accent-primary-hover: #f8fafc;
             --accent-text: #020617;
             --brand-blue: #3b82f6;
-            --brand-blue-light: rgba(59, 130, 246, 0.12);
+            --brand-blue-light: rgba(59, 130, 246, 0.1);
             
-            --glass-bg: rgba(2, 6, 23, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-bg: rgba(2, 6, 23, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
@@ -147,7 +152,7 @@
             width: 100%;
             max-width: var(--container-width);
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
         }
 
         /* Accessibility: Focus States */
@@ -160,9 +165,7 @@
         /* Typography */
         h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
         
-        /* -------------------------------------
-            Header & Navigation
-            ------------------------------------- */
+        /* Header & Navigation */
         .site-header {
             position: sticky;
             top: 0;
@@ -184,7 +187,7 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.625rem;
+            gap: 0.5rem;
             font-weight: 700;
             font-size: 1.25rem;
             color: var(--text-primary);
@@ -193,35 +196,28 @@
         }
         .logo:hover { opacity: 0.8; }
         .logo-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.25rem;
-            height: 2.25rem;
-            background: var(--brand-blue-light);
             color: var(--brand-blue);
-            border-radius: var(--radius-sm);
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-variation-settings: 'FILL' 1;
         }
 
         .desktop-nav {
             display: flex;
             align-items: center;
-            gap: 2.5rem;
+            gap: 2rem;
         }
         .desktop-nav a {
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--text-secondary);
             transition: color var(--transition-fast);
         }
-        .desktop-nav a:hover, .desktop-nav a.active { color: var(--text-primary); }
+        .desktop-nav a:hover { color: var(--text-primary); }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
         }
 
         .icon-btn {
@@ -234,11 +230,9 @@
             color: var(--text-secondary);
             transition: all var(--transition-fast);
             background: transparent;
-            border: 1px solid transparent;
         }
         .icon-btn:hover {
             background: var(--surface-hover);
-            border-color: var(--border-light);
             color: var(--text-primary);
         }
 
@@ -258,57 +252,52 @@
             flex-direction: column;
             gap: 1.5rem;
             border-top: 1px solid var(--border-light);
-            animation: fadeIn 0.2s ease-out;
         }
         .mobile-menu.active { display: flex; }
         .mobile-menu a {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--text-primary);
-            padding: 0.75rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid var(--border-light);
         }
 
-        /* -------------------------------------
-            Hero Section
-            ------------------------------------- */
+        /* Hero Section */
         .hero-section {
             position: relative;
-            padding: 7rem 0 5rem;
+            padding: 6rem 0 4rem;
             text-align: center;
             overflow: hidden;
         }
         
-        /* Mesh Gradient Background Effect */
         .hero-section::before {
             content: '';
             position: absolute;
-            top: -20%;
+            top: -10%;
             left: 50%;
             transform: translateX(-50%);
-            width: 900px;
-            height: 450px;
+            width: 800px;
+            height: 400px;
             background: radial-gradient(circle, var(--brand-blue-light) 0%, transparent 70%);
             z-index: -1;
-            opacity: 0.9;
+            opacity: 0.8;
             border-radius: 50%;
-            filter: blur(40px);
         }
 
         .hero-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 840px;
+            max-width: 800px;
             margin: 0 auto;
-            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeUp 0.8s ease-out;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.375rem 1rem;
+            gap: 0.375rem;
+            padding: 0.375rem 0.875rem;
             border-radius: var(--radius-full);
             background: var(--surface);
             border: 1px solid var(--border-light);
@@ -321,56 +310,73 @@
         .hero-badge .material-symbols-outlined { font-size: 1.125rem; color: var(--brand-blue); }
 
         .hero-section h1 {
-            font-size: clamp(2.75rem, 5.5vw, 4.75rem);
-            letter-spacing: -0.035em;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.03em;
             margin-bottom: 1.25rem;
             color: var(--text-primary);
-            line-height: 1.1;
         }
         
         .hero-section p {
             font-size: clamp(1.125rem, 2vw, 1.25rem);
             color: var(--text-secondary);
             margin-bottom: 3rem;
-            max-width: 680px;
+            max-width: 600px;
         }
 
-        /* Search Bar */
+        /* --------------------------------------------------------------------------
+           GOOGLE SEARCH BOX STYLE (Fixed Overlapping Issue with min-width & gaps)
+           -------------------------------------------------------------------------- */
         .search-wrapper {
             position: relative;
             width: 100%;
             max-width: 680px;
-            margin-bottom: 3.5rem;
-            transition: transform var(--transition-fast);
+            margin-bottom: 3rem;
         }
+
         .search-container {
             display: flex;
             align-items: center;
             background: var(--surface);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-full);
-            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 1.25rem;
+            gap: 0.75rem;
             box-shadow: var(--shadow-md);
             transition: all var(--transition-smooth);
         }
+
         .search-container:focus-within {
             border-color: var(--brand-blue);
             box-shadow: var(--shadow-search), var(--shadow-glow);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
+
         .search-icon {
             color: var(--text-muted);
-            font-size: 1.5rem;
-            margin-right: 0.875rem;
+            font-size: 1.375rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         .search-container input {
             flex: 1;
-            font-size: 1.125rem;
+            min-width: 0; /* CRITICAL FIX: prevents flex item text overflow/overlap */
+            font-size: 1.0625rem;
             color: var(--text-primary);
             background: transparent;
-            width: 100%;
+            border: none;
+            outline: none;
+            padding: 0.25rem 0;
+            line-height: 1.5;
         }
-        .search-container input::placeholder { color: var(--text-muted); }
+
+        .search-container input::placeholder { 
+            color: var(--text-muted); 
+            opacity: 1;
+        }
+
         .kbd-hint {
             display: flex;
             align-items: center;
@@ -383,29 +389,32 @@
             font-weight: 600;
             color: var(--text-muted);
             font-family: monospace;
-            margin-left: 0.75rem;
+            flex-shrink: 0;
+            user-select: none;
         }
         
         .search-btn {
             background: var(--accent-primary);
             color: var(--accent-text);
-            padding: 0.75rem 1.5rem;
+            padding: 0.625rem 1.375rem;
             border-radius: var(--radius-full);
             font-weight: 600;
             font-size: 0.875rem;
-            margin-left: 0.5rem;
+            flex-shrink: 0;
             transition: background var(--transition-fast), transform var(--transition-fast);
         }
-        .search-btn:hover { background: var(--accent-primary-hover); transform: scale(1.02); }
+        .search-btn:hover { 
+            background: var(--accent-primary-hover); 
+        }
 
         /* Hero Stats */
         .hero-stats {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 3rem;
+            gap: 2.5rem;
             flex-wrap: wrap;
-            padding-top: 2.5rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-light);
             width: 100%;
         }
@@ -416,10 +425,9 @@
             gap: 0.25rem;
         }
         .stat-value {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-primary);
-            letter-spacing: -0.02em;
         }
         .stat-label {
             font-size: 0.8125rem;
@@ -429,17 +437,11 @@
             letter-spacing: 0.05em;
         }
 
-        /* -------------------------------------
-            Categories Section
-            ------------------------------------- */
+        /* Categories Section */
         .categories-section {
-            padding: 1.5rem 0 2.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
             background: var(--bg-main);
-            position: sticky;
-            top: 4.5rem;
-            z-index: 90;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
         .categories-list {
             display: flex;
@@ -447,7 +449,6 @@
             overflow-x: auto;
             padding-bottom: 0.5rem;
             scrollbar-width: none;
-            justify-content: center;
         }
         .categories-list::-webkit-scrollbar { display: none; }
         
@@ -455,7 +456,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.625rem 1.25rem;
+            padding: 0.5rem 1rem;
             background: var(--surface);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-full);
@@ -465,25 +466,20 @@
             white-space: nowrap;
             transition: all var(--transition-fast);
             cursor: pointer;
-            box-shadow: var(--shadow-sm);
         }
         .category-pill:hover, .category-pill.active {
             background: var(--text-primary);
             color: var(--bg-main);
             border-color: var(--text-primary);
-            transform: translateY(-1px);
         }
 
-        /* -------------------------------------
-            Tools Grid Section
-            ------------------------------------- */
+        /* Tools Grid Section */
         .tools-section {
             padding: 5rem 0;
             background: var(--bg-secondary);
-            min-height: 60vh;
         }
         .section-header {
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem;
             text-align: center;
         }
         .section-title {
@@ -500,8 +496,8 @@
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.75rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
         }
 
         /* Premium Tool Card */
@@ -511,7 +507,7 @@
             background: var(--surface);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            padding: 2rem;
+            padding: 1.75rem;
             transition: all var(--transition-smooth);
             position: relative;
             overflow: hidden;
@@ -530,7 +526,7 @@
         }
 
         .tool-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             border-color: var(--border-hover);
             box-shadow: var(--shadow-lg);
         }
@@ -555,8 +551,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 3.25rem;
-            height: 3.25rem;
+            width: 3rem;
+            height: 3rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
@@ -564,7 +560,7 @@
             transition: transform var(--transition-smooth);
         }
         .tool-card:hover .card-icon {
-            transform: scale(1.08) rotate(-4deg);
+            transform: scale(1.05) rotate(-3deg);
             color: var(--brand-blue);
             border-color: var(--brand-blue-light);
             background: var(--surface);
@@ -573,12 +569,11 @@
         .card-tag {
             font-size: 0.75rem;
             font-weight: 600;
-            padding: 0.25rem 0.75rem;
+            padding: 0.25rem 0.625rem;
             background: var(--bg-main);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-full);
             color: var(--text-secondary);
-            letter-spacing: 0.02em;
         }
 
         .tool-card h3 {
@@ -591,8 +586,7 @@
             font-size: 0.9375rem;
             color: var(--text-secondary);
             flex: 1;
-            margin-bottom: 1.75rem;
-            line-height: 1.5;
+            margin-bottom: 1.5rem;
         }
 
         .card-footer-action {
@@ -613,71 +607,51 @@
             color: var(--brand-blue);
         }
 
-        /* Empty state for search */
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--surface);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            display: none;
-        }
-        .no-results h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
-        .no-results p { color: var(--text-secondary); }
-
-        /* -------------------------------------
-            Features & Why Choose Us Section
-            ------------------------------------- */
+        /* Features & Why Choose Us Section */
         .features-section {
-            padding: 6rem 0;
+            padding: 5rem 0;
             background: var(--bg-main);
-            border-top: 1px solid var(--border-light);
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 3.5rem;
+            margin-top: 3rem;
         }
         .feature-item {
-            padding: 2.5rem;
+            padding: 2rem;
             background: var(--surface);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            transition: box-shadow var(--transition-fast);
         }
-        .feature-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .feature-item:hover { box-shadow: var(--shadow-md); }
         .feature-icon {
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 3rem;
+            height: 3rem;
             border-radius: var(--radius-md);
             background: var(--brand-blue-light);
             color: var(--brand-blue);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
         }
         .feature-item h4 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
             color: var(--text-primary);
         }
         .feature-item p {
             font-size: 0.9375rem;
             color: var(--text-secondary);
-            line-height: 1.6;
         }
 
-        /* -------------------------------------
-            Footer Section
-            ------------------------------------- */
+        /* Footer Section */
         .site-footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-light);
-            padding: 5rem 0 2.5rem;
+            padding: 4rem 0 2rem;
         }
         
         .footer-content {
@@ -685,33 +659,33 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 2.5rem;
+            gap: 2rem;
         }
 
         .privacy-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.625rem;
-            padding: 0.875rem 1.5rem;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
             background: var(--surface);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--text-secondary);
             box-shadow: var(--shadow-sm);
         }
-        .privacy-badge .material-symbols-outlined { color: #10b981; font-variation-settings: 'FILL' 1; }
+        .privacy-badge .material-symbols-outlined { color: #10b981; }
 
         .footer-nav {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
         }
         .footer-nav a {
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--text-secondary);
             transition: color var(--transition-fast);
@@ -722,19 +696,13 @@
         .copyright {
             font-size: 0.875rem;
             color: var(--text-muted);
-            margin-top: 0.5rem;
+            margin-top: 1rem;
         }
 
-        /* -------------------------------------
-            Animations & Responsiveness
-            ------------------------------------- */
+        /* Animations & Responsiveness */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -745,14 +713,12 @@
             .desktop-nav { display: none; }
             .mobile-menu-btn { display: flex; }
             .hero-section h1 { font-size: 2.25rem; }
-            .hero-stats { gap: 1.5rem; flex-direction: column; align-items: stretch; padding: 2rem; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
-            .stat-item { flex-direction: row; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
+            .hero-stats { gap: 1.5rem; flex-direction: column; align-items: flex-start; padding: 2rem; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
+            .stat-item { flex-direction: row; align-items: baseline; gap: 1rem; width: 100%; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
             .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
             .kbd-hint { display: none; }
             .search-btn { display: none; }
             .search-container { padding-right: 1.25rem; }
-            .tools-grid { grid-template-columns: 1fr; }
-            .container { padding: 0 1.25rem; }
         }
     </style>
 </head>
@@ -767,7 +733,7 @@
             </a>
             
             <nav class="desktop-nav" aria-label="Main Navigation">
-                <a href="/" class="active">Home</a>
+                <a href="/">Home</a>
                 <a href="#tools-grid">Tools</a>
                 <a href="#categories">Categories</a>
                 <a href="/about.html">About</a>
@@ -776,10 +742,10 @@
 
             <div class="header-actions">
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark and light mode">
-                    <span class="material-symbols-outlined" aria-hidden="true" id="theme-icon">dark_mode</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
                 </button>
                 <button class="icon-btn mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-                    <span class="material-symbols-outlined" aria-hidden="true" id="menu-icon">menu</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">menu</span>
                 </button>
             </div>
         </div>
@@ -812,7 +778,7 @@
                 <div class="search-wrapper">
                     <div class="search-container" role="search">
                         <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
-                        <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV, JSON)..." aria-label="Search tools" autocomplete="off">
+                        <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV)..." aria-label="Search tools" autocomplete="off">
                         <span class="kbd-hint" aria-hidden="true">⌘K</span>
                         <button class="search-btn" aria-label="Submit Search">Search</button>
                     </div>
@@ -821,7 +787,7 @@
                 <!-- Trust Statistics -->
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <span class="stat-value">12+</span>
+                        <span class="stat-value">10+</span>
                         <span class="stat-label">Pro Tools</span>
                     </div>
                     <div class="stat-item">
@@ -829,8 +795,8 @@
                         <span class="stat-label">Privacy Friendly</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-value">0ms</span>
-                        <span class="stat-label">Server Latency</span>
+                        <span class="stat-value"><span class="material-symbols-outlined" style="font-size: 1.5rem; vertical-align: bottom;">bolt</span></span>
+                        <span class="stat-label">Lightning Fast</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-value">Free</span>
@@ -843,13 +809,14 @@
         <!-- Categories Section -->
         <section id="categories" class="categories-section" aria-label="Tool Categories">
             <div class="container">
-                <div class="categories-list" id="category-filters">
-                    <button class="category-pill active" data-category="all">All Tools</button>
-                    <button class="category-pill" data-category="engineering"><span class="material-symbols-outlined" style="font-size: 1.125rem;">engineering</span> Engineering</button>
-                    <button class="category-pill" data-category="electrical"><span class="material-symbols-outlined" style="font-size: 1.125rem;">electrical_services</span> Electrical</button>
-                    <button class="category-pill" data-category="solar"><span class="material-symbols-outlined" style="font-size: 1.125rem;">solar_power</span> Solar PV</button>
-                    <button class="category-pill" data-category="developer"><span class="material-symbols-outlined" style="font-size: 1.125rem;">code</span> Developer</button>
-                    <button class="category-pill" data-category="converters"><span class="material-symbols-outlined" style="font-size: 1.125rem;">swap_horiz</span> Converters</button>
+                <div class="categories-list">
+                    <button class="category-pill active">All Tools</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">engineering</span> Engineering</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">electrical_services</span> Electrical</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">solar_power</span> Solar PV</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">code</span> Developer</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">swap_horiz</span> Converters</button>
+                    <button class="category-pill"><span class="material-symbols-outlined" style="font-size: 1.125rem;">calculate</span> Calculators</button>
                 </div>
             </div>
         </section>
@@ -862,17 +829,17 @@
                     <p class="section-subtitle">Explore our growing collection of robust, browser-based utilities.</p>
                 </div>
                 
-                <div class="tools-grid" id="tools-container">
+                <div class="tools-grid">
                     
                     <!-- Tool Card 1: Ohm's Law -->
-                    <article class="tool-card-wrapper" data-category="electrical engineering">
-                        <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power electrical">
+                    <article>
+                        <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power">
                             <div class="card-content">
                                 <div class="card-header-row">
                                     <div class="card-icon" aria-hidden="true">
                                         <span class="material-symbols-outlined">electrical_services</span>
                                     </div>
-                                    <span class="card-tag">Electrical</span>
+                                    <span class="card-tag">Engineering</span>
                                 </div>
                                 <h3>Ohm's Law Calculator</h3>
                                 <p>Calculate Voltage, Current, Resistance, and Power instantly using standard Ohm's Law formulas.</p>
@@ -885,8 +852,8 @@
                     </article>
 
                     <!-- Tool Card 2: Solar PV -->
-                    <article class="tool-card-wrapper" data-category="solar engineering">
-                        <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing generation">
+                    <article>
+                        <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing">
                             <div class="card-content">
                                 <div class="card-header-row">
                                     <div class="card-icon" aria-hidden="true">
@@ -894,8 +861,8 @@
                                     </div>
                                     <span class="card-tag">Solar PV</span>
                                 </div>
-                                <h3>Solar PV Sizing Calculator</h3>
-                                <p>Estimate daily solar power generation, panel count, and battery capacity requirements for your setup.</p>
+                                <h3>Solar PV System Calculator</h3>
+                                <p>Estimate panel requirements, battery storage sizing, and daily solar energy production effortlessly.</p>
                                 <div class="card-footer-action">
                                     <span>Launch Tool</span>
                                     <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
@@ -904,126 +871,6 @@
                         </a>
                     </article>
 
-                    <!-- Tool Card 3: JSON Formatter -->
-                    <article class="tool-card-wrapper" data-category="developer">
-                        <a href="/tools/json-formatter.html" class="tool-card" data-name="json formatter validator minifier developer tools">
-                            <div class="card-content">
-                                <div class="card-header-row">
-                                    <div class="card-icon" aria-hidden="true">
-                                        <span class="material-symbols-outlined">data_object</span>
-                                    </div>
-                                    <span class="card-tag">Developer</span>
-                                </div>
-                                <h3>JSON Formatter & Validator</h3>
-                                <p>Format, validate, beautify, and minify JSON data payloads directly in your secure web browser.</p>
-                                <div class="card-footer-action">
-                                    <span>Launch Tool</span>
-                                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- Tool Card 4: Base64 Encoder -->
-                    <article class="tool-card-wrapper" data-category="developer converters">
-                        <a href="/tools/base64-encoder.html" class="tool-card" data-name="base64 encoder decoder string text converter">
-                            <div class="card-content">
-                                <div class="card-header-row">
-                                    <div class="card-icon" aria-hidden="true">
-                                        <span class="material-symbols-outlined">code</span>
-                                    </div>
-                                    <span class="card-tag">Converters</span>
-                                </div>
-                                <h3>Base64 Encoder / Decoder</h3>
-                                <p>Encode plain text into Base64 format or decode Base64 strings safely with instant live processing.</p>
-                                <div class="card-footer-action">
-                                    <span>Launch Tool</span>
-                                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- Tool Card 5: Cable Size Calculator -->
-                    <article class="tool-card-wrapper" data-category="electrical engineering">
-                        <a href="/tools/cable-size-calculator.html" class="tool-card" data-name="cable size calculator voltage drop wire gauge electrical">
-                            <div class="card-content">
-                                <div class="card-header-row">
-                                    <div class="card-icon" aria-hidden="true">
-                                        <span class="material-symbols-outlined">settings_input_hdmi</span>
-                                    </div>
-                                    <span class="card-tag">Electrical</span>
-                                </div>
-                                <h3>Cable Size & Voltage Drop</h3>
-                                <p>Determine proper wire gauge and calculate voltage drop across long copper or aluminum cable runs.</p>
-                                <div class="card-footer-action">
-                                    <span>Launch Tool</span>
-                                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- Tool Card 6: Unit Converter -->
-                    <article class="tool-card-wrapper" data-category="converters engineering">
-                        <a href="/tools/unit-converter.html" class="tool-card" data-name="unit converter length weight temperature pressure speed">
-                            <div class="card-content">
-                                <div class="card-header-row">
-                                    <div class="card-icon" aria-hidden="true">
-                                        <span class="material-symbols-outlined">swap_horiz</span>
-                                    </div>
-                                    <span class="card-tag">Converters</span>
-                                </div>
-                                <h3>Universal Unit Converter</h3>
-                                <p>Quickly convert units across length, mass, temperature, pressure, energy, and power metrics.</p>
-                                <div class="card-footer-action">
-                                    <span>Launch Tool</span>
-                                    <span class="material-symbols-outlined arrow-icon" aria-hidden="true">arrow_forward</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-
-                </div>
-
-                <!-- No Results State -->
-                <div class="no-results" id="no-results-state">
-                    <h3>No matching tools found</h3>
-                    <p>Try searching for a different keyword or explore all available categories.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features & Why Choose Us Section -->
-        <section class="features-section" aria-label="Why Choose Prasun Tools">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Designed for Professionals</h2>
-                    <p class="section-subtitle">Why engineers and developers trust Prasun Tools for daily workflows.</p>
-                </div>
-                
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <span class="material-symbols-outlined">lock</span>
-                        </div>
-                        <h4>100% Privacy First</h4>
-                        <p>All calculations and data processing happen entirely client-side in your browser. Your data never leaves your device or touches any server.</p>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <span class="material-symbols-outlined">bolt</span>
-                        </div>
-                        <h4>Lightning Fast</h4>
-                        <p>Built with lightweight, optimized vanilla web technologies for zero bloated dependencies and instantaneous response times.</p>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <span class="material-symbols-outlined">devices</span>
-                        </div>
-                        <h4>Fully Responsive</h4>
-                        <p>Optimized seamlessly across desktop workstations, tablets, and mobile devices so you can run tools anywhere on the go.</p>
-                    </div>
                 </div>
             </div>
         </section>
@@ -1035,120 +882,24 @@
         <div class="container footer-content">
             <div class="privacy-badge">
                 <span class="material-symbols-outlined" aria-hidden="true">lock</span>
-                Zero server logs. Your inputs stay private in your browser.
+                <span>100% Client-Side Processing. No data ever leaves your browser.</span>
             </div>
-
+            
             <nav class="footer-nav" aria-label="Footer Navigation">
                 <a href="/">Home</a>
                 <span class="separator">&bull;</span>
-                <a href="#tools-grid">Tools</a>
-                <span class="separator">&bull;</span>
                 <a href="/about.html">About</a>
+                <span class="separator">&bull;</span>
+                <a href="/contact.html">Contact</a>
                 <span class="separator">&bull;</span>
                 <a href="/privacy.html">Privacy Policy</a>
                 <span class="separator">&bull;</span>
-                <a href="/contact.html">Contact</a>
+                <a href="/terms.html">Terms of Use</a>
             </nav>
 
-            <p class="copyright">&copy; <span id="current-year">2026</span> Prasun Tools. Built with precision for engineers &amp; developers.</p>
+            <p class="copyright">&copy; 2026 Prasun Barua. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Interactive JavaScript Logic -->
-    <script>
-        // Update copyright year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Theme Toggle Functionality
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-
-        const updateThemeIcon = (theme) => {
-            themeIcon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
-        };
-
-        // Initialize icon state
-        updateThemeIcon(document.documentElement.getAttribute('data-theme'));
-
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('prasun_theme', newTheme);
-            updateThemeIcon(newTheme);
-        });
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            const isOpen = mobileMenu.classList.toggle('active');
-            menuIcon.textContent = isOpen ? 'close' : 'menu';
-            mobileMenuBtn.setAttribute('aria-expanded', isOpen);
-        });
-
-        // Close mobile menu when clicking a link
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                menuIcon.textContent = 'menu';
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            });
-        });
-
-        // Live Tool Search & Category Filter
-        const searchInput = document.getElementById('tool-search');
-        const toolCards = document.querySelectorAll('.tool-card-wrapper');
-        const noResultsState = document.getElementById('no-results-state');
-        const categoryPills = document.querySelectorAll('#category-filters .category-pill');
-
-        let activeCategory = 'all';
-        let searchQuery = '';
-
-        function filterTools() {
-            let visibleCount = 0;
-
-            toolCards.forEach(card => {
-                const nameAttr = card.querySelector('.tool-card').getAttribute('data-name') || '';
-                const categoryAttr = card.getAttribute('data-category') || '';
-                
-                const matchesSearch = nameAttr.toLowerCase().includes(searchQuery);
-                const matchesCategory = activeCategory === 'all' || categoryAttr.includes(activeCategory);
-
-                if (matchesSearch && matchesCategory) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            noResultsState.style.display = visibleCount === 0 ? 'block' : 'none';
-        }
-
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.toLowerCase().trim();
-            filterTools();
-        });
-
-        categoryPills.forEach(pill => {
-            pill.addEventListener('click', () => {
-                categoryPills.forEach(p => p.classList.remove('active'));
-                pill.classList.add('active');
-                activeCategory = pill.getAttribute('data-category');
-                filterTools();
-            });
-        });
-
-        // Keyboard Shortcut ⌘K / Ctrl+K for Search Focus
-        window.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-                e.preventDefault();
-                searchInput.focus();
-            }
-        });
-    </script>
 </body>
 </html>
