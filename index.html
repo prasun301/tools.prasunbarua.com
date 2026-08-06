@@ -1,1062 +1,124 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prasun Tools — Fast, Free & Privacy-Friendly Online Tools</title>
-  <meta name="description" content="Discover professional, lightning-fast, and 100% privacy-friendly online tools for developers, engineers, and creators. Free, browser-based, no registration required.">
-  <link rel="canonical" href="https://tools.prasunbarua.com/">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tools.prasunbarua.com/">
-  <meta property="og:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Tools">
-  <meta property="og:description" content="Professional developer, engineering, and utility tools built for speed and privacy.">
-  <meta property="og:image" content="https://tools.prasunbarua.com/og-image.png">
-  
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Tools">
-  <meta name="twitter:description" content="Professional developer, engineering, and utility tools built for speed and privacy.">
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Material Symbols Outlined -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Prasun Tools",
-    "url": "https://tools.prasunbarua.com",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://tools.prasunbarua.com/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Prasun Tools",
-    "url": "https://tools.prasunbarua.com",
-    "logo": "https://tools.prasunbarua.com/logo.png",
-    "sameAs": [
-      "https://github.com/prasunbarua",
-      "https://linkedin.com/in/prasunbarua"
-    ]
-  }
-  </script>
-
-  <style>
-    /* Design Tokens & CSS Variables */
-    :root {
-      --bg-primary: #09090b;
-      --bg-secondary: #121216;
-      --bg-tertiary: #18181b;
-      --bg-card: rgba(24, 24, 27, 0.7);
-      --bg-card-hover: rgba(39, 39, 42, 0.85);
-      --border-color: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.2);
-      --text-primary: #f4f4f5;
-      --text-secondary: #a1a1aa;
-      --text-tertiary: #71717a;
-      --accent-primary: #6366f1;
-      --accent-secondary: #a855f7;
-      --accent-glow: rgba(99, 102, 241, 0.15);
-      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-      --surface-glass: rgba(18, 18, 22, 0.75);
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-      --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      --radius-full: 9999px;
-      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [data-theme="light"] {
-      --bg-primary: #fafafa;
-      --bg-secondary: #f4f4f5;
-      --bg-tertiary: #e4e4e7;
-      --bg-card: rgba(255, 255, 255, 0.85);
-      --bg-card-hover: rgba(255, 255, 255, 1);
-      --border-color: rgba(0, 0, 0, 0.08);
-      --border-hover: rgba(0, 0, 0, 0.2);
-      --text-primary: #09090b;
-      --text-secondary: #52525b;
-      --text-tertiary: #71717a;
-      --accent-primary: #4f46e5;
-      --accent-secondary: #9333ea;
-      --accent-glow: rgba(79, 70, 229, 0.1);
-      --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
-      --surface-glass: rgba(255, 255, 255, 0.8);
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
-    }
-
-    /* Reset & Base */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-    }
-
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Skip link for Accessibility */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--accent-primary);
-      color: #fff;
-      padding: 8px 16px;
-      z-index: 100;
-      transition: top 0.2s ease;
-      border-radius: 0 0 var(--radius-sm) 0;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .skip-link:focus {
-      top: 0;
-    }
-
-    /* Utility & Background Glow */
-    .bg-glow {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 1200px;
-      height: 600px;
-      background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* Sticky Header & Navigation */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: var(--surface-glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-color);
-      transition: var(--transition);
-    }
-
-    .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 4.5rem;
-    }
-
-    .logo-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-    }
-
-    .logo-icon {
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: var(--radius-sm);
-      background: var(--accent-gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-secondary);
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover, .nav-links a:focus-visible {
-      color: var(--text-primary);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .icon-btn {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      color: var(--text-primary);
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .icon-btn:hover {
-      background: var(--bg-tertiary);
-      border-color: var(--border-hover);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-primary);
-      cursor: pointer;
-    }
-
-    /* Hero Section */
-    .hero-section {
-      position: relative;
-      padding: 6rem 0 4rem;
-      text-align: center;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      padding: 0.35rem 1rem;
-      border-radius: var(--radius-full);
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .hero-badge span.dot {
-      width: 6px;
-      height: 6px;
-      background: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #10b981;
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1.25rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-title .gradient-text {
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--text-secondary);
-      max-width: 680px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-    }
-
-    .hero-cta-group {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.75rem;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: var(--transition);
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: var(--accent-primary);
-      color: white;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.1);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      border-color: var(--border-color);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-tertiary);
-      border-color: var(--border-hover);
-    }
-
-    /* Modern Search Experience */
-    .search-wrapper {
-      max-width: 700px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .search-box {
-      position: relative;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      padding: 0.5rem 1rem 0.5rem 1.25rem;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-    }
-
-    .search-box:focus-within {
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-lg);
-    }
-
-    .search-box .material-symbols-outlined {
-      color: var(--text-tertiary);
-      font-size: 1.5rem;
-      margin-right: 0.75rem;
-    }
-
-    .search-input {
-      flex: 1;
-      background: none;
-      border: none;
-      color: var(--text-primary);
-      font-size: 1.05rem;
-      font-family: var(--font-sans);
-      outline: none;
-    }
-
-    .search-input::placeholder {
-      color: var(--text-tertiary);
-    }
-
-    .search-shortcut {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
-      color: var(--text-tertiary);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-    }
-
-    .search-suggestions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .suggestion-label {
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-    }
-
-    .suggestion-chip {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      padding: 0.25rem 0.75rem;
-      border-radius: var(--radius-full);
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .suggestion-chip:hover {
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-      border-color: var(--border-hover);
-    }
-
-    /* Section Shared Styling */
-    section {
-      padding: 5rem 0;
-      position: relative;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .section-tag {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent-primary);
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 3vw, 2.75rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-    }
-
-    .section-desc {
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-    }
-
-    /* Category Section */
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .category-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 1.75rem;
-      text-decoration: none;
-      color: var(--text-primary);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .category-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: var(--accent-gradient);
-      opacity: 0;
-      transition: var(--transition);
-    }
-
-    .category-card:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--border-hover);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .category-card:hover::before {
-      opacity: 1;
-    }
-
-    .category-icon-wrapper {
-      width: 3rem;
-      height: 3rem;
-      border-radius: var(--radius-sm);
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-primary);
-      font-size: 1.5rem;
-      transition: var(--transition);
-    }
-
-    .category-card:hover .category-icon-wrapper {
-      background: var(--accent-primary);
-      color: white;
-    }
-
-    .category-info h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .category-info p {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-
-    .category-count {
-      margin-top: auto;
-      font-size: 0.75rem;
-      font-family: var(--font-mono);
-      color: var(--text-tertiary);
-    }
-
-    /* Tools Grid & Cards */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .tool-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .tool-card:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--border-hover);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .tool-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .tool-icon-title {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .tool-icon {
-      width: 3.25rem;
-      height: 3.25rem;
-      border-radius: var(--radius-md);
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-primary);
-      font-size: 1.75rem;
-      flex-shrink: 0;
-    }
-
-    .tool-meta-badges {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: var(--radius-full);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .badge-category { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); }
-    .badge-popular { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-    .badge-fast { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .badge-privacy { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-
-    .favorite-btn {
-      background: none;
-      border: none;
-      color: var(--text-tertiary);
-      cursor: pointer;
-      transition: var(--transition);
-      padding: 0.25rem;
-    }
-
-    .favorite-btn:hover, .favorite-btn.active {
-      color: #ef4444;
-      transform: scale(1.1);
-    }
-
-    .tool-body h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
-    }
-
-    .tool-body p {
-      font-size: 0.925rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .tool-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: auto;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .tool-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent-primary);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .tool-link:hover {
-      gap: 0.5rem;
-    }
-
-    /* Footer */
-    .site-footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border-color);
-      padding: 4rem 0 2rem;
-      margin-top: 4rem;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr repeat(3, 1fr);
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-
-    .footer-col h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 1.25rem;
-      color: var(--text-primary);
-    }
-
-    .footer-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .footer-col ul a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: var(--transition);
-    }
-
-    .footer-col ul a:hover {
-      color: var(--text-primary);
-    }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border-color);
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .mobile-menu-btn { display: block; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities</title>
+    <meta name="description" content="A modern collection of fast, free, and privacy-friendly online tools for developers, engineers, students, and professionals running directly in your browser.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Prasun Tools — Fast, Free & Privacy-Friendly Online Utilities">
+    <meta property="og:description" content="Modern browser-based tools for developers, engineers, and professionals. Zero server tracking.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tools.prasunbarua.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    
+    <!-- Theme Initializer Script -->
+    <script>
+        const updateThemeFromDevice = () => {
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
+        };
+
+        // Apply theme immediately on load
+        updateThemeFromDevice();
+
+        // Listen for live system changes in real-time
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        });
+    </script>
 </head>
 <body>
 
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div class="bg-glow"></div>
-
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container nav-container">
-      <a href="#" class="logo-brand">
-        <div class="logo-icon">
-          <span class="material-symbols-outlined">bolt</span>
+    <!-- Header Section -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span> Prasun Tools
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="/">Home</a>
+                <a href="#tools-grid">Tools</a>
+                <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+                </button>
+            </nav>
         </div>
-        Prasun Tools
-      </a>
+    </header>
 
-      <ul class="nav-links">
-        <li><a href="#tools">All Tools</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#privacy">Privacy Promise</a></li>
-        <li><a href="https://github.com/prasunbarua" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
-          <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
-        </button>
-        <button class="mobile-menu-btn" aria-label="Open Menu">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main id="main-content">
-    
     <!-- Hero Section -->
     <section class="hero-section">
-      <div class="container">
-        <div class="hero-badge">
-          <span class="dot"></span> 100% Client-Side Processing • Zero Data Stored
+        <div class="container">
+            <h1>Professional Utilities, Built for Speed</h1>
+            <p>Fast, free, and privacy-friendly online tools running completely client-side in your browser.</p>
+            
+            <!-- Live Search Bar -->
+            <div class="search-container">
+                <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
+                <input type="text" id="tool-search" placeholder="Search tools (e.g., Ohm's Law, Solar PV)..." aria-label="Search tools">
+            </div>
         </div>
-        
-        <h1 class="hero-title">
-          Professional <span class="gradient-text">Developer & Utility Tools</span> Built for Speed
-        </h1>
-        
-        <p class="hero-subtitle">
-          A lightning-fast collection of browser-based utilities designed for developers, engineers, and creators. No registration, no ads, completely free.
-        </p>
-
-        <!-- Search Bar -->
-        <div class="search-wrapper">
-          <div class="search-box">
-            <span class="material-symbols-outlined">search</span>
-            <input type="text" class="search-input" id="tool-search" placeholder="Search 45+ tools (e.g. JSON Formatter, Base64, JWT)...">
-            <span class="search-shortcut">⌘K</span>
-          </div>
-          
-          <div class="search-suggestions">
-            <span class="suggestion-label">Popular:</span>
-            <button class="suggestion-chip" data-filter="JSON">JSON Formatter</button>
-            <button class="suggestion-chip" data-filter="Encoder">Base64</button>
-            <button class="suggestion-chip" data-filter="JWT">JWT Decoder</button>
-            <button class="suggestion-chip" data-filter="Regex">Regex Tester</button>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- Categories Section -->
-    <section id="categories">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Explore by Category</span>
-          <h2 class="section-title">What do you need to build?</h2>
-          <p class="section-desc">Tools categorized logically to help you find what you need in seconds.</p>
-        </div>
-
-        <div class="categories-grid">
-          <a href="#" class="category-card">
-            <div class="category-icon-wrapper">
-              <span class="material-symbols-outlined">code</span>
-            </div>
-            <div class="category-info">
-              <h3>Development</h3>
-              <p>Formatters, parsers, linters & validators</p>
-            </div>
-            <span class="category-count">16 tools</span>
-          </a>
-
-          <a href="#" class="category-card">
-            <div class="category-icon-wrapper">
-              <span class="material-symbols-outlined">security</span>
-            </div>
-            <div class="category-info">
-              <h3>Security & Crypto</h3>
-              <p>Hashes, tokens, encoders & generators</p>
-            </div>
-            <span class="category-count">12 tools</span>
-          </a>
-
-          <a href="#" class="category-card">
-            <div class="category-icon-wrapper">
-              <span class="material-symbols-outlined">palette</span>
-            </div>
-            <div class="category-info">
-              <h3>Design & CSS</h3>
-              <p>Color pickers, shadows & svg tools</p>
-            </div>
-            <span class="category-count">9 tools</span>
-          </a>
-
-          <a href="#" class="category-card">
-            <div class="category-icon-wrapper">
-              <span class="material-symbols-outlined">calculate</span>
-            </div>
-            <div class="category-info">
-              <h3>Converters & Math</h3>
-              <p>Units, data sizes, timestamps & math</p>
-            </div>
-            <span class="category-count">10 tools</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Tools Grid -->
-    <section id="tools">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Featured Utilities</span>
-          <h2 class="section-title">Most Popular Tools</h2>
-          <p class="section-desc">Blazing fast tools engineered with vanilla JavaScript for instant results.</p>
-        </div>
-
-        <div class="tools-grid">
-          <!-- Tool Card 1 -->
-          <div class="tool-card" data-name="json formatter validator">
-            <div class="tool-header">
-              <div class="tool-icon-title">
-                <div class="tool-icon">
-                  <span class="material-symbols-outlined">data_object</span>
-                </div>
-              </div>
-              <div class="tool-meta-badges">
-                <span class="badge badge-popular">Popular</span>
-              </div>
-            </div>
-            <div class="tool-body">
-              <h3>JSON Formatter & Validator</h3>
-              <p>Format, validate, minify, and inspect JSON payloads with real-time error detection and syntax highlighting.</p>
-            </div>
-            <div class="tool-footer">
-              <span class="badge badge-category">Development</span>
-              <a href="#" class="tool-link">Launch Tool <span class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span></a>
-            </div>
-          </div>
-
-          <!-- Tool Card 2 -->
-          <div class="tool-card" data-name="jwt decoder debugger">
-            <div class="tool-header">
-              <div class="tool-icon-title">
-                <div class="tool-icon">
-                  <span class="material-symbols-outlined">key</span>
-                </div>
-              </div>
-              <div class="tool-meta-badges">
-                <span class="badge badge-fast">Secure</span>
-              </div>
-            </div>
-            <div class="tool-body">
-              <h3>JWT Decoder & Debugger</h3>
-              <p>Decode JSON Web Tokens instantly to inspect header, payload claims, and expiration dates locally in your browser.</p>
-            </div>
-            <div class="tool-footer">
-              <span class="badge badge-category">Security</span>
-              <a href="#" class="tool-link">Launch Tool <span class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span></a>
-            </div>
-          </div>
-
-          <!-- Tool Card 3 -->
-          <div class="tool-card" data-name="base64 encoder decoder">
-            <div class="tool-header">
-              <div class="tool-icon-title">
-                <div class="tool-icon">
-                  <span class="material-symbols-outlined">sync_alt</span>
-                </div>
-              </div>
-              <div class="tool-meta-badges">
-                <span class="badge badge-privacy">Private</span>
-              </div>
-            </div>
-            <div class="tool-body">
-              <h3>Base64 Encoder / Decoder</h3>
-              <p>Encode plain text or binary files into Base64 format or decode strings instantly with zero server roundtrips.</p>
-            </div>
-            <div class="tool-footer">
-              <span class="badge badge-category">Utility</span>
-              <a href="#" class="tool-link">Launch Tool <span class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="#" class="logo-brand" style="margin-bottom: 1rem; display: inline-flex;">
-            <div class="logo-icon">
-              <span class="material-symbols-outlined">bolt</span>
-            </div>
-            Prasun Tools
-          </a>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 320px;">
-            Professional online tools designed with a focus on speed, user experience, and absolute privacy.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Development</h4>
-          <ul>
-            <li><a href="#">JSON Formatter</a></li>
-            <li><a href="#">JWT Decoder</a></li>
-            <li><a href="#">Regex Tester</a></li>
-            <li><a href="#">Diff Checker</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Security & Crypto</h4>
-          <ul>
-            <li><a href="#">Password Generator</a></li>
-            <li><a href="#">Hash Generator (MD5/SHA)</a></li>
-            <li><a href="#">Base64 Converter</a></li>
-            <li><a href="#">UUID v4 Generator</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Connect</h4>
-          <ul>
-            <li><a href="https://github.com/prasunbarua" target="_blank" rel="noopener">GitHub</a></li>
-            <li><a href="https://linkedin.com/in/prasunbarua" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="mailto:contact@prasunbarua.com">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
-        <p>Built with pure HTML, CSS & JavaScript.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Interactivity Scripts -->
-  <script>
-    // Theme Switcher Logic
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
-    const htmlElement = document.documentElement;
-
-    themeToggleBtn.addEventListener('click', () => {
-      const currentTheme = htmlElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      htmlElement.setAttribute('data-theme', newTheme);
-      themeIcon.textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
-      localStorage.setItem('theme', newTheme);
-    });
-
-    // Check saved preference on load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      htmlElement.setAttribute('data-theme', savedTheme);
-      themeIcon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
-    }
-
-    // Simple Real-Time Search Filter for Tool Cards
-    const searchInput = document.getElementById('tool-search');
-    const toolCards = document.querySelectorAll('.tool-card');
-
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      
-      toolCards.forEach(card => {
-        const keywords = card.getAttribute('data-name');
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        const desc = card.querySelector('p').textContent.toLowerCase();
+    <!-- Main Tools Grid Section -->
+    <main class="container" id="tools-grid">
+        <h2 class="section-title">Available Tools</h2>
         
-        if (keywords.includes(query) || title.includes(query) || desc.includes(query)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
+        <div class="grid">
+            <!-- Tool Card 1: Ohm's Law -->
+            <a href="/tools/ohms-law-calculator.html" class="tool-card" data-name="ohms law calculator voltage current resistance power">
+               <div class="card-icon">
+                   <span class="material-symbols-outlined" aria-hidden="true">electrical_services</span>
+               </div>
+               <h3>Ohm's Law Calculator</h3>
+               <p>Calculate Voltage, Current, Resistance, and Power instantly using Ohm's Law formulas.</p>
+               <span class="card-tag">Engineering</span>
+            </a>
 
-    // Suggestion chip filter helper
-    document.querySelectorAll('.suggestion-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const filterVal = chip.getAttribute('data-filter');
-        searchInput.value = filterVal;
-        searchInput.dispatchEvent(new Event('input'));
-      });
-    });
-  </script>
+            <!-- Tool Card 2: Solar PV -->
+            <a href="/tools/solar-pv-calculator.html" class="tool-card" data-name="solar pv calculator energy panels sizing">
+               <div class="card-icon">
+                   <span class="material-symbols-outlined" aria-hidden="true">solar_power</span>
+               </div>
+               <h3>Solar PV Calculator</h3>
+               <p>Estimate solar panel sizing, system capacity, and daily energy generation output.</p>
+               <span class="card-tag">Engineering</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <!-- Privacy Badge -->
+            <p class="privacy-badge">
+                <span class="material-symbols-outlined" aria-hidden="true">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
+            </p>
+
+            <!-- AdSense & Navigation Links -->
+            <p class="footer-nav" style="margin: 15px 0; font-size: 14px;">
+                <a href="/about.html">About Us</a> | 
+                <a href="/privacy-policy.html">Privacy Policy</a> | 
+                <a href="/terms.html">Terms & Conditions</a> | 
+                <a href="/contact.html">Contact Us</a>
+            </p>
+
+            <!-- Copyright -->
+            <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Application Script -->
+    <script src="/assets/js/app.js" defer></script>
 </body>
 </html>
