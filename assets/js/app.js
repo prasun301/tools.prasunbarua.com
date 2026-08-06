@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const iconSpan = themeToggleBtn.querySelector('.material-symbols-outlined');
 
     // Check user preference from localStorage
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme') || 'light';
     htmlElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
