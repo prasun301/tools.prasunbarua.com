@@ -1,548 +1,643 @@
 /* =========================================================
-   PROFESSIONAL DESIGN SYSTEM STYLESHEET
-   Architecture: Root Variables -> Reset -> Base -> Components
+   ENTERPRISE DESIGN SYSTEM
+   Version: 2.0 (Refactored)
+   Architecture: Layers -> Tokens -> Reset -> Base -> Layout -> Components -> Utilities
 ========================================================= */
+
+/* --- 00. CSS LAYERS --- */
+@layer reset, tokens, base, layout, components, utilities, print;
 
 /* =========================================================
-   01. Root Variables & Design Tokens
+   01. DESIGN TOKENS (@layer tokens)
 ========================================================= */
-:root {
-    /* --- Colors: Surfaces & Backgrounds --- */
-    --surface-1: #0f172a;
-    --surface-2: #1e293b;
-    
-    /* --- Colors: Text --- */
-    --text-main: #f8fafc;
-    --text-sub: #94a3b8;
-    --text-inverse: #ffffff; /* Explicitly for buttons/elements needing strict contrast */
+@layer tokens {
+    :root {
+        /* --- Color Palette (Theme Agnostic) --- */
+        --sky-400: #38bdf8;
+        --sky-600: #0284c7;
+        --sky-700: #0369a1;
+        --blue-600: #2563eb;
+        
+        --slate-50: #f8fafc;
+        --slate-100: #f1f5f9;
+        --slate-200: #e2e8f0;
+        --slate-300: #cbd5e1;
+        --slate-500: #64748b;
+        --slate-600: #475569;
+        --slate-700: #334155;
+        --slate-800: #1e293b;
+        --slate-900: #0f172a;
 
-    /* --- Colors: Brand & Accents --- */
-    --primary: #38bdf8;
-    --primary-hover: #2563eb;
-    --primary-rgb: 56, 189, 248; /* RGB extracted for alpha transparency calculations */
-    
-    /* --- Colors: Structural --- */
-    --border: #334155;
+        --green-500: #22c55e;
+        --green-600: #16a34a;
+        --red-500: #ef4444;
+        --red-600: #dc2626;
+        --amber-500: #f59e0b;
 
-    /* --- Legacy Aliases (Maintained for strict backward compatibility) --- */
-    --bg-color: var(--surface-1);
-    --card-bg: var(--surface-2);
-    --text-primary: var(--text-main);
-    --text-secondary: var(--text-sub);
-    --accent-color: var(--primary);
-    --hover-bg: var(--primary-hover);
-    --border-color: var(--border);
+        /* --- Theme Tokens (Default: Dark Mode) --- */
+        --surface-1: var(--slate-900);
+        --surface-2: var(--slate-800);
+        --surface-3: var(--slate-700);
+        
+        --text-main: var(--slate-50);
+        --text-sub: var(--slate-300); /* WCAG AA Compliant contrast on slate-800/900 */
+        --text-inverse: var(--slate-900);
+        
+        --primary: var(--sky-400);
+        --primary-hover: var(--blue-600);
+        --primary-rgb: 56, 189, 248;
+        
+        --success: var(--green-500);
+        --success-hover: var(--green-600);
+        --danger: var(--red-500);
+        --danger-hover: var(--red-600);
+        --warning: var(--amber-500);
+        
+        --border: var(--slate-700);
+        --border-hover: var(--slate-600);
+        --ring: rgba(var(--primary-rgb), 0.3);
 
-    /* --- Border Radius --- */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-pill: 9999px;
+        /* --- Legacy Aliases (Strict Backward Compatibility) --- */
+        --bg-color: var(--surface-1);
+        --card-bg: var(--surface-2);
+        --text-primary: var(--text-main);
+        --text-secondary: var(--text-sub);
+        --accent-color: var(--primary);
+        --hover-bg: var(--primary-hover);
+        --border-color: var(--border);
 
-    /* --- Shadows --- */
-    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
-    --shadow-btn: 0 8px 20px rgba(0, 0, 0, 0.15);
+        /* --- Fluid Spacing Scale --- */
+        --space-1: 0.25rem; /* 4px */
+        --space-2: 0.5rem;  /* 8px */
+        --space-3: 1rem;    /* 16px */
+        --space-4: 1.5rem;  /* 24px */
+        --space-5: clamp(2rem, 3vw + 1rem, 3rem);   /* Fluid 32px -> 48px */
+        --space-6: clamp(3rem, 5vw + 1rem, 5rem);   /* Fluid 48px -> 80px */
+        --space-7: clamp(4rem, 7vw + 1rem, 8rem);   /* Fluid 64px -> 128px */
 
-    /* --- Transitions --- */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.25s ease;
+        /* --- Fluid Typography --- */
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: clamp(1.125rem, 1vw + 0.875rem, 1.25rem);
+        --text-xl: clamp(1.25rem, 1.5vw + 1rem, 1.5rem);
+        --text-2xl: clamp(1.5rem, 2vw + 1rem, 2rem);
+        --text-3xl: clamp(1.875rem, 3vw + 1rem, 2.5rem);
+        --text-4xl: clamp(2.25rem, 4vw + 1rem, 3.5rem);
 
-    /* --- Layout & Spacing --- */
-    --container-width: 1200px;
-    --header-height: 70px;
-}
+        /* --- Structural --- */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-xl: 16px;
+        --radius-pill: 9999px;
 
-/* Light Theme Overrides */
-[data-theme="light"] {
-    --surface-1: #f8fafc;
-    --surface-2: #ffffff;
-    
-    --text-main: #0f172a;
-    --text-sub: #64748b;
-    
-    --primary: #0284c7;
-    --primary-hover: #0ea5e9;
-    --primary-rgb: 2, 132, 199;
-    
-    --border: #e2e8f0;
-}
+        /* --- Elevation / Shadows --- */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        --shadow-btn: 0 4px 14px 0 rgba(var(--primary-rgb), 0.39);
 
-/* =========================================================
-   02. CSS Reset
-========================================================= */
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        /* --- Z-Index System --- */
+        --z-hide: -1;
+        --z-base: 0;
+        --z-nav: 100;
+        --z-dropdown: 200;
+        --z-overlay: 300;
+        --z-modal: 400;
+        --z-toast: 500;
 
-body {
-    background-color: var(--surface-1);
-    color: var(--text-main);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+        /* --- Animation & Timing --- */
+        --duration-fast: 150ms;
+        --duration-normal: 250ms;
+        --duration-slow: 400ms;
+        --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+        --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
-/* =========================================================
-   03. Accessibility
-========================================================= */
-/* Focus styles for keyboard navigation */
-:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 3px;
-    border-radius: var(--radius-sm);
-}
+        /* --- Layout --- */
+        --container-sm: 640px;
+        --container-md: 768px;
+        --container-lg: 1024px;
+        --container-xl: 1280px;
+        --container-width: 1440px;
+    }
 
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    /* --- Light Theme Overrides --- */
+    [data-theme="light"] {
+        --surface-1: var(--slate-50);
+        --surface-2: #ffffff;
+        --surface-3: var(--slate-100);
+        
+        --text-main: var(--slate-900);
+        --text-sub: var(--slate-600);
+        --text-inverse: #ffffff;
+        
+        --primary: var(--sky-600);
+        --primary-hover: var(--sky-700);
+        --primary-rgb: 2, 132, 199;
+        
+        --border: var(--slate-200);
+        --border-hover: var(--slate-300);
+        
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-btn: 0 4px 14px 0 rgba(var(--primary-rgb), 0.25);
     }
 }
 
 /* =========================================================
-   04. Typography & Global Links
+   02. RESET & ACCESSIBILITY (@layer reset)
 ========================================================= */
-/* Exclude all button classes from normal hyperlink styles to prevent override leaks */
-a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary) {
-    color: var(--primary);
-    text-decoration: none;
-    transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
+@layer reset {
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary):hover {
-    color: var(--primary-hover);
-    text-decoration: underline;
-}
+    html {
+        scroll-behavior: smooth;
+        text-size-adjust: 100%;
+    }
 
-a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary):visited {
-    color: var(--primary);
-}
+    body {
+        background-color: var(--surface-1);
+        color: var(--text-main);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        -webkit-font-smoothing: antialiased;
+    }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-    color: var(--text-main);
-    line-height: 1.2;
+    img, picture, video, canvas, svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    button, input, select, textarea {
+        font: inherit;
+        color: inherit;
+    }
+
+    /* WCAG 2.2 AA Universal Focus State */
+    :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+        border-radius: var(--radius-sm);
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
 }
 
 /* =========================================================
-   05. Layout
+   03. BASE (@layer base)
 ========================================================= */
-main {
-    flex: 1;
-    padding: 2rem 0 4rem;
+@layer base {
+    /* Headings System */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--text-main);
+        line-height: 1.2;
+        font-weight: 700;
+        margin-bottom: var(--space-3);
+    }
+
+    /* Fluid Typographic Utilities */
+    .page-title {
+        font-size: var(--text-4xl);
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        margin-bottom: var(--space-4);
+    }
+    .section-title { font-size: var(--text-3xl); margin-bottom: var(--space-4); }
+    .lead { font-size: var(--text-lg); color: var(--text-sub); }
+    .small { font-size: var(--text-sm); }
+
+    /* Bulletproof Links (Scoping out components) */
+    a {
+        color: var(--primary);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-color: transparent;
+        transition: color var(--duration-fast), text-decoration-color var(--duration-fast);
+    }
+    
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration-color: var(--primary-hover);
+    }
+
+    /* Unset link styles for elements functioning as UI/Buttons */
+    :where(a[class*="btn"], .logo, .nav-links a, .card, .card-tag) {
+        text-decoration: none;
+        color: inherit;
+    }
 }
 
 /* =========================================================
-   06. Containers
+   04. LAYOUT (@layer layout)
 ========================================================= */
-.container {
-    width: 100%;
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
+@layer layout {
+    main {
+        flex: 1 1 auto;
+        padding: var(--space-5) 0 var(--space-7);
+    }
 
-.section {
-    margin-bottom: 4rem;
-}
+    .container {
+        width: 100%;
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 var(--space-4);
+    }
 
-/* =========================================================
-   07. Header
-========================================================= */
-.site-header {
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
-    background-color: var(--surface-2);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.header-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-main);
-    text-decoration: none !important;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.logo:hover,
-.logo:focus {
-    color: var(--text-main);
-}
-
-/* =========================================================
-   08. Navigation
-========================================================= */
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.nav-links a {
-    color: var(--text-sub) !important;
-    font-weight: 500;
-}
-
-.nav-links a:hover {
-    color: var(--primary) !important;
-    text-decoration: none !important;
-}
-
-#theme-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-main);
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
-}
-
-#theme-toggle:hover {
-    background-color: var(--border);
-}
-
-/* =========================================================
-   09. Buttons (Design System Core)
-========================================================= */
-/* Base button class */
-.btn,
-.btn-primary,
-.primary-btn,
-.btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border: none;
-    border-radius: 10px;
-    padding: 0.75rem 1.4rem;
-    font-weight: 600;
-    text-decoration: none !important; /* Force override to protect from 'a' tags */
-    cursor: pointer;
-    transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
-}
-
-/* Primary Button Variant */
-.btn-primary,
-.primary-btn {
-    background: var(--primary);
-    color: var(--text-inverse) !important; /* Ensure text stays white in all themes */
-}
-
-.btn-primary:hover,
-.primary-btn:hover {
-    color: var(--text-inverse) !important;
-    filter: brightness(0.95);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-btn);
-}
-
-.btn-primary .material-symbols-outlined,
-.primary-btn .material-symbols-outlined,
-.btn-primary .icon,
-.primary-btn .icon {
-    color: var(--text-inverse);
-}
-
-/* Secondary Button Variant (Future Proofing) */
-.btn-secondary {
-    background: var(--surface-2);
-    color: var(--text-main) !important;
-    border: 1px solid var(--border);
-}
-
-.btn-secondary:hover {
-    background: var(--border);
-    transform: translateY(-2px);
-}
-
-/* =========================================================
-   10. Forms & Search
-========================================================= */
-.form-group,
-.search-container {
-    position: relative;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.icon,
-.search-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-sub);
-    pointer-events: none;
-}
-
-.input,
-#tool-search {
-    width: 100%;
-    padding: 0.875rem 1rem 0.875rem 3rem;
-    background-color: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    color: var(--text-main);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.input:focus,
-#tool-search:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15); /* Modern accessibility focus ring */
-}
-
-/* =========================================================
-   11. Cards (Grid & Tools)
-========================================================= */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-/* Base Card Attributes */
-.card,
-.tool-card,
-.content-card {
-    background-color: var(--surface-2);
-    border: 1px solid var(--border);
-}
-
-/* Tool Card Specifics */
-.tool-card {
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    text-decoration: none !important;
-    color: var(--text-main);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.tool-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-lg);
-}
-
-.tool-card:hover h3 {
-    color: var(--primary);
-}
-
-.card-icon {
-    margin-bottom: 1rem;
-}
-
-.tool-card h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-    transition: color var(--transition-fast);
-}
-
-.tool-card p {
-    color: var(--text-sub);
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
-    flex: 1;
-}
-
-/* =========================================================
-   12. Content Pages (About / Privacy / Terms / Contact)
-========================================================= */
-.content-card {
-    border-radius: var(--radius-xl);
-    padding: 2.5rem;
-    box-shadow: var(--shadow-md);
-}
-
-.content-card h1,
-.content-card h2,
-.content-card h3 {
-    margin-bottom: 1rem;
-}
-
-.content-card p,
-.content-card li {
-    color: var(--text-sub);
-    line-height: 1.8;
-}
-
-.content-card ul,
-.content-card ol {
-    padding-left: 1.5rem;
-    margin: 1rem 0;
-}
-
-.content-card hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 2rem 0;
-}
-
-.content-card blockquote {
-    border-left: 4px solid var(--primary);
-    padding: 1rem 1.25rem;
-    background: rgba(var(--primary-rgb), 0.08); /* Dynamic alpha adapting to theme */
-    border-radius: 0 10px 10px 0;
-}
-
-/* Anchor styling specific to text blocks to prevent generic leaks */
-.content-card a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary) {
-    color: var(--primary);
-    font-weight: 600;
-    text-decoration: underline;
-}
-
-.content-card a:not(.btn):not(.btn-primary):not(.primary-btn):not(.btn-secondary):hover {
-    color: var(--primary-hover);
-}
-
-/* =========================================================
-   13. Footer
-========================================================= */
-.site-footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 0;
-    background-color: var(--surface-2);
-    text-align: center;
-    font-size: 0.875rem;
-    color: var(--text-sub);
-}
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.privacy-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.8rem;
-}
-
-/* =========================================================
-   14. Utilities & Helpers
-========================================================= */
-.hero-section {
-    padding: 4rem 0 2rem;
-    text-align: center;
-}
-
-.page-title,
-.hero-section h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    letter-spacing: -0.025em;
-}
-
-.hero-section p {
-    color: var(--text-sub);
-    font-size: 1.125rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-}
-
-.heading,
-.section-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-.text-muted {
-    color: var(--text-sub);
-}
-
-.text-center {
-    text-align: center;
-}
-
-.badge,
-.card-tag {
-    align-self: flex-start;
-    font-size: 0.75rem;
-    background-color: rgba(var(--primary-rgb), 0.1); /* Dynamic theme-adaptive alpha */
-    color: var(--primary);
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-pill);
-    font-weight: 500;
-}
-
-/* =========================================================
-   15. Animations & Transitions
-========================================================= */
-/* Animations are intrinsically handled within components via the --transition-* variables */
-
-/* =========================================================
-   16. Responsive & Media Queries
-========================================================= */
-/* Boilerplate for future responsive growth without breaking existing architecture */
-
-@media (max-width: 768px) {
+    .section,
     .hero-section {
-        padding: 3rem 0 1.5rem;
-    }
-    
-    .page-title,
-    .hero-section h1 {
-        font-size: 2rem;
-    }
-
-    .content-card {
-        padding: 1.5rem;
+        padding: var(--space-6) 0;
     }
 
     .grid {
-        grid-template-columns: 1fr; /* Switch to 1 column on mobile natively */
+        display: grid;
+        gap: var(--space-4);
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
     }
 }
 
-@media (max-width: 480px) {
-    .nav-links {
-        gap: 1rem;
+/* =========================================================
+   05. COMPONENTS (@layer components)
+========================================================= */
+@layer components {
+    /* --- NAVIGATION --- */
+    .site-header {
+        border-bottom: 1px solid var(--border);
+        background-color: var(--surface-2);
+        padding: var(--space-3) 0;
+        position: sticky;
+        top: 0;
+        z-index: var(--z-nav);
     }
     
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    
     .logo {
-        font-size: 1.125rem;
+        font-size: var(--text-xl);
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        color: var(--text-main) !important;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: var(--space-4); }
+    
+    .nav-links a {
+        color: var(--text-sub);
+        font-weight: 500;
+        font-size: var(--text-sm);
+        transition: color var(--duration-fast) var(--ease-standard);
+    }
+    
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+        color: var(--primary);
+    }
+
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        font-size: var(--text-sm);
+        color: var(--text-sub);
+        margin-bottom: var(--space-4);
+        list-style: none;
+    }
+    .breadcrumbs a { color: var(--text-sub); text-decoration: none; }
+    .breadcrumbs a:hover { color: var(--primary); text-decoration: underline; }
+    .breadcrumbs li:not(:last-child)::after {
+        content: "/";
+        margin-left: var(--space-2);
+        color: var(--border);
+    }
+
+    /* --- ENTERPRISE BUTTON SYSTEM --- */
+    .btn,
+    .btn-primary, .primary-btn,
+    .btn-secondary,
+    .btn-outline,
+    .btn-danger,
+    .btn-success,
+    .btn-ghost,
+    .btn-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        font-weight: 600;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--duration-fast) var(--ease-standard);
+        line-height: 1;
+        padding: var(--btn-py, 0.75rem) var(--btn-px, 1.25rem);
+        font-size: var(--btn-fs, var(--text-base));
+        border: 1px solid var(--btn-border, transparent);
+        background-color: var(--btn-bg, transparent);
+        color: var(--btn-color, inherit);
+        text-decoration: none;
+    }
+
+    /* Global Button States */
+    :where(.btn, [class*="btn-"], .primary-btn):disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    :where(.btn, [class*="btn-"], .primary-btn):active:not(:disabled) {
+        transform: scale(0.97);
+    }
+
+    /* Scoped Button Variants */
+    .btn-primary, .primary-btn {
+        --btn-bg: var(--primary);
+        --btn-color: #ffffff; /* Explicitly white for dark/light mode contrast on sky blue */
+        box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover, .primary-btn:hover {
+        --btn-bg: var(--primary-hover);
+        box-shadow: var(--shadow-btn);
+    }
+
+    .btn-secondary {
+        --btn-bg: var(--surface-3);
+        --btn-color: var(--text-main);
+        --btn-border: var(--border);
+    }
+    .btn-secondary:hover { --btn-bg: var(--border-hover); }
+
+    .btn-outline {
+        --btn-border: var(--primary);
+        --btn-color: var(--primary);
+    }
+    .btn-outline:hover { --btn-bg: rgba(var(--primary-rgb), 0.1); }
+
+    .btn-danger { --btn-bg: var(--danger); --btn-color: #ffffff; }
+    .btn-danger:hover { --btn-bg: var(--danger-hover); }
+
+    .btn-success { --btn-bg: var(--success); --btn-color: #ffffff; }
+    .btn-success:hover { --btn-bg: var(--success-hover); }
+
+    .btn-ghost { --btn-color: var(--text-main); }
+    .btn-ghost:hover { --btn-bg: var(--surface-3); }
+    
+    .btn-link { --btn-color: var(--primary); padding: 0; }
+    .btn-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* Button Sizing */
+    .btn-sm { --btn-py: 0.5rem; --btn-px: 0.875rem; --btn-fs: var(--text-sm); }
+    .btn-lg { --btn-py: 1rem; --btn-px: 1.5rem; --btn-fs: var(--text-lg); }
+
+    /* --- CARD SYSTEM --- */
+    .card,
+    .tool-card,
+    .content-card,
+    .feature-card,
+    .info-card,
+    .result-card {
+        background-color: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: var(--card-radius, var(--radius-lg));
+        padding: var(--card-padding, var(--space-4));
+        transition: transform var(--duration-normal), box-shadow var(--duration-normal), border-color var(--duration-normal);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .content-card {
+        --card-radius: var(--radius-xl);
+        --card-padding: var(--space-5);
+    }
+    .content-card p, .content-card li { color: var(--text-sub); margin-bottom: var(--space-3); }
+    .content-card ul, .content-card ol { padding-left: var(--space-4); margin-bottom: var(--space-3); }
+    .content-card hr { border: 0; border-top: 1px solid var(--border); margin: var(--space-5) 0; }
+
+    .tool-card, .feature-card {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        cursor: pointer;
+    }
+    .tool-card:hover, .tool-card:focus-within {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow-lg);
+    }
+    .tool-card:hover h3 { color: var(--primary); }
+    .tool-card p { color: var(--text-sub); font-size: var(--text-sm); margin-bottom: var(--space-4); flex: 1; }
+    
+    .card-tag {
+        align-self: flex-start;
+        font-size: var(--text-xs);
+        background-color: rgba(var(--primary-rgb), 0.1);
+        color: var(--primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* --- FORM SYSTEM --- */
+    .form-group, .search-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: var(--space-4);
+    }
+
+    .input, .form-control, #tool-search,
+    input[type="text"], input[type="email"], input[type="number"], input[type="search"], input[type="password"],
+    textarea, select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: var(--surface-1); /* Nested input inside surface-2 cards needs contrast */
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        color: var(--text-main);
+        font-size: var(--text-base);
+        transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+        appearance: none;
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1rem; padding-right: 2.5rem; }
+
+    .search-container .input, .search-container #tool-search { padding-left: 2.75rem; border-radius: var(--radius-pill); }
+    
+    .search-icon, .icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-sub);
+        pointer-events: none;
+    }
+
+    /* Form States */
+    :where(.input, .form-control, input, textarea, select):not(:disabled):hover {
+        border-color: var(--border-hover);
+    }
+    
+    :where(.input, .form-control, input, textarea, select):focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--ring);
+    }
+
+    :where(.input, .form-control, input, textarea, select):disabled {
+        background-color: var(--surface-3);
+        color: var(--text-sub);
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    /* Validation */
+    [aria-invalid="true"] {
+        border-color: var(--danger) !important;
+    }
+    [aria-invalid="true"]:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+    }
+
+    /* Radios & Checkboxes */
+    .checkbox-group, .radio-group { display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; color: var(--text-main); }
+    input[type="checkbox"], input[type="radio"] {
+        width: 1.25rem;
+        height: 1.25rem;
+        accent-color: var(--primary);
+        cursor: pointer;
+    }
+
+    /* --- FOOTER --- */
+    .site-footer {
+        border-top: 1px solid var(--border);
+        background-color: var(--surface-2);
+        padding: var(--space-6) 0;
+        text-align: center;
+        color: var(--text-sub);
+        font-size: var(--text-sm);
+        margin-top: auto;
+    }
+}
+
+/* =========================================================
+   06. UTILITIES (@layer utilities)
+========================================================= */
+@layer utilities {
+    /* Spacing */
+    .mt-1 { margin-top: var(--space-1) !important; }
+    .mt-2 { margin-top: var(--space-2) !important; }
+    .mt-3 { margin-top: var(--space-3) !important; }
+    .mt-4 { margin-top: var(--space-4) !important; }
+    .mb-1 { margin-bottom: var(--space-1) !important; }
+    .mb-2 { margin-bottom: var(--space-2) !important; }
+    .mb-3 { margin-bottom: var(--space-3) !important; }
+    .mb-4 { margin-bottom: var(--space-4) !important; }
+    .p-2 { padding: var(--space-2) !important; }
+    .p-3 { padding: var(--space-3) !important; }
+    .p-4 { padding: var(--space-4) !important; }
+
+    /* Flexbox & Grid */
+    .flex { display: flex !important; }
+    .flex-col { display: flex !important; flex-direction: column !important; }
+    .flex-center { display: flex !important; align-items: center !important; justify-content: center !important; }
+    .justify-between { justify-content: space-between !important; }
+    .items-center { align-items: center !important; }
+    
+    .gap-1 { gap: var(--space-1) !important; }
+    .gap-2 { gap: var(--space-2) !important; }
+    .gap-3 { gap: var(--space-3) !important; }
+    .gap-4 { gap: var(--space-4) !important; }
+
+    .grid-2 { grid-template-columns: repeat(2, 1fr) !important; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr) !important; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr) !important; }
+
+    /* Display & Visibility */
+    .block { display: block !important; }
+    .hidden { display: none !important; }
+    .overflow-hidden { overflow: hidden !important; }
+    
+    /* Typography */
+    .text-center { text-align: center !important; }
+    .text-left { text-align: left !important; }
+    .text-right { text-align: right !important; }
+    .text-muted { color: var(--text-sub) !important; }
+    .text-primary { color: var(--primary) !important; }
+
+    /* Sizing & Structure */
+    .w-full { width: 100% !important; }
+    .max-w-sm { max-width: var(--container-sm) !important; margin-inline: auto; }
+    .max-w-md { max-width: var(--container-md) !important; margin-inline: auto; }
+    .max-w-lg { max-width: var(--container-lg) !important; margin-inline: auto; }
+
+    /* Appearance */
+    .rounded { border-radius: var(--radius-md) !important; }
+    .rounded-full { border-radius: var(--radius-pill) !important; }
+    .shadow-sm { box-shadow: var(--shadow-sm) !important; }
+    .shadow-md { box-shadow: var(--shadow-md) !important; }
+    .shadow-lg { box-shadow: var(--shadow-lg) !important; }
+}
+
+/* =========================================================
+   07. RESPONSIVE BREAKPOINTS (Media Queries)
+========================================================= */
+/* Using standard hardcoded breakpoints. Component specific adjustments go here. */
+@media (min-width: 768px) {
+    @layer components {
+        .content-card { --card-padding: var(--space-6); }
+        .site-footer { text-align: left; }
+        .footer-content { flex-direction: row; justify-content: space-between; }
+    }
+}
+@media (max-width: 767px) {
+    @layer utilities {
+        .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+    }
+}
+
+/* =========================================================
+   08. PRINT STYLES (@layer print)
+========================================================= */
+@layer print {
+    @media print {
+        body {
+            background-color: white !important;
+            color: black !important;
+        }
+        /* Hide all Non-Essential UI */
+        .site-header, .site-footer, .nav-links, .search-container, 
+        button, [class*="btn"], .breadcrumbs, #theme-toggle {
+            display: none !important;
+        }
+        /* Un-nest Layout Constraints */
+        main, .container {
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+        }
+        /* Expand Cards for Printing Data/Results */
+        .card, .content-card, .result-card {
+            border: 1px solid #ccc !important;
+            box-shadow: none !important;
+            page-break-inside: avoid;
+        }
+        a { text-decoration: underline !important; color: black !important; }
     }
 }
