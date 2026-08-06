@@ -1,217 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy — Prasun Tools</title>
-    <meta name="description" content="Privacy Policy for Prasun Tools. Learn how we handle visitor information, browser-based processing, cookies, analytics, and advertising.">
-    <meta name="keywords" content="privacy policy, data protection, cookies, ad-sense policy, prasun tools privacy">
+    <meta name="description" content="Privacy Policy for Prasun Tools. Overview of data collection, browser-based processing, cookies, analytics, and advertising practices.">
     <link rel="canonical" href="https://tools.prasunbarua.com/privacy-policy.html">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Social Meta Tags -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Privacy Policy — Prasun Tools">
-    <meta property="og:description" content="Read the privacy policy for Prasun Tools to understand our data practices, cookie usage, analytics, and third-party services.">
+    <meta property="og:description" content="Privacy Policy for Prasun Tools. Overview of data collection, browser-based processing, cookies, analytics, and advertising practices.">
     <meta property="og:url" content="https://tools.prasunbarua.com/privacy-policy.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Prasun Tools">
 
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Privacy Policy — Prasun Tools">
-    <meta name="twitter:description" content="Understand how Prasun Tools protects your privacy, manages cookies, and utilizes third-party services like Google AdSense and Analytics.">
-
-    <!-- Material Symbols & Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
-    <!-- Theme Initializer Script to prevent flash -->
+    <!-- Theme Initializer Script -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 
-    <!-- Embedded Styles -->
     <style>
         :root {
-            --bg-main: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --accent-light: rgba(59, 130, 246, 0.08);
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
+            --bg-main: #ffffff;
+            --bg-secondary: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-light: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --brand-blue: #2563eb;
+            --brand-blue-hover: #1d4ed8;
+            --brand-blue-light: #eff6ff;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --radius-full: 9999px;
+            --transition-smooth: 0.2s ease;
+            --container-width: 800px;
         }
 
         [data-theme="dark"] {
-            --bg-main: #090d16;
-            --card-bg: #111827;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #1e293b;
-            --accent: #3b82f6;
-            --accent-hover: #60a5fa;
-            --accent-light: rgba(59, 130, 246, 0.15);
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+            --bg-main: #020617;
+            --bg-secondary: #0f172a;
+            --surface: #0f172a;
+            --surface-hover: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-light: #1e293b;
+            --border-hover: #334155;
+            --brand-blue: #3b82f6;
+            --brand-blue-hover: #60a5fa;
+            --brand-blue-light: rgba(59, 130, 246, 0.1);
         }
 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: var(--font-sans);
             background-color: var(--bg-main);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
+            color: var(--text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Navigation */
         .site-header {
-            border-bottom: 1px solid var(--border-color);
-            background: var(--card-bg);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(8px);
-            background-color: var(--card-bg);
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border-light);
+            backdrop-filter: blur(12px);
         }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
+        .header-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 4rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 700;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .logo-icon {
+            color: var(--brand-blue);
             font-size: 1.25rem;
         }
 
-        .logo span.material-symbols-outlined {
-            color: var(--accent);
-            font-size: 28px;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
         }
 
-        .btn-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            font-size: 0.9rem;
+        .nav-links a {
+            font-size: 0.875rem;
             font-weight: 500;
-            background-color: var(--accent-light);
-            color: var(--accent);
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            transition: color var(--transition-smooth);
         }
 
-        .btn-home:hover {
-            border-color: var(--accent);
-            background-color: var(--accent);
-            color: #ffffff;
+        .nav-links a:hover {
+            color: var(--text-primary);
         }
 
-        .privacy-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: var(--radius-full);
+            transition: background var(--transition-smooth), color var(--transition-smooth);
         }
 
-        /* Hero Section */
+        .theme-toggle-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+        }
+
+        /* Main Content Area */
+        .privacy-main {
+            padding: 3rem 0 5rem;
+        }
+
         .privacy-hero {
-            text-align: center;
-            max-width: 750px;
-            margin: 0 auto 3rem auto;
+            margin-bottom: 2.5rem;
+            text-align: left;
         }
 
-        .badge {
+        .tool-badge-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            background-color: var(--accent-light);
-            color: var(--accent);
-            border-radius: 50px;
-            font-size: 0.85rem;
+            gap: 0.375rem;
+            background: var(--brand-blue-light);
+            color: var(--brand-blue);
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            padding: 0.2rem 0.625rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 0.75rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
+        }
+
+        .tool-badge-pill .material-symbols-outlined {
+            font-size: 0.875rem;
         }
 
         .privacy-hero h1 {
-            font-size: clamp(2.25rem, 4vw, 3rem);
-            font-weight: 800;
+            font-size: 1.875rem;
+            font-weight: 700;
             letter-spacing: -0.02em;
-            margin-bottom: 0.75rem;
-            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
         .update-date {
-            font-size: 0.95rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
+            font-family: var(--font-mono);
         }
 
         /* Content Sections */
         .content-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: var(--surface);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            padding: 1.75rem;
             margin-bottom: 1.25rem;
         }
 
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            background-color: var(--accent-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            flex-shrink: 0;
-        }
-
         .content-card h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
             letter-spacing: -0.01em;
         }
 
         .content-card p {
-            color: var(--text-muted);
-            font-size: 1.025rem;
-            line-height: 1.75;
-            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.875rem;
+            line-height: 1.7;
         }
 
         .content-card p:last-child {
@@ -219,125 +226,82 @@
         }
 
         .content-card ul {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             padding-left: 1.25rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.875rem;
             line-height: 1.7;
+            list-style: disc;
         }
 
         .content-card li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.375rem;
+            font-size: 0.9375rem;
         }
 
         .content-card a {
-            color: var(--accent);
+            color: var(--brand-blue);
             text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.2s ease;
         }
 
         .content-card a:hover {
-            opacity: 0.8;
             text-decoration: underline;
         }
 
         .sub-heading {
-            font-size: 1.15rem;
+            font-size: 0.9375rem;
             font-weight: 600;
-            color: var(--text-main);
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Call to Action Box */
-        .cta-box {
-            background: linear-gradient(135deg, var(--accent-light), transparent);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: var(--accent);
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            font-weight: 600;
+            color: var(--text-primary);
             margin-top: 1rem;
-            transition: background-color 0.2s ease, transform 0.1s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
+            margin-bottom: 0.5rem;
         }
 
         /* Footer */
         .site-footer {
-            border-top: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            padding: 2.5rem 1.5rem;
+            border-top: 1px solid var(--border-light);
+            padding: 2rem 0;
             text-align: center;
+            font-size: 0.8125rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            background: var(--bg-secondary);
         }
 
         .footer-content {
-            max-width: 900px;
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
-        }
-
-        .privacy-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .privacy-badge span {
-            color: var(--accent);
-            font-size: 18px;
+            gap: 0.75rem;
         }
 
         .footer-nav {
             display: flex;
             gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            font-size: 0.875rem;
         }
 
         .footer-nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
+            color: var(--text-secondary);
+            transition: color var(--transition-smooth);
         }
 
         .footer-nav a:hover {
-            color: var(--accent);
+            color: var(--text-primary);
         }
 
-        @media (max-width: 768px) {
-            .privacy-container {
-                padding: 2rem 1rem;
-            }
-            .content-card {
-                padding: 1.5rem;
-            }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .privacy-badge .material-symbols-outlined {
+            font-size: 1rem;
         }
     </style>
 
-    <!-- JSON-LD Structured Data for WebSite, Organization, and Legal Document -->
+    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -347,18 +311,8 @@
           "@id": "https://tools.prasunbarua.com/#website",
           "url": "https://tools.prasunbarua.com/",
           "name": "Prasun Tools",
-          "description": "Fast, free, and privacy-friendly online utilities and engineering calculators.",
+          "description": "Browser-based engineering calculators and technical utilities.",
           "inLanguage": "en"
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://tools.prasunbarua.com/#organization",
-          "name": "Prasun Tools",
-          "url": "https://tools.prasunbarua.com/",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://tools.prasunbarua.com/assets/images/logo.png"
-          }
         },
         {
           "@type": "WebPage",
@@ -368,7 +322,7 @@
           "isPartOf": {
             "@id": "https://tools.prasunbarua.com/#website"
           },
-          "description": "Privacy policy for Prasun Tools detailing information practices, cookies, analytics, and advertising."
+          "description": "Privacy policy for Prasun Tools detailing information practices, browser-based processing, cookies, analytics, and advertising."
         }
       ]
     }
@@ -376,225 +330,163 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header Section -->
     <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="logo">
-                <span class="material-symbols-outlined">bolt</span>
-                <span>Prasun Tools</span>
+        <div class="container header-inner">
+            <a href="/" class="logo" aria-label="Prasun Tools Home">
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">terminal</span>
+                <span>prasun-tools</span>
             </a>
-            <a href="/" class="btn-home">
-                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-                <span>Home</span>
-            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="/">Home</a>
+                <a href="/about.html">Documentation</a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+                </button>
+            </nav>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="privacy-container">
-        
-        <!-- Hero Section -->
-        <section class="privacy-hero">
-            <div class="badge">
-                <span class="material-symbols-outlined" style="font-size: 16px;">gavel</span>
-                Legal Policy
+    <main class="container privacy-main">
+        <div class="privacy-hero">
+            <div class="tool-badge-pill">
+                <span class="material-symbols-outlined" aria-hidden="true">gavel</span>
+                <span>Legal Policy</span>
             </div>
             <h1>Privacy Policy</h1>
             <p class="update-date">Last Updated: August 6, 2026</p>
+        </div>
+
+        <!-- 1. Overview -->
+        <section class="content-card">
+            <h2>1. Overview</h2>
+            <p>Prasun Tools (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) operates <code>tools.prasunbarua.com</code>. This Privacy Policy outlines how information is collected, processed, and managed when you access or use our web platform and utilities.</p>
+            <p>We implement reasonable technical measures and limit unnecessary data collection to support operational transparency across our services.</p>
         </section>
 
-        <!-- 1. Privacy Overview -->
+        <!-- 2. Information Collection -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">security</span></div>
-                <h2>Privacy Overview</h2>
-            </div>
-            <p>At <strong>Prasun Tools</strong> (accessible via <code>tools.prasunbarua.com</code>), protecting your personal privacy is a fundamental principle of our platform design. We believe transparency is essential when interacting with web utilities.</p>
-            <p>To maximize user confidentiality, most tools on our platform operate directly inside your web browser. This design minimizes data transmission to our servers whenever technically feasible.</p>
-        </section>
-
-        <!-- 2. Information We Collect -->
-        <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">database</span></div>
-                <h2>Information We Collect</h2>
-            </div>
-            <p>Depending on how you interact with our platform, we may collect or process certain categories of information:</p>
-            
-            <h3 class="sub-heading">Information You Provide Directly</h3>
-            <p>Prasun Tools currently operates without user accounts or registration portals. We only collect information that you explicitly provide to us voluntarily, which may include:</p>
+            <h2>2. Information Collection</h2>
+            <p>We collect information depending on your direct interactions with the platform:</p>
+            <h3 class="sub-heading">Information Provided Voluntarily</h3>
+            <p>Prasun Tools does not require user accounts or registration. We collect information only when submitted directly by users, such as:</p>
             <ul>
-                <li>Messages or inquiries submitted through our Contact page</li>
-                <li>User feedback, bug reports, and feature suggestions</li>
-                <li>Support requests or correspondence</li>
+                <li>Inquiries or correspondence submitted through contact channels</li>
+                <li>Feedback, technical reports, or feature suggestions</li>
             </ul>
-
-            <h3 class="sub-heading">Automatically Collected Information</h3>
-            <p>When you visit and navigate our website, our hosting and analytics partners automatically record standard technical log data. This typically includes:</p>
+            <h3 class="sub-heading">Automatically Logged Technical Data</h3>
+            <p>When accessing the website, standard technical log data is recorded automatically by our hosting and infrastructure providers. This data may include:</p>
             <ul>
                 <li>Internet Protocol (IP) address</li>
                 <li>Browser type and version</li>
                 <li>Operating system and device metadata</li>
                 <li>Referring and exit web pages</li>
-                <li>Date, time stamp, and duration of visit</li>
-                <li>Anonymous usage statistics</li>
+                <li>Access timestamps and duration of visit</li>
             </ul>
-            <p>This technical data helps us maintain operational security, diagnose technical issues, analyze aggregated traffic trends, and improve overall platform reliability.</p>
         </section>
 
         <!-- 3. Browser-Based Processing -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">developer_mode</span></div>
-                <h2>Browser-Based Processing</h2>
-            </div>
-            <p>A core architectural feature of Prasun Tools is client-side execution. Most calculators, converters, and text utilities perform computations locally within your browser using JavaScript.</p>
-            <p>Data entered into these utilities is generally processed locally on your device and is not transmitted to our servers unless required by a specific advanced feature. While we engineer our utilities to maintain high local privacy standards, users should exercise appropriate discretion when processing sensitive technical information.</p>
+            <h2>3. Browser-Based Processing</h2>
+            <p>Many tools process calculations locally in the browser using client-side JavaScript. Specific tools may use different processing methods depending on their computational functionality.</p>
+            <p>Data entered into local utilities is executed within the user's browser environment and is not transmitted to our servers unless required by a specific advanced feature.</p>
         </section>
 
         <!-- 4. Cookies and Local Storage -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">cookie</span></div>
-                <h2>Cookies and Local Storage</h2>
-            </div>
-            <p>We use standard browser cookies and local storage mechanisms to improve your browsing experience. Specifically, we utilize browser local storage to recall your preferred visual theme (such as light or dark mode settings) between sessions.</p>
-            <p>You retain full control over cookies and local storage through your browser settings, where you can choose to block, clear, or restrict them at any time.</p>
+            <h2>4. Cookies and Local Storage</h2>
+            <p>We utilize browser local storage to record user interface preferences, such as light or dark display theme settings. You can manage or clear local storage and cookie configurations directly through your browser settings.</p>
         </section>
 
         <!-- 5. Analytics -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">analytics</span></div>
-                <h2>Analytics</h2>
-            </div>
-            <p>We utilize <strong>Google Analytics</strong> to collect anonymous usage statistics and traffic reports. This service helps us understand how visitors interact with our pages, which tools are most popular, and how we can optimize layout performance.</p>
-            <p>Google Analytics gathers aggregated data such as page views and navigation paths without tying them to individual personally identifiable profiles. You can opt out of analytics tracking by utilizing browser extensions or adjusting your cookie preferences.</p>
+            <h2>5. Analytics</h2>
+            <p>We utilize <strong>Google Analytics</strong> to collect aggregated usage statistics and traffic reports. This service helps analyze visitor interaction and platform performance. Google Analytics gathers non-personally identifiable traffic metrics through cookies in accordance with Google's operational standards.</p>
         </section>
 
-        <!-- 6. Advertising and Google AdSense -->
+        <!-- 6. Advertising -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">campaign</span></div>
-                <h2>Advertising and Google AdSense</h2>
-            </div>
-            <p>To support the ongoing maintenance and free availability of our tools, we display advertisements served by <strong>Google AdSense</strong>.</p>
-            <p>Google, as a third-party vendor, uses cookies to serve ads based on your prior visits to our website or other websites across the internet. Google's use of advertising cookies enables it and its partners to serve personalized ads based on your visit history.</p>
-            <p>Users may review Google's advertising privacy practices and opt out of personalized advertising by visiting the <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google Ad and Content Network Privacy Policy</a>.</p>
+            <h2>6. Advertising and Google AdSense</h2>
+            <p>To support the maintenance of the platform, we display advertisements served by <strong>Google AdSense</strong>. Third-party vendors, including Google, use cookies to serve ads based on prior visits to this website or other web properties.</p>
+            <p>Users may review advertising privacy practices and manage ad personalization settings via the <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google Ad and Content Network Privacy Policy</a>.</p>
         </section>
 
         <!-- 7. Third-Party Services -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">hub</span></div>
-                <h2>Third-Party Services</h2>
-            </div>
-            <p>Prasun Tools relies on trusted third-party infrastructure and service providers to deliver a fast, secure experience. These providers may process technical information in accordance with their respective privacy policies:</p>
+            <h2>7. Third-Party Services</h2>
+            <p>Our infrastructure relies on third-party service providers to deliver secure hosting and content delivery:</p>
             <ul>
-                <li><strong>Cloudflare:</strong> Provides DNS management, edge caching, and web security services.</li>
-                <li><strong>GitHub Pages:</strong> Hosts our static web files and asset delivery network.</li>
-                <li><strong>Google Analytics:</strong> Analyzes anonymous platform usage and traffic trends.</li>
-                <li><strong>Google AdSense:</strong> Delivers contextual and personalized advertisements.</li>
+                <li><strong>Cloudflare:</strong> DNS management, edge caching, and web security</li>
+                <li><strong>GitHub Pages:</strong> Static asset hosting and web file delivery</li>
+                <li><strong>Google Analytics:</strong> Traffic measurement and analytics</li>
+                <li><strong>Google AdSense:</strong> Advertising delivery</li>
             </ul>
         </section>
 
-        <!-- 8. Future Services and Digital Commerce -->
+        <!-- 8. External Links -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">storefront</span></div>
-                <h2>Future Services and Digital Commerce</h2>
-            </div>
-            <p>As Prasun Tools evolves, we may introduce additional services, downloadable digital products, or optional premium utilities. Future payment processing features may integrate secure third-party commerce platforms such as <strong>Paddle</strong>.</p>
-            <p>Should you purchase or interact with future digital offerings, this Privacy Policy will govern any corresponding transactional information collected at that time.</p>
+            <h2>8. External Links</h2>
+            <p>Our platform may include links to external websites not operated by us. We hold no responsibility for the content, privacy policies, or practices of external sites.</p>
         </section>
 
-        <!-- 9. External Links -->
+        <!-- 9. Data Security -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">link</span></div>
-                <h2>External Links</h2>
-            </div>
-            <p>Our website may contain links to external third-party websites or resources not operated by us. Please note that we have no control over the content or privacy practices of these external sites and accept no responsibility or liability for their respective privacy policies.</p>
+            <h2>9. Data Security</h2>
+            <p>We implement standard technical safeguards, including HTTPS encryption and network security layers, to protect data integrity. However, no method of electronic transmission or storage is completely secure, and absolute data security cannot be guaranteed.</p>
         </section>
 
-        <!-- 10. Data Security -->
+        <!-- 10. User Rights and Controls -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">lock</span></div>
-                <h2>Data Security</h2>
-            </div>
-            <p>We employ reasonable technical, physical, and organizational security measures—including HTTPS encryption and Cloudflare protection layers—to safeguard the integrity and security of our platform.</p>
-            <p>However, no method of transmission over the internet or electronic storage is completely secure. While we strive to protect information, we cannot guarantee absolute data security.</p>
-        </section>
-
-        <!-- 11. Children's Privacy -->
-        <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">child_care</span></div>
-                <h2>Children's Privacy</h2>
-            </div>
-            <p>Prasun Tools is an informational developer and engineering utility platform not intentionally directed toward children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us so we can promptly address it.</p>
-        </section>
-
-        <!-- 12. Your Choices and Controls -->
-        <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">tune</span></div>
-                <h2>Your Choices and Controls</h2>
-            </div>
-            <p>Visitors maintain control over their data interactions through standard browser capabilities:</p>
+            <h2>10. User Rights and Controls</h2>
+            <p>Visitors maintain control over data processing interactions through standard browser capabilities:</p>
             <ul>
-                <li>Disabling or restricting cookies through your browser settings</li>
-                <li>Clearing browser local storage</li>
-                <li>Utilizing ad-blockers or browser privacy features</li>
-                <li>Reaching out to our team with privacy-related inquiries</li>
+                <li>Disabling or restricting cookies in browser settings</li>
+                <li>Clearing local storage data</li>
+                <li>Utilizing browser privacy extensions or ad-blocking tools</li>
             </ul>
         </section>
 
-        <!-- 13. Changes to This Policy -->
+        <!-- 11. Policy Updates -->
         <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">update</span></div>
-                <h2>Changes to This Privacy Policy</h2>
-            </div>
-            <p>We may update our Privacy Policy periodically to reflect technological adjustments, new utility additions, or legal updates. Any revisions will be posted on this page accompanied by an updated revision date. We encourage you to review this page periodically.</p>
+            <h2>11. Policy Updates</h2>
+            <p>We may update this Privacy Policy periodically to reflect technical or operational adjustments. Revisions are posted on this page with an updated revision date.</p>
         </section>
-
-        <!-- 14. Contact Information -->
-        <section class="content-card">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">mail</span></div>
-                <h2>Contact Information</h2>
-            </div>
-            <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please feel free to reach out to our team.</p>
-            
-            <div class="cta-box">
-                <h3 style="margin-top: 0; font-size: 1.25rem;">Have questions about privacy?</h3>
-                <p style="margin: 0.5rem 0 0 0; color: var(--text-muted);">We are happy to assist with any inquiries you may have.</p>
-                <a href="/contact.html" class="btn-primary">
-                    <span class="material-symbols-outlined">support_agent</span>
-                    <span>Visit Contact Page</span>
-                </a>
-            </div>
-        </section>
-
     </main>
 
-    <!-- Footer -->
+    <!-- Footer Section -->
     <footer class="site-footer">
-        <div class="footer-content">
-            <p class="privacy-badge">
-                <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. Most tools process data locally in your browser.
-            </p>
-            <nav class="footer-nav">
-                <a href="/about.html">About Us</a>
+        <div class="container footer-content">
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <a href="/about.html">Documentation</a>
                 <a href="/privacy-policy.html">Privacy Policy</a>
-                <a href="/terms.html">Terms & Conditions</a>
-                <a href="/contact.html">Contact Us</a>
+                <a href="/">Utilities</a>
             </nav>
+            <p class="privacy-badge">
+                <span class="material-symbols-outlined" aria-hidden="true">shield</span> Client-side processing supported across tools.
+            </p>
             <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('.material-symbols-outlined');
+
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+        }
+
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+    </script>
 </body>
 </html>
