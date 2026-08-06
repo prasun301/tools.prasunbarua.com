@@ -82,7 +82,8 @@ body {
    Global Hyperlink Styles
 ========================================================= */
 
-a {
+/* Normal links only */
+a:not(.btn-primary):not(.primary-btn) {
     color: var(--accent-color);
     text-decoration: none;
     transition:
@@ -90,21 +91,20 @@ a {
         text-decoration-color 0.2s ease;
 }
 
-a:hover {
+a:not(.btn-primary):not(.primary-btn):hover {
     color: var(--hover-bg);
     text-decoration: underline;
 }
 
-a:visited {
+a:not(.btn-primary):not(.primary-btn):visited {
     color: var(--accent-color);
 }
 
-a:focus-visible {
+a:not(.btn-primary):not(.primary-btn):focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 3px;
     border-radius: 4px;
 }
-
 
 /* Header */
 
