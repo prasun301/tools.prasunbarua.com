@@ -1,1 +1,182 @@
+/* Tool Page Specific Styles */
+.tool-main {
+    padding: 2.5rem 0 4rem;
+}
 
+.tool-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+}
+
+.tool-badge-icon {
+    font-size: 40px;
+    color: var(--accent-color);
+    background-color: rgba(56, 189, 248, 0.1);
+    padding: 0.75rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.tool-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* Tool Workspace Grid */
+.tool-workspace {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .tool-workspace {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Calculator Card */
+.calculator-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.75rem 4rem 0.75rem 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-wrapper input:focus {
+    border-color: var(--accent-color);
+}
+
+.unit {
+    position: absolute;
+    right: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    border: none;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.primary-btn {
+    background-color: var(--accent-color);
+    color: #0f172a;
+    flex: 2;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.secondary-btn:hover {
+    background-color: var(--border-color);
+}
+
+/* Info Sidebar Card */
+.info-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.info-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.info-card ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.info-card li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-card li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.info-card strong {
+    color: var(--text-primary);
+}
