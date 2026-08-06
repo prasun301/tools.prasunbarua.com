@@ -45,17 +45,17 @@
         <div class="tool-header">
             <span class="material-symbols-outlined tool-badge-icon">electrical_services</span>
             <h1>Ohm's Law Calculator</h1>
-            <p>Select any two known parameters and enter their values to instantly calculate the rest.</p>
+            <p>Select any two known parameters and enter their numerical values to compute the remaining metrics.</p>
         </div>
 
         <div class="tool-workspace">
             <!-- Calculator Card -->
             <div class="calculator-card">
-                <div class="input-grid-dual">
+                <div class="calculator-inner">
                     <!-- Known Parameter 1 -->
-                    <div class="input-row">
+                    <div class="input-row-card">
                         <div class="select-group">
-                            <label for="param1-select">Known 1</label>
+                            <label for="param1-select">First Known Parameter</label>
                             <select id="param1-select">
                                 <option value="voltage" selected>Voltage (V)</option>
                                 <option value="current">Current (I)</option>
@@ -65,14 +65,16 @@
                         </div>
                         <div class="input-group">
                             <label for="param1-value">Value</label>
-                            <input type="number" id="param1-value" placeholder="Enter value" step="any">
+                            <div class="input-field-wrapper">
+                                <input type="number" id="param1-value" placeholder="0.00" step="any">
+                            </div>
                         </div>
                     </div>
 
                     <!-- Known Parameter 2 -->
-                    <div class="input-row">
+                    <div class="input-row-card">
                         <div class="select-group">
-                            <label for="param2-select">Known 2</label>
+                            <label for="param2-select">Second Known Parameter</label>
                             <select id="param2-select">
                                 <option value="voltage">Voltage (V)</option>
                                 <option value="current" selected>Current (I)</option>
@@ -82,20 +84,29 @@
                         </div>
                         <div class="input-group">
                             <label for="param2-value">Value</label>
-                            <input type="number" id="param2-value" placeholder="Enter value" step="any">
+                            <div class="input-field-wrapper">
+                                <input type="number" id="param2-value" placeholder="0.00" step="any">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <button id="calc-btn" class="btn primary-btn">Calculate</button>
-                    <button id="reset-btn" class="btn secondary-btn">Reset</button>
+                    <button id="calc-btn" class="btn primary-btn">
+                        <span class="material-symbols-outlined">calculate</span> Calculate
+                    </button>
+                    <button id="reset-btn" class="btn secondary-btn">
+                        <span class="material-symbols-outlined">restart_alt</span> Reset
+                    </button>
                 </div>
 
                 <!-- Results Display Section -->
                 <div id="results-section" class="results-box" style="display: none;">
-                    <h3>Calculation Results</h3>
+                    <div class="results-header">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        <h3>Calculated Results</h3>
+                    </div>
                     <div class="results-grid">
                         <div class="result-item">
                             <span class="result-label" id="res-label-1">Voltage (V)</span>
@@ -111,12 +122,27 @@
 
             <!-- Formula Reference Sidebar Card -->
             <div class="info-card">
-                <h3>Ohm's Law Formulas</h3>
-                <ul>
-                    <li><strong>Voltage (V):</strong> V = I × R &nbsp;|&nbsp; V = P / I</li>
-                    <li><strong>Current (I):</strong> I = V / R &nbsp;|&nbsp; I = P / V</li>
-                    <li><strong>Resistance (R):</strong> R = V / I &nbsp;|&nbsp; R = V² / P</li>
-                    <li><strong>Power (P):</strong> P = V × I &nbsp;|&nbsp; P = I² × R</li>
+                <div class="info-header">
+                    <span class="material-symbols-outlined">info</span>
+                    <h3>Ohm's Law Formulas</h3>
+                </div>
+                <ul class="formula-list">
+                    <li>
+                        <span class="formula-name">Voltage (V)</span>
+                        <span class="formula-eq">V = I × R &nbsp;|&nbsp; V = P / I</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">Current (I)</span>
+                        <span class="formula-eq">I = V / R &nbsp;|&nbsp; I = P / V</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">Resistance (R)</span>
+                        <span class="formula-eq">R = V / I &nbsp;|&nbsp; R = V² / P</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">Power (P)</span>
+                        <span class="formula-eq">P = V × I &nbsp;|&nbsp; P = I² × R</span>
+                    </li>
                 </ul>
             </div>
         </div>
