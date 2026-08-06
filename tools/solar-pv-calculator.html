@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar PV System Calculator — Prasun Tools</title>
+    <meta name="description" content="Calculate required solar panel system size, total panel count, and estimated daily power generation instantly. Free, fast, and runs locally in your browser.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Solar PV System Calculator — Prasun Tools">
+    <meta property="og:description" content="Instant browser-based solar energy and system sizing calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tools.prasunbarua.com/tools/solar-pv-calculator.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/tool-page.css">
 
+    <!-- Global Theme Initializer Script -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="material-symbols-outlined logo-icon">bolt</span> Prasun Tools
+            </a>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/#tools-grid">All Tools</a>
+                <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Tool Container -->
+    <main class="container tool-main">
+        <div class="tool-header">
+            <span class="material-symbols-outlined tool-badge-icon">solar_power</span>
+            <h1>Solar PV System Calculator</h1>
+            <p>Estimate your required solar system capacity, panel count, and daily energy generation based on your household or business load.</p>
+        </div>
+
+        <div class="tool-workspace">
+            <!-- Calculator Card -->
+            <div class="calculator-card">
+                <div class="calculator-inner">
+                    <!-- Input 1: Daily Energy Consumption -->
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="daily-energy">Daily Energy Usage</label>
+                            <span class="input-hint">Average consumption</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="daily-energy">Value (kWh / day)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="daily-energy" placeholder="e.g., 15" step="any" min="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input 2: Peak Sun Hours -->
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="sun-hours">Peak Sun Hours</label>
+                            <span class="input-hint">Daily average peak sunlight</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="sun-hours">Value (Hours/Day)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="sun-hours" placeholder="e.g., 5.0" step="any" min="0.5" value="5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input 3: Solar Panel Wattage -->
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="panel-wattage">Panel Power Rating</label>
+                            <span class="input-hint">Single solar panel output</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="panel-wattage">Value (Watts)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="panel-wattage" placeholder="e.g., 400" step="any" min="50" value="400">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input 4: System Efficiency -->
+                    <div class="input-row-card">
+                        <div class="select-group">
+                            <label for="system-efficiency">System Efficiency Loss</label>
+                            <span class="input-hint">Inverter, wiring & temp losses</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="system-efficiency">Value (%)</label>
+                            <div class="input-field-wrapper">
+                                <input type="number" id="system-efficiency" placeholder="e.g., 80" step="any" min="10" max="100" value="80">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="calc-btn" class="btn primary-btn">
+                        <span class="material-symbols-outlined">calculate</span> Calculate System
+                    </button>
+                    <button id="reset-btn" class="btn secondary-btn">
+                        <span class="material-symbols-outlined">restart_alt</span> Reset
+                    </button>
+                </div>
+
+                <!-- Results Display Section -->
+                <div id="results-section" class="results-box" style="display: none;">
+                    <div class="results-header">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        <h3>System Sizing Results</h3>
+                    </div>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <span class="result-label">Recommended System Size</span>
+                            <span class="result-value" id="res-system-size">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Panels Required</span>
+                            <span class="result-value" id="res-panel-count">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Est. Daily Generation</span>
+                            <span class="result-value" id="res-daily-gen">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Est. Monthly Generation</span>
+                            <span class="result-value" id="res-monthly-gen">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formula & Guide Reference Sidebar Card -->
+            <div class="info-card">
+                <div class="info-header">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                    <h3>Solar Sizing Formulas</h3>
+                </div>
+                <ul class="formula-list">
+                    <li>
+                        <span class="formula-name">System Size (kW)</span>
+                        <span class="formula-eq">Daily Load / (Sun Hours × Efficiency)</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">Number of Panels</span>
+                        <span class="formula-eq">(System Size × 1000) / Panel Wattage</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">Daily Generation</span>
+                        <span class="formula-eq">System Size × Sun Hours × Efficiency</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">System Efficiency</span>
+                        <span class="formula-eq">Typically accounts for 75% to 85% total system loss factors.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
+            <p class="privacy-badge">
+                <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Tool Logic Script -->
+    <script src="../assets/js/tools/solar-pv-calculator.js" defer></script>
+    <script src="../assets/js/app.js" defer></script>
+</body>
+</html>
