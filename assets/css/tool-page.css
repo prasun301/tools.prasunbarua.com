@@ -1,126 +1,98 @@
-/* Tool Page Specific Styles */
-.tool-main {
-    padding: 2.5rem 0 4rem;
-}
-
-.tool-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 2.5rem;
-}
-
-.tool-badge-icon {
-    font-size: 40px;
-    color: var(--accent-color);
-    background-color: rgba(56, 189, 248, 0.1);
-    padding: 0.75rem;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    display: inline-block;
-}
-
-.tool-header h1 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.025em;
-}
-
-.tool-header p {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-}
-
-/* Tool Workspace Grid */
-.tool-workspace {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    align-items: start;
-}
-
-@media (max-width: 900px) {
-    .tool-workspace {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Calculator Card */
+/* Professional Tool Page Enhancements */
 .calculator-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 2.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-.input-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
+.calculator-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
     margin-bottom: 2rem;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.input-group label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-wrapper input {
-    width: 100%;
-    padding: 0.75rem 4rem 0.75rem 1rem;
+.input-row-card {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
     background-color: var(--bg-color);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    outline: none;
+    border-radius: 12px;
     transition: border-color 0.2s;
 }
 
-.input-wrapper input:focus {
+.input-row-card:focus-within {
     border-color: var(--accent-color);
 }
 
-.unit {
-    position: absolute;
-    right: 1rem;
-    font-size: 0.8rem;
+@media (max-width: 600px) {
+    .input-row-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+.select-group, .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.select-group label, .input-group label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
     color: var(--text-secondary);
-    font-weight: 500;
-    pointer-events: none;
+}
+
+.select-group select, .input-field-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.select-group select:focus, .input-field-wrapper input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+.select-group select {
+    cursor: pointer;
 }
 
 /* Action Buttons */
 .action-buttons {
     display: flex;
     gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: all 0.2s ease;
     border: none;
 }
 
-.btn:active {
-    transform: scale(0.98);
+.btn .material-symbols-outlined {
+    font-size: 18px;
 }
 
 .primary-btn {
@@ -130,7 +102,8 @@
 }
 
 .primary-btn:hover {
-    opacity: 0.9;
+    filter: brightness(1.1);
+    transform: translateY(-1px);
 }
 
 .secondary-btn {
@@ -144,39 +117,126 @@
     background-color: var(--border-color);
 }
 
+/* Results Box */
+.results-box {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 12px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.results-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.results-header .material-symbols-outlined {
+    font-size: 20px;
+}
+
+.results-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.result-item {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.result-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.result-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
 /* Info Sidebar Card */
 .info-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 1.75rem;
 }
 
-.info-card h3 {
-    font-size: 1.125rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
 }
 
-.info-card ul {
-    list-style-type: none;
+.info-header .material-symbols-outlined {
+    color: var(--accent-color);
+    font-size: 20px;
+}
+
+.info-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.formula-list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
-.info-card li {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    padding-bottom: 0.5rem;
+.formula-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border-color);
 }
 
-.info-card li:last-child {
+.formula-list li:last-child {
     border-bottom: none;
     padding-bottom: 0;
 }
 
-.info-card strong {
+.formula-name {
+    font-size: 0.85rem;
+    font-weight: 700;
     color: var(--text-primary);
+}
+
+.formula-eq {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
