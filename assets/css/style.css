@@ -238,3 +238,20 @@ main {
     gap: 0.25rem;
     font-size: 0.8rem;
 }
+/* Google Material Design Standard for Primary Filled Buttons */
+.primary-btn {
+    background-color: var(--accent-color);
+    color: #ffffff !important; /* Forces crisp white text for standard contrast */
+    flex: 2;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn .material-symbols-outlined {
+    color: #ffffff !important; /* Forces white icon color to match text */
+}
+
+.primary-btn:hover {
+    filter: brightness(0.92); /* Standard Google darkening effect on hover */
+    transform: none; /* Keeps flat modern Material elevation */
+}
