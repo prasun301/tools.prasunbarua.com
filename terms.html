@@ -3,73 +3,616 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms and Conditions — Prasun Tools</title>
-    <meta name="description" content="Terms and conditions for using Prasun Tools calculators and browser utilities.">
+    <title>Terms & Conditions — Prasun Tools</title>
+    <meta name="description" content="Read the Terms & Conditions for Prasun Tools. Understand platform usage guidelines, engineering disclaimers, intellectual property, and third-party integrations.">
+    <meta name="keywords" content="terms and conditions, terms of service, legal agreement, prasun tools terms, engineering disclaimer">
+    <link rel="canonical" href="https://tools.prasunbarua.com/terms.html">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:title" content="Terms & Conditions — Prasun Tools">
+    <meta property="og:description" content="Review the terms governing your use of Prasun Tools online utilities, calculators, and developer resources.">
+    <meta property="og:url" content="https://tools.prasunbarua.com/terms.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Prasun Tools">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Terms & Conditions — Prasun Tools">
+    <meta name="twitter:description" content="Understand the user agreement, technical disclaimers, and platform policies for Prasun Tools.">
+
+    <!-- Material Symbols & Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Theme Initializer Script to prevent flash -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
+
+    <!-- Embedded Styles -->
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-light: rgba(59, 130, 246, 0.08);
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.3);
+            --warning-text: #d97706;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #090d16;
+            --card-bg: #111827;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-light: rgba(59, 130, 246, 0.15);
+            --warning-bg: rgba(245, 158, 11, 0.12);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --warning-text: #fbbf24;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .site-header {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            background-color: var(--card-bg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .logo span.material-symbols-outlined {
+            color: var(--accent);
+            font-size: 28px;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .btn-home:hover {
+            border-color: var(--accent);
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .terms-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        /* Hero Section */
+        .terms-hero {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background-color: var(--accent-light);
+            color: var(--accent);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .terms-hero h1 {
+            font-size: clamp(2.25rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .update-date {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background-color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .content-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            font-size: 1.025rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card ul {
+            color: var(--text-muted);
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .content-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .content-card a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .sub-heading {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Highlighted Notice Box (for Engineering Disclaimer) */
+        .notice-box {
+            background-color: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .notice-box span.material-symbols-outlined {
+            color: var(--warning-text);
+            font-size: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .notice-content p {
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* Call to Action Box */
+        .cta-box {
+            background: linear-gradient(135deg, var(--accent-light), transparent);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .privacy-badge span {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .terms-container {
+                padding: 2rem 1rem;
+            }
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <!-- JSON-LD Structured Data for WebSite, Organization, and Legal Document -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://tools.prasunbarua.com/#website",
+          "url": "https://tools.prasunbarua.com/",
+          "name": "Prasun Tools",
+          "description": "Fast, free, and privacy-friendly online utilities and engineering calculators.",
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tools.prasunbarua.com/#organization",
+          "name": "Prasun Tools",
+          "url": "https://tools.prasunbarua.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://tools.prasunbarua.com/assets/images/logo.png"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://tools.prasunbarua.com/terms.html#webpage",
+          "url": "https://tools.prasunbarua.com/terms.html",
+          "name": "Terms & Conditions — Prasun Tools",
+          "isPartOf": {
+            "@id": "https://tools.prasunbarua.com/#website"
+          },
+          "description": "Terms & Conditions for Prasun Tools covering user conduct, calculator disclaimers, IP, and platform policies."
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
+
     <!-- Header -->
     <header class="site-header">
-        <div class="container header-content">
+        <div class="header-content">
             <a href="/" class="logo">
                 <span class="material-symbols-outlined">bolt</span>
                 <span>Prasun Tools</span>
             </a>
-            <a href="/" class="btn-secondary" style="text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 14px;">← Back to Home</a>
+            <a href="/" class="btn-home">
+                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+                <span>Home</span>
+            </a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container" style="max-width: 850px; margin: 60px auto; padding: 0 20px;">
-        <div class="content-card" style="background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e2e8f0); border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 800;">Terms and Conditions</h1>
-            <p style="font-size: 0.95rem; color: var(--text-muted, #64748b); margin-bottom: 30px;"><em>Last updated: August 6, 2026</em></p>
+    <main class="terms-container">
+        
+        <!-- Hero Section -->
+        <section class="terms-hero">
+            <div class="badge">
+                <span class="material-symbols-outlined" style="font-size: 16px;">gavel</span>
+                Legal Agreement
+            </div>
+            <h1>Terms & Conditions</h1>
+            <p class="update-date">Last Updated: August 6, 2026</p>
+        </section>
 
-            <p style="line-height: 1.7; margin-bottom: 25px; color: var(--text-main, #334155);">
-                Welcome to <strong>Prasun Tools</strong>. By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement.
-            </p>
+        <!-- 1. Acceptance of Terms -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">verified_user</span></div>
+                <h2>Acceptance of Terms</h2>
+            </div>
+            <p>Welcome to <strong>Prasun Tools</strong> (accessible via <code>tools.prasunbarua.com</code>). By accessing, browsing, or utilizing our website, online utilities, and services, you agree to comply with and be bound by these Terms & Conditions.</p>
+            <p>If you do not agree with any part of these terms, please discontinue your use of our platform immediately.</p>
+        </section>
 
-            <h2 style="font-size: 1.3rem; margin-top: 30px; margin-bottom: 12px;">1. Use License</h2>
-            <p style="line-height: 1.7; margin-bottom: 20px;">Permission is granted to temporarily use materials on Prasun Tools for personal, non-commercial transitory viewing only.</p>
+        <!-- 2. Use of the Website -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">shield_person</span></div>
+                <h2>Use of the Website</h2>
+            </div>
+            <p>You agree to use Prasun Tools solely for lawful purposes and in a manner that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the website. Prohibited activities include, but are not limited to:</p>
+            <ul>
+                <li>Misusing the platform or attempting unauthorized access to infrastructure or source code</li>
+                <li>Engaging in automated abuse, excessive scraping, or denial-of-service disruptions</li>
+                <li>Executing malicious activities, script injections, or uploading harmful payloads</li>
+                <li>Attempting to reverse engineer restricted platform components where prohibited by applicable law</li>
+            </ul>
+        </section>
 
-            <h2 style="font-size: 1.3rem; margin-top: 30px; margin-bottom: 12px;">2. Disclaimer & Engineering Notice</h2>
-            <p style="line-height: 1.7; margin-bottom: 15px;">The utilities on Prasun Tools are provided "as is". We disclaim all warranties, express or implied.</p>
-            <blockquote style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid var(--accent, #3b82f6); padding: 15px; border-radius: 0 8px 8px 0; margin: 20px 0; font-size: 0.95rem; line-height: 1.6;">
-                <em>Engineering and technical calculators (such as electrical or solar utilities) are provided for estimation and educational purposes only. Always verify critical calculations with certified professionals before implementing them in real-world engineering projects.</em>
-            </blockquote>
+        <!-- 3. Intellectual Property -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">copyright</span></div>
+                <h2>Intellectual Property</h2>
+            </div>
+            <p>All original content, branding, visual design elements, user interface layouts, custom source code, graphics, logos, and documentation featured on Prasun Tools are the exclusive property of Prasun Tools or its respective creators, and are protected by applicable intellectual property laws.</p>
+            <p>Users must respect third-party trademarks, libraries, and open-source licenses integrated or referenced across the platform.</p>
+        </section>
 
-            <h2 style="font-size: 1.3rem; margin-top: 30px; margin-bottom: 12px;">3. Limitations</h2>
-            <p style="line-height: 1.7; margin-bottom: 20px;">In no event shall Prasun Tools be liable for any damages arising out of the use or inability to use the materials on this website.</p>
+        <!-- 4. Online Tools -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">calculate</span></div>
+                <h2>Online Tools</h2>
+            </div>
+            <p>Prasun Tools provides a broad suite of browser-based utilities, including engineering calculators, solar PV tools, electrical calculators, PDF converters, image editors, text utilities, unit converters, developer tools, and productivity applications.</p>
+            <p>These tools are designed to assist you in performing calculations, conversions, and productivity tasks efficiently. However, users should thoroughly review and independently verify all output results before relying upon them for important undertakings.</p>
+        </section>
 
-            <h2 style="font-size: 1.3rem; margin-top: 30px; margin-bottom: 12px;">4. External Links</h2>
-            <p style="line-height: 1.7; margin-bottom: 20px;">Prasun Tools is not responsible for the content of any linked external sites. Use of any linked web site is at the user's own risk.</p>
+        <!-- 5. Engineering & Technical Disclaimer -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">engineering</span></div>
+                <h2>Engineering & Technical Disclaimer</h2>
+            </div>
+            <p>Calculators related to engineering, electrical systems, solar PV design, science, and financial metrics are provided strictly for educational, planning, and preliminary estimation purposes.</p>
+            
+            <div class="notice-box">
+                <span class="material-symbols-outlined">warning</span>
+                <div class="notice-content">
+                    <p><strong>Important Notice:</strong> Users must independently verify all computations, sizing models, and outputs before applying them in actual construction, engineering, electrical installation, medical, safety-critical, legal, or commercial financial applications. Prasun Tools assumes no liability for design errors or miscalculations resulting from platform use.</p>
+                </div>
+            </div>
+        </section>
 
-            <h2 style="font-size: 1.3rem; margin-top: 30px; margin-bottom: 12px;">5. Modifications</h2>
-            <p style="line-height: 1.7;">Prasun Tools may revise these terms of service at any time without notice. By using this website you agree to be bound by the current version.</p>
-        </div>
+        <!-- 6. Accuracy of Information -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">fact_check</span></div>
+                <h2>Accuracy of Information</h2>
+            </div>
+            <p>While we make reasonable efforts to ensure that our tools and content are accurate, reliable, and up to date, technical inaccuracies, typographical errors, or algorithmic omissions may occasionally occur.</p>
+            <p>We do not warrant that all tool outputs or website content will be completely free from errors, and we reserve the right to correct mistakes as they are identified.</p>
+        </section>
+
+        <!-- 7. Third-Party Services -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">hub</span></div>
+                <h2>Third-Party Services</h2>
+            </div>
+            <p>To ensure optimal performance, security, analytics, and monetization, Prasun Tools integrates trusted third-party services, including:</p>
+            <ul>
+                <li><strong>Google Analytics:</strong> For anonymous traffic and usage analysis</li>
+                <li><strong>Google AdSense:</strong> For serving contextual advertisements</li>
+                <li><strong>Cloudflare:</strong> For DNS management, caching, and edge security</li>
+                <li><strong>GitHub Pages:</strong> For static asset hosting</li>
+                <li><strong>Future Payment Providers:</strong> Such as Paddle, for secure digital product transactions</li>
+            </ul>
+            <p>These third-party providers operate under their own respective terms of service and privacy policies.</p>
+        </section>
+
+        <!-- 8. External Links -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">link</span></div>
+                <h2>External Links</h2>
+            </div>
+            <p>Our website may contain hyperlinks pointing to external websites or resources managed by third parties. These links are provided solely for user convenience. Prasun Tools does not endorse, control, or take responsibility for the availability, content, or practices of external sites.</p>
+        </section>
+
+        <!-- 9. User Content & Communications -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">forum</span></div>
+                <h2>User Content & Communications</h2>
+            </div>
+            <p>If you submit messages, bug reports, feature suggestions, or feedback through our Contact page, you grant Prasun Tools the right to utilize those communications to improve website functionality and user experience.</p>
+            <p>Any personal data shared during communications is handled strictly in accordance with our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+        </section>
+
+        <!-- 10. Limitation of Liability -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">security</span></div>
+                <h2>Limitation of Liability</h2>
+            </div>
+            <p>Prasun Tools is provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis without warranties of any kind, whether express or implied. To the maximum extent permitted by applicable law, the website owner shall not be held liable for any direct, indirect, incidental, or consequential damages arising out of or related to your use of the website or reliance upon tool results.</p>
+        </section>
+
+        <!-- 11. Availability and Modifications -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">schedule</span></div>
+                <h2>Availability and Modifications</h2>
+            </div>
+            <p>We strive to maintain high platform uptime, but we do not guarantee uninterrupted access. Tools, features, and services may be modified, suspended, updated, or discontinued at any time without prior notice.</p>
+        </section>
+
+        <!-- 12. Future Services -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">storefront</span></div>
+                <h2>Future Services and Digital Products</h2>
+            </div>
+            <p>As Prasun Tools expands, future updates may introduce premium utilities, downloadable digital products, subscription options, or paid services. These Terms & Conditions shall continue to govern those future offerings unless separate, specific terms are explicitly provided at the point of sale or access.</p>
+        </section>
+
+        <!-- 13. Changes to These Terms -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">history</span></div>
+                <h2>Changes to These Terms</h2>
+            </div>
+            <p>We reserve the right to revise or update these Terms & Conditions periodically to reflect platform enhancements or legal requirements. Updated versions will be posted on this page with a revised "Last Updated" date. Your continued use of the website following any modifications constitutes your formal acceptance of the revised terms.</p>
+        </section>
+
+        <!-- 14. Contact Information -->
+        <section class="content-card">
+            <div class="section-header">
+                <div class="section-icon"><span class="material-symbols-outlined">mail</span></div>
+                <h2>Contact Information</h2>
+            </div>
+            <p>If you have any questions, clarifications, or concerns regarding these Terms & Conditions, please feel free to reach out to our team.</p>
+            
+            <div class="cta-box">
+                <h3 style="margin-top: 0; font-size: 1.25rem;">Have questions about our terms?</h3>
+                <p style="margin: 0.5rem 0 0 0; color: var(--text-muted);">We are ready to help address your inquiries.</p>
+                <a href="/contact.html" class="btn-primary">
+                    <span class="material-symbols-outlined">support_agent</span>
+                    <span>Visit Contact Page</span>
+                </a>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="container footer-content">
+        <div class="footer-content">
             <p class="privacy-badge">
-                <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
+                <span class="material-symbols-outlined">lock</span> Fast, Free & Privacy-Friendly Online Tools.
             </p>
-            <p class="footer-nav" style="margin: 15px 0; font-size: 14px;">
-                <a href="/about.html">About Us</a> | 
-                <a href="/privacy-policy.html">Privacy Policy</a> | 
-                <a href="/terms.html">Terms & Conditions</a> | 
+            <nav class="footer-nav">
+                <a href="/about.html">About Us</a>
+                <a href="/privacy-policy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms & Conditions</a>
                 <a href="/contact.html">Contact Us</a>
-            </p>
+            </nav>
             <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
         </div>
     </footer>
+
 </body>
 </html>
