@@ -4,37 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us — Prasun Tools</title>
-    <meta name="description" content="Get in touch with Prasun Tools for technical support, bug reports, feature requests, business inquiries, or general questions.">
-    <meta name="keywords" content="contact prasun tools, support, feedback, bug report, feature request, business inquiry">
-    <link rel="canonical" href="https://tools.prasunbarua.com/contact.html">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Social Meta Tags -->
-    <meta property="og:title" content="Contact Us — Prasun Tools">
-    <meta property="og:description" content="Reach out to the Prasun Tools team for support, feedback, partnerships, or technical inquiries.">
-    <meta property="og:url" content="https://tools.prasunbarua.com/contact.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Prasun Tools">
-
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Contact Us — Prasun Tools">
-    <meta name="twitter:description" content="Connect with Prasun Tools for support, feedback, or business inquiries.">
-
-    <!-- Material Symbols & Fonts -->
+    
+    <!-- Material Symbols & Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Theme Initializer Script to prevent flash -->
+    <!-- Theme Initializer Script -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 
-    <!-- Embedded Styles -->
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -51,16 +34,14 @@
             --error-bg: rgba(239, 68, 68, 0.08);
             --error-border: rgba(239, 68, 68, 0.3);
             --error-text: #dc2626;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            --radius-lg: 20px;
+            --radius-sm: 10px;
         }
 
         [data-theme="dark"] {
-            --bg-main: #090d16;
-            --card-bg: #111827;
+            --bg-main: #07090e;
+            --card-bg: #0f172a;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #1e293b;
@@ -73,8 +54,7 @@
             --error-bg: rgba(239, 68, 68, 0.15);
             --error-border: rgba(239, 68, 68, 0.3);
             --error-text: #f87171;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
 
         body {
@@ -82,161 +62,39 @@
             background-color: var(--bg-main);
             color: var(--text-main);
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
         }
 
-        .site-header {
-            border-bottom: 1px solid var(--border-color);
-            background: var(--card-bg);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(8px);
-            background-color: var(--card-bg);
+        .contact-wrapper {
+            width: 100%;
+            max-width: 640px;
         }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .logo span.material-symbols-outlined {
-            color: var(--accent);
-            font-size: 28px;
-        }
-
-        .btn-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            font-size: 0.9rem;
-            font-weight: 500;
-            background-color: var(--accent-light);
-            color: var(--accent);
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .btn-home:hover {
-            border-color: var(--accent);
-            background-color: var(--accent);
-            color: #ffffff;
-        }
-
-        .contact-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
-        }
-
-        /* Hero Section */
-        .contact-hero {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 3.5rem auto;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            background-color: var(--accent-light);
-            color: var(--accent);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .contact-hero h1 {
-            font-size: clamp(2.25rem, 4vw, 3.25rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .contact-hero p {
-            color: var(--text-muted);
-            font-size: 1.125rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1rem;
-        }
-
-        .tag-item {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* Layout Grid */
-        .contact-layout {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        @media (max-width: 968px) {
-            .contact-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Cards */
-        .content-card {
+        .contact-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-xl);
+            position: relative;
         }
 
-        .section-header {
+        .card-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 1.5rem;
+            gap: 14px;
+            margin-bottom: 2rem;
         }
 
-        .section-icon {
-            width: 40px;
-            height: 40px;
+        .header-icon {
+            width: 48px;
+            height: 48px;
             border-radius: var(--radius-sm);
             background-color: var(--accent-light);
             display: flex;
@@ -246,14 +104,24 @@
             flex-shrink: 0;
         }
 
-        .content-card h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -0.01em;
+        .header-icon span {
+            font-size: 24px;
         }
 
-        /* Form Styles */
+        .card-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .card-header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Form Controls */
         .form-group {
             margin-bottom: 1.25rem;
         }
@@ -264,16 +132,19 @@
             gap: 1rem;
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 580px) {
             .form-row {
                 grid-template-columns: 1fr;
+            }
+            .contact-card {
+                padding: 1.5rem;
             }
         }
 
         label {
             display: block;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             margin-bottom: 0.5rem;
             color: var(--text-main);
         }
@@ -289,7 +160,7 @@
             border-radius: var(--radius-sm);
             color: var(--text-main);
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
             box-sizing: border-box;
         }
@@ -315,40 +186,7 @@
 
         textarea {
             resize: vertical;
-            min-height: 140px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin: 1.5rem 0;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            margin-top: 4px;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            font-weight: 400;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .checkbox-group a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .checkbox-group a:hover {
-            text-decoration: underline;
+            min-height: 120px;
         }
 
         .btn-primary {
@@ -366,6 +204,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.1s ease;
+            margin-top: 0.5rem;
         }
 
         .btn-primary:hover:not(:disabled) {
@@ -378,12 +217,12 @@
             cursor: not-allowed;
         }
 
-        /* Form Feedback Messages */
+        /* Feedback Messages */
         .form-message {
             padding: 1rem;
             border-radius: var(--radius-sm);
             margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             display: none;
         }
 
@@ -401,10 +240,10 @@
             display: block;
         }
 
-        /* Spinner for Loading State */
+        /* Loading Spinner */
         .spinner {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #ffffff;
@@ -415,525 +254,78 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* Sidebar Cards */
-        .sidebar-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .sidebar-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .sidebar-card h3 span.material-symbols-outlined {
-            color: var(--accent);
-            font-size: 20px;
-        }
-
-        .sidebar-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin: 0 0 1rem 0;
-            line-height: 1.6;
-        }
-
-        .sidebar-card p:last-child {
-            margin-bottom: 0;
-        }
-
-        .contact-email-link {
-            font-weight: 600;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 1.05rem;
-        }
-
-        .contact-email-link:hover {
-            text-decoration: underline;
-        }
-
-        /* What We Can Help With Grid */
-        .help-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .help-item {
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .help-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
-            background-color: var(--accent-light);
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .help-content h4 {
-            margin: 0 0 0.25rem 0;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .help-content p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* FAQ Section */
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .faq-item {
-            background-color: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.25rem 1.5rem;
-        }
-
-        .faq-item h4 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .faq-item h4 span.material-symbols-outlined {
-            color: var(--accent);
-            font-size: 18px;
-        }
-
-        .faq-item p {
-            margin: 0;
-            font-size: 0.925rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Privacy Notice Box */
-        .privacy-notice-box {
-            background: linear-gradient(135deg, var(--accent-light), transparent);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .privacy-notice-box span.material-symbols-outlined {
-            color: var(--accent);
-            font-size: 24px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .privacy-notice-content p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        .privacy-notice-content a {
-            color: var(--accent);
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .privacy-notice-content a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .site-footer {
-            border-top: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            padding: 2.5rem 1.5rem;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .privacy-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .privacy-badge span {
-            color: var(--accent);
-            font-size: 18px;
-        }
-
-        .footer-nav {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .footer-nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .footer-nav a:hover {
-            color: var(--accent);
-        }
-
-        @media (max-width: 768px) {
-            .contact-container {
-                padding: 2rem 1rem;
-            }
-            .content-card, .sidebar-card {
-                padding: 1.5rem;
-            }
-        }
     </style>
-
-    <!-- JSON-LD Structured Data for WebSite, Organization, and ContactPage -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://tools.prasunbarua.com/#website",
-          "url": "https://tools.prasunbarua.com/",
-          "name": "Prasun Tools",
-          "description": "Fast, free, and privacy-friendly online utilities and engineering calculators.",
-          "inLanguage": "en"
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://tools.prasunbarua.com/#organization",
-          "name": "Prasun Tools",
-          "url": "https://tools.prasunbarua.com/",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://tools.prasunbarua.com/assets/images/logo.png"
-          },
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "contact@prasunbarua.com",
-            "contactType": "Customer Support",
-            "availableLanguage": ["English"]
-          }
-        },
-        {
-          "@type": "ContactPage",
-          "@id": "https://tools.prasunbarua.com/contact.html#webpage",
-          "url": "https://tools.prasunbarua.com/contact.html",
-          "name": "Contact Us — Prasun Tools",
-          "isPartOf": {
-            "@id": "https://tools.prasunbarua.com/#website"
-          },
-          "description": "Contact Prasun Tools for inquiries, technical support, bug reports, and feature requests."
-        }
-      ]
-    }
-    </script>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="logo">
-                <span class="material-symbols-outlined">bolt</span>
-                <span>Prasun Tools</span>
-            </a>
-            <a href="/" class="btn-home">
-                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-                <span>Home</span>
-            </a>
+    <main class="contact-wrapper">
+        <div class="contact-card">
+            
+            <div class="card-header">
+                <div class="header-icon">
+                    <span class="material-symbols-outlined">mail</span>
+                </div>
+                <div>
+                    <h1>Get in Touch</h1>
+                    <p>Have questions or feedback? Send us a message.</p>
+                </div>
+            </div>
+
+            <!-- Feedback Notifications -->
+            <div id="formSuccess" class="form-message success" aria-live="polite">
+                Thank you! Your message has been sent successfully.
+            </div>
+            <div id="formError" class="form-message error" aria-live="polite">
+                Please fill out all required fields correctly.
+            </div>
+
+            <!-- Contact Form -->
+            <form id="contactForm" method="POST" action="https://formspree.io/f/your-form-endpoint" novalidate>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Full Name <span style="color: var(--error-text);">*</span></label>
+                        <input type="text" id="fullName" name="fullName" placeholder="John Doe" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span style="color: var(--error-text);">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subject">Subject <span style="color: var(--error-text);">*</span></label>
+                        <input type="text" id="subject" name="subject" placeholder="Brief summary" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category <span style="color: var(--error-text);">*</span></label>
+                        <select id="category" name="category" required>
+                            <option value="" disabled selected>Select category</option>
+                            <option value="General">General Question</option>
+                            <option value="Support">Technical Support</option>
+                            <option value="Bug">Bug Report</option>
+                            <option value="Feature">Feature Request</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message <span style="color: var(--error-text);">*</span></label>
+                    <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-primary">
+                    <span id="btnText">Send Message</span>
+                    <div id="btnSpinner" class="spinner"></div>
+                    <span class="material-symbols-outlined" id="btnIcon" style="font-size: 18px;">send</span>
+                </button>
+
+            </form>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="contact-container">
-        
-        <!-- Hero Section -->
-        <section class="contact-hero">
-            <div class="badge">
-                <span class="material-symbols-outlined" style="font-size: 16px;">support</span>
-                Get in Touch
-            </div>
-            <h1>Contact Prasun Tools</h1>
-            <p>Have a question, feedback, bug report, or feature suggestion? We would love to hear from you. Reach out to our team using the form below or via direct email.</p>
-            
-            <div class="tag-list">
-                <span class="tag-item">General Questions</span>
-                <span class="tag-item">Technical Support</span>
-                <span class="tag-item">Bug Reports</span>
-                <span class="tag-item">Feature Requests</span>
-                <span class="tag-item">Business Inquiries</span>
-                <span class="tag-item">Partnerships</span>
-            </div>
-        </section>
-
-        <!-- Main Layout Grid -->
-        <div class="contact-layout">
-            
-            <!-- Left Column: Contact Form -->
-            <div>
-                <section class="content-card">
-                    <div class="section-header">
-                        <div class="section-icon"><span class="material-symbols-outlined">mail</span></div>
-                        <h2>Send Us a Message</h2>
-                    </div>
-
-                    <!-- Success / Error Message Placeholders -->
-                    <div id="formSuccess" class="form-message success" aria-live="polite" style="display: none;">
-                        Thank you! Your message has been sent successfully. We will get back to you within 1-2 business days.
-                    </div>
-                    <div id="formError" class="form-message error" aria-live="polite" style="display: none;">
-                        Please fill out all required fields correctly and agree to the privacy policy.
-                    </div>
-
-                    <!-- Contact Form -->
-                    <form id="contactForm" method="POST" action="https://formspree.io/f/your-form-endpoint" novalidate>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="fullName">Full Name <span style="color: var(--error-text);">*</span></label>
-                                <input type="text" id="fullName" name="fullName" placeholder="John Doe" required autocomplete="name">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address <span style="color: var(--error-text);">*</span></label>
-                                <input type="email" id="email" name="email" placeholder="john@example.com" required autocomplete="email">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="subject">Subject <span style="color: var(--error-text);">*</span></label>
-                                <input type="text" id="subject" name="subject" placeholder="Brief summary of your inquiry" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="category">Inquiry Category <span style="color: var(--error-text);">*</span></label>
-                                <select id="category" name="category" required>
-                                    <option value="" disabled selected>Select a category</option>
-                                    <option value="General Question">General Question</option>
-                                    <option value="Technical Support">Technical Support</option>
-                                    <option value="Bug Report">Bug Report</option>
-                                    <option value="Feature Request">Feature Request</option>
-                                    <option value="Business Inquiry">Business Inquiry</option>
-                                    <option value="Advertising">Advertising</option>
-                                    <option value="Partnership">Partnership</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message <span style="color: var(--error-text);">*</span></label>
-                            <textarea id="message" name="message" placeholder="Please provide detailed information regarding your inquiry..." required></textarea>
-                        </div>
-
-                        <!-- Anti-Spam Placeholder -->
-                        <div id="turnstilePlaceholder" style="margin-bottom: 1.25rem;">
-                            <!-- Turnstile widget will render here when integrated with Cloudflare Workers -->
-                        </div>
-
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
-                            <label for="privacyConsent">
-                                I have read and agree to the <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. <span style="color: var(--error-text);">*</span>
-                            </label>
-                        </div>
-
-                        <button type="submit" id="submitBtn" class="btn-primary">
-                            <span id="btnText">Send Message</span>
-                            <div id="btnSpinner" class="spinner"></div>
-                            <span class="material-symbols-outlined" id="btnIcon" style="font-size: 18px;">send</span>
-                        </button>
-
-                    </form>
-
-                    <!-- Privacy Notice Box -->
-                    <div class="privacy-notice-box">
-                        <span class="material-symbols-outlined">shield_lock</span>
-                        <div class="privacy-notice-content">
-                            <p>Messages submitted through this contact form are used exclusively to respond to your inquiry and are handled in accordance with our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
-                        </div>
-                    </div>
-
-                </section>
-            </div>
-
-            <!-- Right Column: Sidebar (Contact Info, Response Time) -->
-            <div>
-                <!-- Direct Email Card -->
-                <div class="sidebar-card">
-                    <h3><span class="material-symbols-outlined">alternate_email</span> Direct Email</h3>
-                    <p>Prefer writing directly from your email client? You can reach us anytime at:</p>
-                    <a href="mailto:contact@prasunbarua.com" class="contact-email-link">contact@prasunbarua.com</a>
-                    <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">Our inbox is monitored regularly by the support team.</p>
-                </div>
-
-                <!-- Response Time Card -->
-                <div class="sidebar-card">
-                    <h3><span class="material-symbols-outlined">schedule</span> Response Time</h3>
-                    <p>We strive to respond to all inquiries promptly. Our typical response window is:</p>
-                    <p style="font-weight: 700; color: var(--text-main); font-size: 1.1rem; margin-top: 0.5rem;">1–2 Business Days</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Actual response times may vary during weekends or holidays.</p>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- What We Can Help With Section -->
-        <section class="content-card" style="margin-top: 2rem;">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">help_center</span></div>
-                <h2>What We Can Help With</h2>
-            </div>
-            <p>Prasun Tools provides assistance across a broad spectrum of platform activities:</p>
-            
-            <div class="help-grid">
-                <div class="help-item">
-                    <div class="help-icon"><span class="material-symbols-outlined">support_agent</span></div>
-                    <div class="help-content">
-                        <h4>Technical Support</h4>
-                        <p>Assistance regarding browser tool behavior, conversion output, or formatting issues.</p>
-                    </div>
-                </div>
-
-                <div class="help-item">
-                    <div class="help-icon"><span class="material-symbols-outlined">bug_report</span></div>
-                    <div class="help-content">
-                        <h4>Bug Reports</h4>
-                        <p>Report calculation discrepancies, visual rendering errors, or broken scripts.</p>
-                    </div>
-                </div>
-
-                <div class="help-item">
-                    <div class="help-icon"><span class="material-symbols-outlined">lightbulb</span></div>
-                    <div class="help-content">
-                        <h4>Feature Requests</h4>
-                        <p>Suggest new capabilities, calculators, or productivity utilities to add to the suite.</p>
-                    </div>
-                </div>
-
-                <div class="help-item">
-                    <div class="help-icon"><span class="material-symbols-outlined">engineering</span></div>
-                    <div class="help-content">
-                        <h4>Engineering Tool Suggestions</h4>
-                        <p>Propose electrical, solar PV, mechanical, or scientific formula calculators.</p>
-                    </div>
-                </div>
-
-                <div class="help-item">
-                    <div class="help-icon"><span class="material-symbols-outlined">handshake</span></div>
-                    <div class="help-content">
-                        <h4>Business Partnerships</h4>
-                        <p>Explore collaboration opportunities, sponsorships, or digital product integrations.</p>
-                    </div>
-                </div>
-
-                <div class="help-item">
-                    <div class="help-icon"><span class="material-symbols-outlined">forum</span></div>
-                    <div class="help-content">
-                        <h4>General Feedback</h4>
-                        <p>Share your thoughts on design, usability, or how we can make Prasun Tools even better.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="content-card" style="margin-top: 2rem;">
-            <div class="section-header">
-                <div class="section-icon"><span class="material-symbols-outlined">quiz</span></div>
-                <h2>Frequently Asked Questions</h2>
-            </div>
-            <p>Quick answers to common questions about our platform and services.</p>
-
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> Are all tools on Prasun Tools free to use?</h4>
-                    <p>Yes! All utilities and calculators provided on this platform are completely free to use with no hidden paywalls or forced registrations.</p>
-                </div>
-                <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> Do you save data entered into the calculators?</h4>
-                    <p>No. Most calculations and text manipulations are performed entirely client-side within your browser to ensure maximum privacy and data security.</p>
-                </div>
-                <div class="faq-item">
-                    <h4><span class="material-symbols-outlined">help</span> How can I suggest a new engineering calculator?</h4>
-                    <p>You can use the contact form above and select "Feature Request" or "Engineering Tool Suggestions" as your inquiry category.</p>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="privacy-badge">
-                <span class="material-symbols-outlined">verified_user</span>
-                <span>Privacy-First Online Utilities</span>
-            </div>
-            <nav class="footer-nav">
-                <a href="/">Home</a>
-                <a href="/privacy-policy.html">Privacy Policy</a>
-                <a href="/terms.html">Terms of Service</a>
-                <a href="/contact.html">Contact Us</a>
-            </nav>
-            <p>&copy; 2026 Prasun Tools. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Form Handler Script -->
+    <!-- Script Handler -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('contactForm');
@@ -948,18 +340,14 @@
                 form.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
-                    // Reset message displays
                     formSuccess.style.display = 'none';
                     formError.style.display = 'none';
 
-                    // Validate HTML5 form constraints
                     if (!form.checkValidity()) {
                         formError.style.display = 'block';
-                        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         return;
                     }
 
-                    // Activate loading spinner state
                     submitBtn.disabled = true;
                     btnText.textContent = 'Sending...';
                     btnSpinner.style.display = 'block';
@@ -971,32 +359,25 @@
                         const response = await fetch(form.action, {
                             method: 'POST',
                             body: formData,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
+                            headers: { 'Accept': 'application/json' }
                         });
 
                         if (response.ok) {
                             formSuccess.style.display = 'block';
                             form.reset();
-                            formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         } else {
                             formError.style.display = 'block';
-                            formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         }
                     } catch (error) {
-                        // Fallback handling for static previews/placeholders
                         if (form.action.includes('your-form-endpoint')) {
                             setTimeout(() => {
                                 formSuccess.style.display = 'block';
                                 form.reset();
-                                formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                                 resetState();
-                            }, 1000);
+                            }, 800);
                             return;
                         }
                         formError.style.display = 'block';
-                        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     } finally {
                         if (!form.action.includes('your-form-endpoint')) {
                             resetState();
