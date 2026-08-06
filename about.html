@@ -4,78 +4,673 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us — Prasun Tools</title>
-    <meta name="description" content="Learn more about Prasun Tools — a collection of fast, free, and privacy-friendly utilities built for developers, engineers, and professionals.">
+    <meta name="description" content="Learn about Prasun Tools, an independent collection of fast, free, and privacy-friendly online tools, engineering calculators, developer utilities, and web apps.">
+    <meta name="keywords" content="online tools, free tools, engineering calculators, developer tools, PDF tools, image tools, text utilities, privacy-friendly tools, web utilities, productivity tools">
+    <link rel="canonical" href="https://tools.prasunbarua.com/about.html">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:title" content="About Us — Prasun Tools">
+    <meta property="og:description" content="Discover how Prasun Tools delivers fast, free, and privacy-friendly online tools and engineering calculators for professionals and developers.">
+    <meta property="og:url" content="https://tools.prasunbarua.com/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Prasun Tools">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us — Prasun Tools">
+    <meta name="twitter:description" content="Explore Prasun Tools: Fast, free, and privacy-friendly online utilities built for developers, engineers, and everyday workflows.">
+
+    <!-- Material Symbols & Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Theme Initializer Script to prevent flash -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
+
+    <!-- External & Embedded Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-light: rgba(59, 130, 246, 0.08);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #090d16;
+            --card-bg: #111827;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-light: rgba(59, 130, 246, 0.15);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .site-header {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            background-color: var(--card-bg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .logo span.material-symbols-outlined {
+            color: var(--accent);
+            font-size: 28px;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .btn-home:hover {
+            border-color: var(--accent);
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .about-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background-color: var(--accent-light);
+            color: var(--accent);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .about-hero h1 {
+            font-size: clamp(2.25rem, 4vw, 3.25rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .about-hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Content Blocks */
+        .content-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .content-section h2 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .content-section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 1.25rem;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Mission comparison highlights */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .mission-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+        }
+
+        .mission-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .mission-card.negative h3 span {
+            color: #ef4444;
+        }
+
+        .mission-card.positive h3 span {
+            color: #10b981;
+        }
+
+        .mission-card p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Grid for What We Build & Why Choose */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-icon-wrapper {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background-color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Pillars & Commitment List */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .pillar-item {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .pillar-item span {
+            color: var(--accent);
+        }
+
+        /* Call to Action Box inside section */
+        .cta-box {
+            background: linear-gradient(135deg, var(--accent-light), transparent);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+            font-size: 1.35rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .privacy-badge span {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                padding: 2rem 1rem;
+            }
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <!-- JSON-LD Structured Data for WebSite and Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://tools.prasunbarua.com/#website",
+          "url": "https://tools.prasunbarua.com/",
+          "name": "Prasun Tools",
+          "description": "Fast, free, and privacy-friendly online utilities and engineering calculators.",
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tools.prasunbarua.com/#organization",
+          "name": "Prasun Tools",
+          "url": "https://tools.prasunbarua.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://tools.prasunbarua.com/assets/images/logo.png"
+          },
+          "sameAs": []
+        },
+        {
+          "@type": "AboutPage",
+          "@id": "https://tools.prasunbarua.com/about.html#webpage",
+          "url": "https://tools.prasunbarua.com/about.html",
+          "name": "About Us — Prasun Tools",
+          "isPartOf": {
+            "@id": "https://tools.prasunbarua.com/#website"
+          },
+          "description": "Learn about Prasun Tools, an independent collection of fast, free, and privacy-friendly online tools and engineering calculators."
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
+
     <!-- Header -->
     <header class="site-header">
-        <div class="container header-content">
+        <div class="header-content">
             <a href="/" class="logo">
                 <span class="material-symbols-outlined">bolt</span>
                 <span>Prasun Tools</span>
             </a>
-            <a href="/" class="btn-secondary" style="text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 14px;">← Back to Home</a>
+            <a href="/" class="btn-home">
+                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+                <span>Home</span>
+            </a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container" style="max-width: 850px; margin: 60px auto; padding: 0 20px;">
-        <div class="content-card" style="background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e2e8f0); border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-            <h1 style="font-size: 2.5rem; margin-bottom: 15px; font-weight: 800;">About Prasun Tools</h1>
-            <p style="font-size: 1.1rem; color: var(--text-muted, #64748b); line-height: 1.7; margin-bottom: 30px;">
-                Welcome to <strong>Prasun Tools</strong>, your destination for fast, free, and privacy-friendly online utilities designed for developers, engineers, students, and digital professionals.
-            </p>
+    <main class="about-container">
+        
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="badge">
+                <span class="material-symbols-outlined" style="font-size: 16px;">verified</span>
+                About Our Platform
+            </div>
+            <h1>Fast, Free & Privacy-Friendly Online Tools</h1>
+            <p>Prasun Tools is a growing collection of high-quality online utilities designed to streamline everyday tasks and professional workflows for developers, engineers, students, and digital creators.</p>
+        </section>
 
-            <hr style="border: none; border-top: 1px solid var(--border-color, #e2e8f0); margin: 30px 0;">
+        <!-- Who We Are -->
+        <section class="content-section">
+            <h2>Who We Are</h2>
+            <p>Prasun Tools operates as an independent web platform dedicated to delivering carefully engineered online utilities. Designed from the ground up to solve friction in digital workflows, our collection serves a broad global audience ranging from software developers and electrical engineers to students and everyday computer users.</p>
+            <p>We believe that high-performance digital tools should be accessible to everyone without barriers. By focusing on speed, uncluttered user experience, and robust reliability, we ensure that every utility on the platform performs dependably when you need it most.</p>
+        </section>
 
-            <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Our Mission</h2>
-            <p style="line-height: 1.7; margin-bottom: 25px; color: var(--text-main, #334155);">
-                In a world where many online tools require server uploads and complex registration steps, Prasun Tools takes a different approach. Our core mission is to provide lightning-fast web utilities that run <strong>entirely client-side</strong> inside your browser. This means your data stays strictly on your device, ensuring maximum privacy and instant execution.
-            </p>
+        <!-- Our Mission -->
+        <section class="content-section">
+            <h2>Our Mission</h2>
+            <p>Navigating the web for quick utilities often leads to frustrating experiences. Traditional web tool portals frequently fall short due to structural industry pain points.</p>
+            
+            <div class="mission-grid">
+                <div class="mission-card negative">
+                    <h3><span class="material-symbols-outlined">cancel</span> Common Web Obstacles</h3>
+                    <p>Websites cluttered with aggressive advertisements, mandatory registration walls, mandatory server file uploads, and sluggish page loads.</p>
+                </div>
+                <div class="mission-card positive">
+                    <h3><span class="mission-card-icon material-symbols-outlined">check_circle</span> The Prasun Tools Approach</h3>
+                    <p>Lightweight, instant-loading browser utilities that prioritize absolute user privacy, transparent client-side execution, and frictionless usability.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem;">Our mission is to eliminate digital clutter by providing focused, efficient web applications that respect your time and protect your data.</p>
+        </section>
 
-            <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Why Choose Us?</h2>
-            <ul style="list-style: none; padding: 0; display: grid; gap: 15px; margin-bottom: 30px;">
-                <li style="display: flex; gap: 12px; align-items: flex-start;">
-                    <span class="material-symbols-outlined" style="color: var(--accent, #3b82f6);">verified_user</span>
-                    <div><strong>Privacy-First:</strong> Processing happens locally in your browser. We never track or store your sensitive input data on our servers.</div>
-                </li>
-                <li style="display: flex; gap: 12px; align-items: flex-start;">
-                    <span class="material-symbols-outlined" style="color: var(--accent, #3b82f6);">speed</span>
-                    <div><strong>Built for Speed:</strong> Optimized lightweight code ensures tools load instantaneously without bloat.</div>
-                </li>
-                <li style="display: flex; gap: 12px; align-items: flex-start;">
-                    <span class="material-symbols-outlined" style="color: var(--accent, #3b82f6);">card_giftcard</span>
-                    <div><strong>Completely Free:</strong> All calculators and utilities are 100% free to use with zero hidden subscriptions.</div>
-                </li>
-            </ul>
+        <!-- What We Build -->
+        <section class="content-section">
+            <h2>What We Build</h2>
+            <p>Our platform spans a diverse array of categories, ensuring you have the right utility on hand for technical computations or routine digital tasks.</p>
+            
+            <div class="grid-cards">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">architecture</span></div>
+                    <h3>Engineering</h3>
+                    <p>Calculators for structural, mechanical, and technical formulas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">solar_power</span></div>
+                    <h3>Solar PV</h3>
+                    <p>Photovoltaic system sizing and clean energy estimators.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">bolt</span></div>
+                    <h3>Electrical</h3>
+                    <p>Ohm's law, power equations, and circuit calculators.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">picture_as_pdf</span></div>
+                    <h3>PDF Tools</h3>
+                    <p>Merge, split, compress, and convert documents safely.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">image</span></div>
+                    <h3>Image Tools</h3>
+                    <p>Resize, crop, optimize, and convert graphic formats locally.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">text_snippet</span></div>
+                    <h3>Text Utilities</h3>
+                    <p>Case converters, word counters, diff checks, and formatters.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">code</span></div>
+                    <h3>Developer Tools</h3>
+                    <p>JSON formatters, encoders, hashes, and generators.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">payments</span></div>
+                    <h3>Finance</h3>
+                    <p>Loan, interest, tax, and investment planning calculators.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">science</span></div>
+                    <h3>Science</h3>
+                    <p>Physics, chemistry, and advanced mathematical formulas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">task_alt</span></div>
+                    <h3>Productivity</h3>
+                    <p>Timers, formatters, planners, and efficiency tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">calculate</span></div>
+                    <h3>Unit Conversion</h3>
+                    <p>Metric, imperial, energy, and physical unit matrices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">update</span></div>
+                    <h3>More Coming Soon</h3>
+                    <p>Constantly expanding suite of specialized web utilities.</p>
+                </div>
+            </div>
+        </section>
 
-            <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Get in Touch</h2>
-            <p style="line-height: 1.7;">Have a suggestion for a new tool or found a bug? Feel free to reach out via our <a href="/contact.html" style="color: var(--accent, #3b82f6); text-decoration: none; font-weight: 600;">Contact Page</a>.</p>
-        </div>
+        <!-- Why Choose Prasun Tools -->
+        <section class="content-section">
+            <h2>Why Choose Prasun Tools</h2>
+            <p>Every utility built on our platform adheres to strict design and engineering benchmarks to deliver an optimal experience.</p>
+            
+            <div class="grid-cards">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">shield</span></div>
+                    <h3>Privacy First</h3>
+                    <p>Client-side processing ensures your sensitive data stays on your machine.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">speed</span></div>
+                    <h3>Fast Performance</h3>
+                    <p>Optimized lightweight code guarantees instantaneous loading.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">desktop_windows</span></div>
+                    <h3>Clean Interface</h3>
+                    <p>Distraction-free, modern UI built for absolute focus and usability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">no_accounts</span></div>
+                    <h3>No Registration</h3>
+                    <p>Instant access to every tool without creating accounts or sign-ups.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">devices</span></div>
+                    <h3>Cross-Platform</h3>
+                    <p>Fully compatible across major browsers and operating systems.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">smartphone</span></div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Responsive grid layouts tailored for phones, tablets, and desktops.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">sync</span></div>
+                    <h3>Regular Updates</h3>
+                    <p>Continuously refreshed with new utilities and code improvements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><span class="material-symbols-outlined">verified</span></div>
+                    <h3>Reliable Results</h3>
+                    <p>Precise mathematical and logical algorithms for dependable output.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Commitment -->
+        <section class="content-section">
+            <h2>Our Commitment</h2>
+            <p>We hold our web utilities to rigorous professional standards. Every tool launched on Prasun Tools is engineered around six foundational pillars:</p>
+            
+            <div class="pillars-grid">
+                <div class="pillar-item"><span class="material-symbols-outlined">check</span> Accuracy</div>
+                <div class="pillar-item"><span class="material-symbols-outlined">check</span> Performance</div>
+                <div class="pillar-item"><span class="material-symbols-outlined">check</span> Simplicity</div>
+                <div class="pillar-item"><span class="material-symbols-outlined">check</span> Accessibility</div>
+                <div class="pillar-item"><span class="material-symbols-outlined">check</span> Security</div>
+                <div class="pillar-item"><span class="material-symbols-outlined">check</span> Consistency</div>
+            </div>
+            <p style="margin-top: 1.5rem;">By adhering to these principles, we ensure that your digital workspace remains smooth, dependable, and efficient.</p>
+        </section>
+
+        <!-- Continuous Improvement -->
+        <section class="content-section">
+            <h2>Continuous Improvement</h2>
+            <p>A great utility platform never stops evolving. New tools, performance upgrades, and accessibility enhancements are rolled out regularly. Our roadmap is shaped directly by user feedback, industry best practices, modern web standards, and advanced front-end performance optimization techniques.</p>
+        </section>
+
+        <!-- Get in Touch -->
+        <section class="content-section">
+            <h2>Get in Touch</h2>
+            <p>Have a suggestion for a new utility, spotted a bug, or want to share feedback on how we can improve your experience? We value community input and look forward to hearing from you.</p>
+            
+            <div class="cta-box">
+                <h3>Ready to share your feedback?</h3>
+                <p style="margin: 0.5rem 0 0 0; color: var(--text-muted);">Send us your feature requests, bug reports, or general inquiries.</p>
+                <a href="/contact.html" class="btn-primary">
+                    <span class="material-symbols-outlined">mail</span>
+                    <span>Visit Contact Page</span>
+                </a>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="container footer-content">
+        <div class="footer-content">
             <p class="privacy-badge">
                 <span class="material-symbols-outlined">lock</span> 100% Privacy Friendly. All calculations run locally in your browser.
             </p>
-            <p class="footer-nav" style="margin: 15px 0; font-size: 14px;">
-                <a href="/about.html">About Us</a> | 
-                <a href="/privacy-policy.html">Privacy Policy</a> | 
-                <a href="/terms.html">Terms & Conditions</a> | 
+            <nav class="footer-nav">
+                <a href="/about.html">About Us</a>
+                <a href="/privacy-policy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms & Conditions</a>
                 <a href="/contact.html">Contact Us</a>
-            </p>
+            </nav>
             <p>&copy; 2026 Prasun Barua. All rights reserved.</p>
         </div>
     </footer>
+
 </body>
 </html>
