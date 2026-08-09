@@ -557,12 +557,12 @@
                     const payload = {
                         name: document.getElementById('fullName').value,
                         email: document.getElementById('email').value,
+                        siteName: "Prasun Tools",
                         message: `Category: ${document.getElementById('category').value}\nSubject: ${document.getElementById('subject').value}\n\n${document.getElementById('message').value}`
                     };
 
                     try {
-                        // Replace with your actual deployed Cloudflare Worker URL
-                        const workerUrl = 'https://YOUR_CLOUDFLARE_WORKER_URL.workers.dev';
+                        const workerUrl = 'https://multi-site-contact-backend.prasun301.workers.dev';
 
                         const response = await fetch(workerUrl, {
                             method: 'POST',
