@@ -442,7 +442,10 @@
             </div>
 
             <!-- Contact Form -->
-            <form id="contactForm" method="POST" action="https://formspree.io/f/your-form-endpoint" novalidate>
+            <form id="contactForm" novalidate>
+                <!-- Hidden Spam Protection Honeypot -->
+                <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off" />
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fullName">Full Name <span style="color: var(--error-text);">*</span></label>
@@ -523,7 +526,7 @@
             updateThemeIcon(newTheme);
         });
 
-        // Form Handling Logic
+        // Cloudflare Worker / Resend Form Handling Logic
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('contactForm');
             const submitBtn = document.getElementById('submitBtn');
@@ -550,35 +553,36 @@
                     btnSpinner.style.display = 'block';
                     btnIcon.style.display = 'none';
 
-                    const formData = new FormData(form);
+                    // Construct payload for Cloudflare Worker & Resend
+                    const payload = {
+                        name: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        message: `Category: ${document.getElementById('category').value}\nSubject: ${document.getElementById('subject').value}\n\n${document.getElementById('message').value}`
+                    };
 
                     try {
-                        const response = await fetch(form.action, {
+                        // Replace with your actual deployed Cloudflare Worker URL
+                        const workerUrl = 'https://YOUR_CLOUDFLARE_WORKER_URL.workers.dev';
+
+                        const response = await fetch(workerUrl, {
                             method: 'POST',
-                            body: formData,
-                            headers: { 'Accept': 'application/json' }
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
                         });
 
-                        if (response.ok) {
+                        const result = await response.json();
+
+                        if (response.ok && result.success) {
                             formSuccess.style.display = 'block';
                             form.reset();
                         } else {
-                            formError.style.display = 'block';
+                            throw new Error(result.error || 'Submission failed');
                         }
                     } catch (error) {
-                        if (form.action.includes('your-form-endpoint')) {
-                            setTimeout(() => {
-                                formSuccess.style.display = 'block';
-                                form.reset();
-                                resetState();
-                            }, 800);
-                            return;
-                        }
+                        formError.textContent = 'Failed to send message. Please email directly at contact@prasunbarua.com';
                         formError.style.display = 'block';
                     } finally {
-                        if (!form.action.includes('your-form-endpoint')) {
-                            resetState();
-                        }
+                        resetState();
                     }
                 });
             }
