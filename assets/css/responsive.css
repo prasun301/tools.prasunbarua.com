@@ -1,229 +1,816 @@
 /* =========================================================
-   Responsive Design System — Prasun Tools
-   Version: 2.1 (10/10 Modern UI Production Grade)
+   PRASUN TOOLS — RESPONSIVE DESIGN SYSTEM
+   Version: 3.0
+   Production Responsive Layer
+   Mobile-first refinements without changing desktop design
 ========================================================= */
 
-/* ==========================
-   Large Tablets & Below (≤ 1024px)
-========================== */
-@media (max-width: 1024px) {
+
+/* =========================================================
+   01. LARGE TABLETS / SMALL DESKTOP
+   ≤ 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
     .container {
         max-width: 100%;
-        padding: 0 var(--space-4);
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
-    .hero-section {
-        padding: 3.5rem 0 2rem;
-    }
-
-    .hero-section h1 {
-        font-size: clamp(2rem, 4vw, 2.75rem);
+    .power-calculator-page .tool-page-container {
+        max-width: 100%;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     .grid {
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-        gap: var(--space-3);
+        grid-template-columns:
+            repeat(auto-fit, minmax(250px, 1fr));
     }
+
+    .power-calculator-page .input-row-card {
+        grid-template-columns:
+            minmax(200px, 1fr)
+            minmax(220px, 1fr);
+    }
+
 }
 
 
-/* ==========================
-   Tablets & Below (≤ 768px)
-========================== */
+/* =========================================================
+   02. TABLETS
+   ≤ 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* ---------- Header ---------- */
+
+    .header-inner {
+        gap: 1.25rem;
+    }
+
+    .nav-links {
+        gap: 1.1rem;
+    }
+
+    /* ---------- Main ---------- */
+
+    main {
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
+
+    .section,
+    .hero-section {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero-section h1,
+    .page-title {
+        font-size: clamp(2rem, 5vw, 2.75rem);
+    }
+
+    .hero-section p {
+        max-width: 680px;
+    }
+
+    /* ---------- Generic grids ---------- */
+
+    .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    /* ---------- Tool cards ---------- */
+
+    .tool-card,
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    /* ---------- Power Calculator ---------- */
+
+    .power-calculator-page .tool-page-header {
+        margin-bottom: 2rem;
+    }
+
+    .power-calculator-page .calculator-card {
+        padding: 1.75rem;
+    }
+
+}
+
+
+/* =========================================================
+   03. TABLETS / LARGE PHONES
+   ≤ 768px
+========================================================= */
+
 @media (max-width: 768px) {
+
+    /* =====================================================
+       GLOBAL CONTAINER
+    ===================================================== */
+
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
     .site-header {
         padding: 0.75rem 0;
     }
 
     .header-inner {
         flex-direction: column;
-        gap: var(--space-3);
+        justify-content: center;
+        gap: 0.75rem;
         text-align: center;
+    }
+
+    .logo {
+        font-size: 1.15rem;
     }
 
     .nav-links {
-        flex-wrap: wrap;
+        width: 100%;
         justify-content: center;
-        gap: var(--space-3);
+        flex-wrap: wrap;
+        gap: 0.6rem 1rem;
     }
 
+    .nav-links a {
+        font-size: 0.875rem;
+        padding: 0.3rem 0;
+    }
+
+
+    /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+    main {
+        padding-top: 1.5rem;
+        padding-bottom: 3rem;
+    }
+
+    .section,
     .hero-section {
-        padding: 3rem 0 1.5rem;
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .hero-section {
         text-align: center;
     }
 
-    .hero-section h1 {
-        font-size: clamp(1.75rem, 6vw, 2.25rem);
+    .hero-section h1,
+    .page-title {
+        font-size: clamp(1.85rem, 6vw, 2.4rem);
         line-height: 1.15;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.035em;
     }
 
-    .hero-section p {
-        font-size: var(--text-base);
-        max-width: 100%;
-        margin-inline: auto;
+    .hero-section p,
+    .lead {
+        font-size: 0.95rem;
+        line-height: 1.65;
     }
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
 
     .search-container {
+        width: 100%;
         max-width: 100%;
     }
+
+    #tool-search,
+    .search-container .input {
+        min-height: 46px;
+    }
+
+
+    /* =====================================================
+       SECTION TITLES
+    ===================================================== */
 
     .section-title {
         text-align: center;
-        font-size: var(--text-2xl);
+        font-size: 1.75rem;
     }
+
+
+    /* =====================================================
+       GENERIC GRIDS
+    ===================================================== */
 
     .grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .tool-card {
-        padding: var(--space-4);
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr !important;
+    }
+
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+
+    .tool-card,
+    .feature-card {
+        padding: 1.25rem;
+        border-radius: 16px;
     }
 
     .content-card {
-        padding: var(--space-5);
-        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        border-radius: 16px;
     }
 
-    .results-grid {
-        grid-template-columns: 1fr;
-    }
+
+    /* =====================================================
+       BUTTONS
+       Do NOT force every button to full width.
+    ===================================================== */
 
     .action-buttons {
-        flex-direction: column;
-        width: 100%;
+        gap: 0.75rem;
     }
 
     .action-buttons .btn {
+        min-height: 46px;
+    }
+
+
+    /* =====================================================
+       POWER CALCULATOR
+    ===================================================== */
+
+    .power-calculator-page .tool-page-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 3rem;
+    }
+
+    .power-calculator-page .breadcrumb {
+        padding-top: 1rem;
+        padding-bottom: 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .power-calculator-page .tool-page-header {
+        margin-bottom: 1.75rem;
+    }
+
+    .power-calculator-page .tool-page-icon {
+        width: 52px;
+        height: 52px;
+        margin-bottom: 0.85rem;
+        border-radius: 13px;
+    }
+
+    .power-calculator-page .tool-page-icon .material-symbols-outlined {
+        font-size: 27px;
+    }
+
+    .power-calculator-page .tool-page-header h1 {
+        font-size: clamp(1.85rem, 7vw, 2.35rem);
+        line-height: 1.15;
+    }
+
+    .power-calculator-page .tool-page-header p {
+        font-size: 0.925rem;
+        line-height: 1.65;
+    }
+
+    .power-calculator-page .calculator-card {
+        padding: 1.25rem;
+        border-radius: 16px;
+    }
+
+    .power-calculator-page .calculator-heading {
+        margin-bottom: 1.25rem;
+    }
+
+    .power-calculator-page .calculator-heading h2 {
+        font-size: 1rem;
+    }
+
+
+    /* =====================================================
+       CALCULATOR INPUT ROWS
+    ===================================================== */
+
+    .power-calculator-page .input-row-card {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    .power-calculator-page .input-group label,
+    .power-calculator-page .select-group label {
+        font-size: 0.85rem;
+    }
+
+    .power-calculator-page .input-hint {
+        font-size: 0.72rem;
+    }
+
+
+    /* =====================================================
+       CALCULATOR INPUTS
+    ===================================================== */
+
+    .power-calculator-page .input-field-wrapper input,
+    .power-calculator-page .select-group select {
+        min-height: 46px;
+        font-size: 0.95rem;
+    }
+
+
+    /* =====================================================
+       CALCULATOR BUTTONS
+    ===================================================== */
+
+    .power-calculator-page .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
         width: 100%;
     }
+
+    .power-calculator-page .action-buttons .btn {
+        width: 100%;
+        min-height: 46px;
+    }
+
+
+    /* =====================================================
+       RESULTS
+    ===================================================== */
+
+    .power-calculator-page .results-box {
+        padding: 1.25rem;
+        border-radius: 14px;
+    }
+
+    .power-calculator-page .results-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .power-calculator-page .result-item {
+        padding: 0.95rem 1rem;
+        border-radius: 10px;
+    }
+
+    .power-calculator-page .result-value {
+        font-size: 1.2rem;
+    }
+
+
+    /* =====================================================
+       INFO / FORMULA CARD
+    ===================================================== */
+
+    .power-calculator-page .info-card {
+        padding: 1.25rem;
+        border-radius: 14px;
+    }
+
 }
 
 
-/* ==========================
-   Mobile Phones (≤ 480px)
-========================== */
-@media (max-width: 480px) {
-    .container {
-        padding: 0 var(--space-3);
-    }
+/* =========================================================
+   04. MOBILE PHONES
+   ≤ 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* ---------- Header ---------- */
 
     .site-header {
         padding: 0.65rem 0;
     }
 
-    .logo {
-        font-size: 1.15rem;
-        letter-spacing: -0.02em;
+    .header-inner {
+        gap: 0.6rem;
     }
+
+    .logo {
+        font-size: 1.08rem;
+    }
+
+    .nav-links {
+        gap: 0.4rem 0.8rem;
+    }
+
+    .nav-links a {
+        font-size: 0.82rem;
+    }
+
+
+    /* ---------- Main ---------- */
+
+    main {
+        padding-top: 1rem;
+        padding-bottom: 2.5rem;
+    }
+
+
+    /* ---------- Hero ---------- */
 
     .hero-section {
-        padding: 2.25rem 0 1rem;
+        padding: 2rem 0 1.5rem;
     }
 
-    .hero-section h1 {
-        font-size: 1.75rem;
+    .hero-section h1,
+    .page-title {
+        font-size: 1.8rem;
     }
 
     .hero-section p {
-        font-size: 0.925rem;
-        line-height: 1.6;
+        font-size: 0.9rem;
     }
 
-    #tool-search,
-    .search-container .input {
-        font-size: 0.925rem;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
-        border-radius: var(--radius-pill);
-    }
 
-    .search-icon {
-        left: 0.9rem;
-    }
-
-    .section-title {
-        font-size: 1.35rem;
-    }
-
-    .tool-card {
-        padding: 1.2rem;
-        border-radius: var(--radius-lg);
-    }
-
-    .tool-card h3 {
-        font-size: 1.05rem;
-    }
-
-    .tool-card p {
-        font-size: 0.875rem;
-        margin-bottom: var(--space-3);
-    }
-
-    .card-tag {
-        font-size: 0.68rem;
-        padding: 0.2rem 0.6rem;
-    }
+    /* ---------- Content cards ---------- */
 
     .content-card {
         padding: 1.25rem;
-        border-radius: var(--radius-md);
     }
 
     .content-card h1 {
-        font-size: 1.75rem;
+        font-size: 1.65rem;
     }
 
     .content-card h2 {
         font-size: 1.25rem;
     }
 
-    /* Enforce touch-friendly tap targets (minimum 44px height) */
-    .btn,
-    .btn-primary,
-    .primary-btn,
-    .secondary-btn,
-    .btn-secondary,
-    .btn-outline {
-        width: 100%;
-        justify-content: center;
-        min-height: 44px;
-        padding: 0.75rem 1.25rem;
+
+    /* ---------- Tool cards ---------- */
+
+    .tool-card,
+    .feature-card {
+        padding: 1.15rem;
+    }
+
+    .tool-card h3 {
+        font-size: 1rem;
+    }
+
+    .tool-card p {
+        font-size: 0.85rem;
+    }
+
+
+    /* ---------- Footer ---------- */
+
+    .site-footer {
+        padding: 2.5rem 0;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
     }
 
     .footer-nav {
         display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem 0.75rem;
     }
 
     .footer-nav .separator {
-        display: none;
+        display: inline;
     }
+
+
+    /* ---------- Calculator ---------- */
+
+    .power-calculator-page .tool-page-container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .power-calculator-page .breadcrumb {
+        gap: 0.25rem;
+        font-size: 0.8rem;
+        padding-bottom: 1.25rem;
+    }
+
+    .power-calculator-page .tool-page-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .power-calculator-page .tool-page-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .power-calculator-page .tool-page-icon .material-symbols-outlined {
+        font-size: 25px;
+    }
+
+    .power-calculator-page .tool-page-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .power-calculator-page .tool-page-header p {
+        font-size: 0.875rem;
+    }
+
+    .power-calculator-page .calculator-card {
+        padding: 1rem;
+        border-radius: 14px;
+    }
+
+    .power-calculator-page .calculator-heading {
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .power-calculator-page .calculator-heading .material-symbols-outlined {
+        font-size: 21px;
+    }
+
+    .power-calculator-page .calculator-heading h2 {
+        font-size: 0.95rem;
+    }
+
+    .power-calculator-page .form-section-group {
+        gap: 0.8rem;
+    }
+
+    .power-calculator-page .section-title-tag {
+        font-size: 0.72rem;
+    }
+
+    .power-calculator-page .input-row-card {
+        padding: 0.9rem;
+    }
+
+    .power-calculator-page .input-field-wrapper input,
+    .power-calculator-page .select-group select {
+        min-height: 45px;
+        padding-top: 0.65rem;
+        padding-bottom: 0.65rem;
+    }
+
+    .power-calculator-page .input-field-wrapper input {
+        padding-right: 4.2rem;
+    }
+
+    .power-calculator-page .input-unit {
+        right: 0.55rem;
+        font-size: 0.65rem;
+    }
+
+    .power-calculator-page .results-box {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .power-calculator-page .results-header {
+        margin-bottom: 0.85rem;
+    }
+
+    .power-calculator-page .results-header h3 {
+        font-size: 0.78rem;
+    }
+
+    .power-calculator-page .result-item {
+        padding: 0.85rem;
+    }
+
+    .power-calculator-page .result-label {
+        font-size: 0.66rem;
+    }
+
+    .power-calculator-page .result-value {
+        font-size: 1.15rem;
+    }
+
+    .power-calculator-page .info-card {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .power-calculator-page .formula-list li {
+        padding: 0.8rem 0;
+    }
+
 }
 
 
-/* ==========================
-   Very Small Devices (≤ 360px)
-========================== */
-@media (max-width: 360px) {
-    .hero-section h1 {
-        font-size: 1.5rem;
-    }
+/* =========================================================
+   05. VERY SMALL PHONES
+   ≤ 380px
+========================================================= */
 
-    .hero-section p {
-        font-size: 0.875rem;
+@media (max-width: 380px) {
+
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
     }
 
     .logo {
         font-size: 1rem;
     }
 
-    .tool-card {
-        padding: 1rem;
+    .nav-links {
+        gap: 0.3rem 0.65rem;
+    }
+
+    .nav-links a {
+        font-size: 0.78rem;
+    }
+
+    .hero-section h1,
+    .page-title {
+        font-size: 1.6rem;
+    }
+
+    .hero-section p {
+        font-size: 0.85rem;
     }
 
     .content-card {
         padding: 1rem;
     }
+
+    .tool-card,
+    .feature-card {
+        padding: 1rem;
+    }
+
+    .power-calculator-page .tool-page-container {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .power-calculator-page .calculator-card {
+        padding: 0.85rem;
+    }
+
+    .power-calculator-page .tool-page-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .power-calculator-page .input-row-card {
+        padding: 0.8rem;
+    }
+
+}
+
+
+/* =========================================================
+   06. EXTRA SMALL DEVICES
+   ≤ 320px
+========================================================= */
+
+@media (max-width: 320px) {
+
+    .nav-links {
+        gap: 0.25rem 0.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.74rem;
+    }
+
+    .hero-section h1,
+    .page-title {
+        font-size: 1.45rem;
+    }
+
+    .power-calculator-page .tool-page-header h1 {
+        font-size: 1.45rem;
+    }
+
+    .power-calculator-page .calculator-card {
+        padding: 0.75rem;
+    }
+
+    .power-calculator-page .input-row-card {
+        padding: 0.7rem;
+    }
+
+}
+
+
+/* =========================================================
+   07. LANDSCAPE PHONES
+========================================================= */
+
+@media (max-width: 768px) and (orientation: landscape) {
+
+    .hero-section {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .power-calculator-page .tool-page-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .power-calculator-page .input-row-card {
+        grid-template-columns:
+            minmax(180px, 1fr)
+            minmax(200px, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   08. TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .tool-card:hover,
+    .feature-card:hover,
+    .result-item:hover,
+    .input-row-card:hover {
+        transform: none;
+    }
+
+    .tool-card:active {
+        transform: scale(0.99);
+    }
+
+    .btn,
+    button,
+    select,
+    input {
+        min-height: 44px;
+    }
+
+}
+
+
+/* =========================================================
+   09. REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .tool-card,
+    .feature-card,
+    .result-item,
+    .input-row-card,
+    .btn,
+    .primary-btn,
+    .secondary-btn {
+        transition: none !important;
+    }
+
+}
+
+
+/* =========================================================
+   10. PRINT
+========================================================= */
+
+@media print {
+
+    .power-calculator-page .calculator-card,
+    .power-calculator-page .results-box,
+    .power-calculator-page .info-card {
+        box-shadow: none !important;
+    }
+
 }
