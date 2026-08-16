@@ -1,464 +1,191 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const systemTypeSelect = document.getElementById('system-type');
+    const calcModeSelect = document.getElementById('calc-mode');
+    const dynamicInputsContainer = document.getElementById('dynamic-inputs-container');
+    
+    const calcBtn = document.getElementById('calc-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const resultsSection = document.getElementById('results-section');
 
-    /* =========================================================
-       ELEMENTS & INITIAL SAFETY CHECK
-    ========================================================== */
-    const typeSelect = document.getElementById('powerCalcType');
-    const modeSelect = document.getElementById('powerCalcMode');
-    const inputSection = document.getElementById('powerCalcInputSection');
-    const inputsContainer = document.getElementById('powerCalcInputs');
-    const calcBtn = document.getElementById('powerCalcCalculate');
-    const resetBtn = document.getElementById('powerCalcReset');
-    const resultsSection = document.getElementById('powerCalcResult');
-    const resultGrid = document.getElementById('powerCalcResultGrid');
-    const resultHeader = document.querySelector('#powerCalcResult .results-header h3');
-    const resultIcon = document.querySelector('#powerCalcResult .results-header .material-symbols-outlined');
-    const form = document.getElementById('power-calculator-form');
+    const resLabel1 = document.getElementById('res-label-1');
+    const resVal1 = document.getElementById('res-val-1');
+    const resLabel2 = document.getElementById('res-label-2');
+    const resVal2 = document.getElementById('res-val-2');
+    const resCard2 = document.getElementById('res-card-2');
 
-    if (
-        !typeSelect ||
-        !modeSelect ||
-        !inputSection ||
-        !inputsContainer ||
-        !calcBtn ||
-        !resetBtn ||
-        !resultsSection ||
-        !resultGrid
-    ) {
-        return;
-    }
+    if (!calcBtn) return;
 
-    let notificationTimer = null;
-
-    /* =========================================================
-       FORM SUBMIT PREVENTION
-    ========================================================== */
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            calculate();
-        });
-    }
-
-    /* =========================================================
-       HELPERS
-    ========================================================== */
-    function formatNumber(value) {
-        if (!Number.isFinite(value)) return '--';
-
-        return new Intl.NumberFormat('en-US', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 3
-        }).format(value);
-    }
-
-    function setInputError(input, hasError) {
-        if (!input) return;
-        input.classList.toggle('input-error', hasError);
-        input.setAttribute('aria-invalid', hasError ? 'true' : 'false');
-    }
-
-    function clearInputErrors() {
-        inputsContainer.querySelectorAll('.input-error').forEach(input => {
-            input.classList.remove('input-error');
-            input.setAttribute('aria-invalid', 'false');
-        });
-    }
-
-    function showInputSection(show) {
-        inputSection.hidden = !show;
-        inputSection.style.display = show ? 'block' : 'none';
-    }
-
-    function hideResults() {
-        resultsSection.hidden = true;
-        resultsSection.style.display = 'none';
-    }
-
-    function showResultsSection() {
-        resultsSection.hidden = false;
-        resultsSection.style.display = 'block';
-    }
-
-    /* =========================================================
-       NOTIFICATIONS
-    ========================================================== */
-    function showNotification(message, type = 'error') {
-        if (notificationTimer) {
-            clearTimeout(notificationTimer);
-        }
-
-        const existing = document.getElementById('power-calc-alert-banner');
-        if (existing) {
-            existing.remove();
-        }
-
-        const banner = document.createElement('div');
-        banner.id = 'power-calc-alert-banner';
-        banner.className = type === 'error' ? 'error-banner' : 'success-banner';
-        banner.setAttribute('role', 'alert');
-        banner.setAttribute('aria-live', 'polite');
-
-        const icon = document.createElement('span');
-        icon.className = 'material-symbols-outlined';
-        icon.setAttribute('aria-hidden', 'true');
-        icon.textContent = type === 'error' ? 'error' : 'check_circle';
-
-        const text = document.createElement('span');
-        text.textContent = message;
-
-        banner.appendChild(icon);
-        banner.appendChild(text);
-
-        if (form) {
-            form.prepend(banner);
+    // Helper: Highlight invalid inputs
+    const setFieldError = (inputEl, isError) => {
+        if (!inputEl) return;
+        if (isError) {
+            inputEl.classList.add('input-error');
         } else {
-            inputSection.prepend(banner);
+            inputEl.classList.remove('input-error');
         }
+    };
 
-        notificationTimer = setTimeout(() => {
-            if (banner.parentNode) {
-                banner.remove();
-            }
-        }, 6000);
-    }
+    // Helper: Show notification banner matching Ohm's law format
+    const showNotification = (message, isError = true) => {
+        let existingBanner = document.getElementById('power-alert-banner');
+        if (!existingBanner) {
+            existingBanner = document.createElement('div');
+            existingBanner.id = 'power-alert-banner';
+            existingBanner.className = isError ? 'error-banner' : 'success-banner';
+            calcBtn.closest('form').prepend(existingBanner);
+            existingBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        existingBanner.innerHTML = `<span class="material-symbols-outlined" aria-hidden="true">${isError ? 'error' : 'info'}</span> ${message}`;
+        setTimeout(() => existingBanner.remove(), 6000);
+    };
 
-    /* =========================================================
-       RESULTS DISPLAY
-    ========================================================== */
-    function showResults(results, icon = 'check_circle') {
-        resultGrid.innerHTML = '';
+    // Render Dynamic Input Fields based on System & Calculation Mode
+    const renderInputs = () => {
+        const sys = systemTypeSelect.value;
+        const mode = calcModeSelect.value;
+        let html = '';
 
-        Object.entries(results).forEach(([label, value]) => {
-            const item = document.createElement('div');
-            item.className = 'result-item';
-
-            const resultLabel = document.createElement('span');
-            resultLabel.className = 'result-label';
-            resultLabel.textContent = label;
-
-            const resultValue = document.createElement('span');
-            resultValue.className = 'result-value';
-            resultValue.textContent = value;
-
-            item.appendChild(resultLabel);
-            item.appendChild(resultValue);
-            resultGrid.appendChild(item);
-        });
-
-        if (resultIcon) resultIcon.textContent = icon;
-        if (resultHeader) resultHeader.textContent = 'Calculated Results';
-
-        showResultsSection();
-
-        resultsSection.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest'
-        });
-    }
-
-    function showReadyState() {
-        resultGrid.innerHTML = `
-            <div class="result-item">
-                <span class="result-label">Status</span>
-                <span class="result-value">Ready</span>
-            </div>
-        `;
-
-        if (resultIcon) resultIcon.textContent = 'calculate';
-        if (resultHeader) resultHeader.textContent = 'Calculator Status';
-
-        hideResults();
-    }
-
-    /* =========================================================
-       INPUT CREATION
-    ========================================================== */
-    function createInput(id, label, hint, unit) {
-        return `
-            <div class="input-row-card">
-                <div class="select-group">
-                    <label for="${id}">${label}</label>
-                    <span class="input-hint">${hint}</span>
-                </div>
-                <div class="input-group">
-                    <div class="input-field-wrapper">
-                        <input
-                            type="number"
-                            id="${id}"
-                            name="${id}"
-                            placeholder="0.00"
-                            step="any"
-                            min="0"
-                            inputmode="decimal"
-                            autocomplete="off"
-                            aria-invalid="false"
-                        >
-                        <span class="input-unit">${unit}</span>
+        if (mode !== 'voltage') {
+            html += `
+                <div class="input-row-card">
+                    <div class="select-group">
+                        <label for="param-voltage">Voltage (V)</label>
+                        <span class="input-hint">Volts (V)</span>
                     </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function createPowerFactorInput() {
-        return `
-            <div class="input-row-card">
-                <div class="select-group">
-                    <label for="powerCalcPF">Power Factor</label>
-                    <span class="input-hint">Value between 0.01 and 1.00</span>
-                </div>
-                <div class="input-group">
-                    <div class="input-field-wrapper">
-                        <input
-                            type="number"
-                            id="powerCalcPF"
-                            name="powerCalcPF"
-                            placeholder="1.00"
-                            value="1"
-                            step="0.01"
-                            min="0.01"
-                            max="1"
-                            inputmode="decimal"
-                            autocomplete="off"
-                            aria-invalid="false"
-                        >
-                        <span class="input-unit">cos φ</span>
+                    <div class="input-group">
+                        <input type="number" id="param-voltage" step="any" placeholder="e.g. 230" class="input-field">
                     </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function bindLiveValidation() {
-        inputsContainer.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => setInputError(input, false));
-        });
-    }
-
-    /* =========================================================
-       UPDATE INPUTS DOM
-    ========================================================== */
-    function updateInputs() {
-        const type = typeSelect.value;
-        const mode = modeSelect.value;
-
-        inputsContainer.innerHTML = '';
-        clearInputErrors();
-        hideResults();
-        showInputSection(false);
-
-        if (!type || !mode) return;
-
-        if (mode === 'P') {
-            inputsContainer.innerHTML =
-                createInput('powerCalcVoltage', 'Voltage', 'Enter the system voltage', 'V') +
-                createInput('powerCalcCurrent', 'Current', 'Enter the electrical current', 'A');
-
-            if (type !== 'dc') {
-                inputsContainer.innerHTML += createPowerFactorInput();
-            }
-        } else if (mode === 'V') {
-            inputsContainer.innerHTML =
-                createInput('powerCalcPower', 'Power', 'Enter active power', 'W') +
-                createInput('powerCalcCurrent', 'Current', 'Enter electrical current', 'A');
-
-            if (type !== 'dc') {
-                inputsContainer.innerHTML += createPowerFactorInput();
-            }
-        } else if (mode === 'I') {
-            inputsContainer.innerHTML =
-                createInput('powerCalcPower', 'Power', 'Enter active power', 'W') +
-                createInput('powerCalcVoltage', 'Voltage', 'Enter system voltage', 'V');
-
-            if (type !== 'dc') {
-                inputsContainer.innerHTML += createPowerFactorInput();
-            }
+                </div>`;
         }
 
-        showInputSection(true);
-        bindLiveValidation();
-
-        const firstInput = inputsContainer.querySelector('input');
-        if (firstInput) firstInput.focus();
-    }
-
-    /* =========================================================
-       VALIDATION
-    ========================================================== */
-    function getPowerFactor(type) {
-        if (type === 'dc') return 1;
-
-        const pfInput = document.getElementById('powerCalcPF');
-        const pf = parseFloat(pfInput?.value);
-        const invalid = !Number.isFinite(pf) || pf <= 0 || pf > 1;
-
-        setInputError(pfInput, invalid);
-
-        return invalid ? null : pf;
-    }
-
-    function validatePositive(inputId, fieldName) {
-        const input = document.getElementById(inputId);
-        const value = parseFloat(input?.value);
-        const invalid = !Number.isFinite(value) || value <= 0;
-
-        setInputError(input, invalid);
-
-        if (invalid) {
-            showNotification(`${fieldName} must be a number greater than zero.`);
-            if (input) input.focus();
-            return null;
+        if (mode !== 'current') {
+            html += `
+                <div class="input-row-card">
+                    <div class="select-group">
+                        <label for="param-current">Current (I)</label>
+                        <span class="input-hint">Amperes (A)</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="param-current" step="any" placeholder="e.g. 10" class="input-field">
+                    </div>
+                </div>`;
         }
 
-        return value;
-    }
-
-    /* =========================================================
-       CALCULATION LOGIC
-    ========================================================== */
-    function calculatePower(type, V, I, pf) {
-        if (type === 'dc') {
-            const P = V * I;
-            return { 'Active Power (P)': `${formatNumber(P)} W` };
+        if (mode !== 'power') {
+            html += `
+                <div class="input-row-card">
+                    <div class="select-group">
+                        <label for="param-power">Power (P)</label>
+                        <span class="input-hint">Watts (W)</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="param-power" step="any" placeholder="e.g. 2300" class="input-field">
+                    </div>
+                </div>`;
         }
 
-        const multiplier = type === '3ph' ? Math.sqrt(3) : 1;
-        const P = multiplier * V * I * pf;
-        const S = multiplier * V * I;
-        const Q = Math.sqrt(Math.max(0, S * S - P * P));
-
-        return {
-            'Active Power (P)': `${formatNumber(P)} W`,
-            'Apparent Power (S)': `${formatNumber(S)} VA`,
-            'Reactive Power (Q)': `${formatNumber(Q)} VAR`
-        };
-    }
-
-    function calculateVoltage(type, P, I, pf) {
-        if (type === 'dc') {
-            return { 'Voltage (V)': `${formatNumber(P / I)} V` };
+        if (sys !== 'dc') {
+            html += `
+                <div class="input-row-card">
+                    <div class="select-group">
+                        <label for="param-pf">Power Factor (cos φ)</label>
+                        <span class="input-hint">Value between 0.1 and 1.0</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="param-pf" step="0.01" value="0.8" min="0.1" max="1.0" class="input-field">
+                    </div>
+                </div>`;
         }
 
-        const multiplier = type === '3ph' ? Math.sqrt(3) : 1;
-        const V = P / (multiplier * I * pf);
-        const S = multiplier * V * I;
+        dynamicInputsContainer.innerHTML = html;
+        if (resultsSection) resultsSection.style.display = 'none';
+    };
 
-        return {
-            [type === '3ph' ? 'Line Voltage (V)' : 'Voltage (V)']: `${formatNumber(V)} V`,
-            'Apparent Power (S)': `${formatNumber(S)} VA`
-        };
-    }
+    systemTypeSelect.addEventListener('change', renderInputs);
+    calcModeSelect.addEventListener('change', renderInputs);
+    renderInputs(); // Initial render
 
-    function calculateCurrent(type, P, V, pf) {
-        if (type === 'dc') {
-            return { 'Current (I)': `${formatNumber(P / V)} A` };
-        }
+    // Calculate Handler
+    calcBtn.addEventListener('click', () => {
+        const sys = systemTypeSelect.value;
+        const mode = calcModeSelect.value;
 
-        const multiplier = type === '3ph' ? Math.sqrt(3) : 1;
-        const I = P / (multiplier * V * pf);
-        const S = multiplier * V * I;
-
-        return {
-            [type === '3ph' ? 'Line Current (I)' : 'Current (I)']: `${formatNumber(I)} A`,
-            'Apparent Power (S)': `${formatNumber(S)} VA`
-        };
-    }
-
-    function calculate() {
-        clearInputErrors();
-
-        const type = typeSelect.value;
-        const mode = modeSelect.value;
-
-        if (!type || !mode) {
-            showNotification('Please select both system type and parameter to calculate.');
-            return;
-        }
-
-        const pf = getPowerFactor(type);
-        if (pf === null) {
-            showNotification('Power factor must be between 0.01 and 1.00.');
-            const pfInput = document.getElementById('powerCalcPF');
-            if (pfInput) pfInput.focus();
-            return;
-        }
-
-        let results = null;
-
-        if (mode === 'P') {
-            const V = validatePositive('powerCalcVoltage', 'Voltage');
-            if (V === null) return;
-            const I = validatePositive('powerCalcCurrent', 'Current');
-            if (I === null) return;
-
-            results = calculatePower(type, V, I, pf);
-        } else if (mode === 'V') {
-            const P = validatePositive('powerCalcPower', 'Power');
-            if (P === null) return;
-            const I = validatePositive('powerCalcCurrent', 'Current');
-            if (I === null) return;
-
-            results = calculateVoltage(type, P, I, pf);
-        } else if (mode === 'I') {
-            const P = validatePositive('powerCalcPower', 'Power');
-            if (P === null) return;
-            const V = validatePositive('powerCalcVoltage', 'Voltage');
-            if (V === null) return;
-
-            results = calculateCurrent(type, P, V, pf);
-        }
-
-        if (results) {
-            showResults(results);
-        }
-    }
-
-    function resetCalculator() {
-        typeSelect.value = '';
-        modeSelect.value = '';
-        inputsContainer.innerHTML = '';
-
-        showInputSection(false);
-        clearInputErrors();
-
-        const banner = document.getElementById('power-calc-alert-banner');
+        const banner = document.getElementById('power-alert-banner');
         if (banner) banner.remove();
 
-        showReadyState();
-        typeSelect.focus();
-    }
+        const vInput = document.getElementById('param-voltage');
+        const iInput = document.getElementById('param-current');
+        const pInput = document.getElementById('param-power');
+        const pfInput = document.getElementById('param-pf');
 
-    /* =========================================================
-       EVENT BINDINGS
-    ========================================================== */
-    typeSelect.addEventListener('change', () => {
-        modeSelect.value = '';
-        inputsContainer.innerHTML = '';
-        showInputSection(false);
-        hideResults();
-        clearInputErrors();
-    });
+        [vInput, iInput, pInput, pfInput].forEach(el => setFieldError(el, false));
 
-    modeSelect.addEventListener('change', updateInputs);
-    calcBtn.addEventListener('click', calculate);
-    resetBtn.addEventListener('click', resetCalculator);
+        const V = vInput ? parseFloat(vInput.value) : null;
+        const I = iInput ? parseFloat(iInput.value) : null;
+        const P = pInput ? parseFloat(pInput.value) : null;
+        const PF = pfInput ? parseFloat(pfInput.value) : 1.0;
 
-    inputsContainer.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            calculate();
+        // Validation Checks
+        let hasError = false;
+
+        if (vInput && (isNaN(V) || V <= 0)) { setFieldError(vInput, true); hasError = true; }
+        if (iInput && (isNaN(I) || I <= 0)) { setFieldError(iInput, true); hasError = true; }
+        if (pInput && (isNaN(P) || P <= 0)) { setFieldError(pInput, true); hasError = true; }
+        if (sys !== 'dc' && (isNaN(PF) || PF <= 0 || PF > 1)) { setFieldError(pfInput, true); hasError = true; }
+
+        if (hasError) {
+            showNotification('Please enter valid positive numbers for all required parameters.');
+            return;
+        }
+
+        try {
+            const multiplier = sys === '3ph' ? Math.sqrt(3) : 1.0;
+            const effectivePF = sys === 'dc' ? 1.0 : PF;
+
+            if (mode === 'power') {
+                const calculatedP = V * I * multiplier * effectivePF;
+                const apparentPower = V * I * multiplier;
+
+                resLabel1.textContent = 'Active Power (P)';
+                resVal1.textContent = `${calculatedP.toFixed(2)} W (${(calculatedP / 1000).toFixed(3)} kW)`;
+
+                if (sys !== 'dc') {
+                    resCard2.style.display = 'block';
+                    resLabel2.textContent = 'Apparent Power (S)';
+                    resVal2.textContent = `${apparentPower.toFixed(2)} VA (${(apparentPower / 1000).toFixed(3)} kVA)`;
+                } else {
+                    resCard2.style.display = 'none';
+                }
+
+            } else if (mode === 'voltage') {
+                const calculatedV = P / (I * multiplier * effectivePF);
+
+                resLabel1.textContent = 'Voltage (V)';
+                resVal1.textContent = `${calculatedV.toFixed(2)} V`;
+                resCard2.style.display = 'none';
+
+            } else if (mode === 'current') {
+                const calculatedI = P / (V * multiplier * effectivePF);
+
+                resLabel1.textContent = 'Current (I)';
+                resVal1.textContent = `${calculatedI.toFixed(2)} A`;
+                resCard2.style.display = 'none';
+            }
+
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        } catch (err) {
+            showNotification('Error performing calculation. Check input values.');
         }
     });
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            const banner = document.getElementById('power-calc-alert-banner');
-            if (banner) banner.remove();
-        }
+    // Reset Handler
+    resetBtn.addEventListener('click', () => {
+        renderInputs();
+        const banner = document.getElementById('power-alert-banner');
+        if (banner) banner.remove();
     });
-
-    showReadyState();
 });
