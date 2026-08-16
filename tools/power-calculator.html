@@ -1,197 +1,357 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
-<div class="power-calc-container">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-2
+    <meta name="description"
+          content="Free electrical power calculator for DC, single-phase AC, and three-phase AC systems. Calculate power, voltage, and current using standard electrical formulas.">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="author"
+          content="Prasun Barua">
 
-3
+    <meta name="theme-color"
+          content="#2563eb">
 
-​
+    <title>Power Calculator | Electrical Engineering Calculator</title>
 
-4
+    <!-- Google Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<style>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0"
+          rel="stylesheet">
 
-5
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/tools-pages.css">
+</head>
 
-/* ================================================
+<body>
 
-6
+    <!-- Your existing site header should remain here -->
 
-   1. DEFAULT LIGHT MODE CONFIGURATION
+    <main class="page-container">
 
-7
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
 
-================================================ */
+            <span class="material-symbols-outlined"
+                  aria-hidden="true">
+                chevron_right
+            </span>
 
-8
+            <span>Power Calculator</span>
+        </nav>
 
-.power-calc-container {
 
-9
+        <!-- Page Header -->
+        <header class="tool-page-header">
 
-    --pwr-card: #ffffff;
+            <div class="tool-page-icon"
+                 aria-hidden="true">
 
-10
+                <span class="material-symbols-outlined">
+                    electrical_services
+                </span>
 
-    --pwr-text: #0f172a;
+            </div>
 
-11
+            <div>
 
-    --pwr-muted: #64748b;
+                <h1>
+                    Power Calculator
+                </h1>
 
-12
+                <p>
+                    Calculate electrical power, voltage, or current
+                    for DC, single-phase AC, and three-phase AC systems.
+                </p>
 
-    --pwr-primary: #2563eb;
+            </div>
 
-13
+        </header>
 
-    --pwr-border: #e2e8f0;
 
-14
+        <!-- Calculator -->
+        <section class="calculator-card"
+                 aria-labelledby="calculator-heading">
 
-    --pwr-result: #eff6ff;
+            <div class="calculator-inner">
 
-15
+                <h2 id="calculator-heading"
+                    class="section-title-tag">
 
-​
+                    <span class="material-symbols-outlined"
+                          aria-hidden="true">
+                        calculate
+                    </span>
 
-16
+                    Electrical Power Calculation
 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                </h2>
 
-17
 
-    padding: 15px 0;
+                <!-- System Type -->
+                <fieldset class="form-section-group">
 
-18
+                    <legend class="section-title-tag">
+                        System Configuration
+                    </legend>
 
-    max-width: 760px;
+                    <div class="input-row-card">
 
-19
+                        <div class="select-group">
 
-    margin: auto;
+                            <label for="powerCalcType">
+                                System Type
+                            </label>
 
-20
+                            <select id="powerCalcType">
+                                <option value="">
+                                    Select System
+                                </option>
 
-    color-scheme: light dark;
+                                <option value="dc">
+                                    DC
+                                </option>
 
-21
+                                <option value="1ph">
+                                    AC Single Phase
+                                </option>
 
-}
+                                <option value="3ph">
+                                    AC Three Phase
+                                </option>
+                            </select>
 
-22
+                        </div>
 
-​
 
-23
+                        <div class="select-group">
 
-/* ================================================
+                            <label for="powerCalcMode">
+                                Calculate
+                            </label>
 
-24
+                            <select id="powerCalcMode">
+                                <option value="">
+                                    Select Parameter
+                                </option>
 
-   2. AUTOMATIC SYSTEM DARK MODE 
+                                <option value="P">
+                                    Power (P)
+                                </option>
 
-25
+                                <option value="V">
+                                    Voltage (V)
+                                </option>
 
-================================================ */
+                                <option value="I">
+                                    Current (I)
+                                </option>
+                            </select>
 
-26
+                        </div>
 
-@media (prefers-color-scheme: dark) {
+                    </div>
 
-27
+                </fieldset>
 
-    .power-calc-container {
 
-28
+                <!-- Dynamic Inputs -->
+                <fieldset class="form-section-group"
+                          id="powerCalcInputSection"
+                          hidden>
 
-        --pwr-card: #0f172a;
+                    <legend class="section-title-tag">
+                        Input Parameters
+                    </legend>
 
-29
+                    <div class="power-calc-inputs"
+                         id="powerCalcInputs">
+                    </div>
 
-        --pwr-text: #e5e7eb;
+                </fieldset>
 
-30
 
-        --pwr-muted: #94a3b8;
+                <!-- Buttons -->
+                <div class="action-buttons">
 
-31
+                    <button type="button"
+                            class="btn primary-btn"
+                            id="powerCalcCalculate">
 
-        --pwr-primary: #3b82f6;
+                        <span class="material-symbols-outlined"
+                              aria-hidden="true">
+                            calculate
+                        </span>
 
-32
+                        Calculate
 
-        --pwr-border: #1e293b;
+                    </button>
 
-33
 
-        --pwr-result: #0b1220;
+                    <button type="button"
+                            class="btn secondary-btn"
+                            id="powerCalcReset">
 
-34
+                        <span class="material-symbols-outlined"
+                              aria-hidden="true">
+                            restart_alt
+                        </span>
 
-    }
+                        Reset
 
-35
+                    </button>
 
-}
+                </div>
 
-36
 
-​
+                <!-- Result -->
+                <div class="results-box"
+                     id="powerCalcResult"
+                     role="status"
+                     aria-live="polite">
 
-37
+                    <div class="results-header">
 
-/* ================================================
+                        <span class="material-symbols-outlined"
+                              aria-hidden="true">
+                            analytics
+                        </span>
 
-38
+                        <h3>
+                            Result
+                        </h3>
 
-   3. BLOGGER DARK THEME FORCE OVERRIDES
+                    </div>
 
-39
+                    <div class="results-grid"
+                         id="powerCalcResultGrid">
 
-================================================ */
+                        <div class="result-item">
 
-40
+                            <span class="result-label">
+                                Status
+                            </span>
 
-:root.dark .power-calc-container, body.dark .power-calc-container,
+                            <span class="result-value"
+                                  id="powerCalcResultValue">
+                                Ready
+                            </span>
 
-41
+                        </div>
 
-:root.dark-mode .power-calc-container, body.dark-mode .power-calc-container,
+                    </div>
 
-42
+                </div>
 
-:root[data-theme="dark"] .power-calc-container, body[data-theme="dark"] .power-calc-container,
+            </div>
 
-43
+        </section>
 
-:root.theme-dark .power-calc-container, body.theme-dark .power-calc-container {
 
-44
+        <!-- Formula Information -->
+        <section class="info-card"
+                 aria-labelledby="formula-heading">
 
-    --pwr-card: #0f172a;
+            <div class="info-header">
 
-45
+                <span class="material-symbols-outlined"
+                      aria-hidden="true">
+                    functions
+                </span>
 
-    --pwr-text: #e5e7eb;
+                <h3 id="formula-heading">
+                    Electrical Formulas
+                </h3>
 
-46
+            </div>
 
-    --pwr-muted: #94a3b8;
 
-47
+            <ul class="formula-list">
 
-    --pwr-primary: #3b82f6;
+                <li>
 
-48
+                    <span class="formula-name">
+                        DC Power
+                    </span>
 
-    --pwr-border: #1e293b;
+                    <span class="formula-eq">
+                        P = V × I
+                    </span>
 
-Page settings
-Search Description
-Options
-Custom Robot Tags
-Page: Edit
+                </li>
+
+
+                <li>
+
+                    <span class="formula-name">
+                        Single-Phase AC Power
+                    </span>
+
+                    <span class="formula-eq">
+                        P = V × I × cosφ
+                    </span>
+
+                </li>
+
+
+                <li>
+
+                    <span class="formula-name">
+                        Three-Phase AC Power
+                    </span>
+
+                    <span class="formula-eq">
+                        P = √3 × V × I × cosφ
+                    </span>
+
+                </li>
+
+
+                <li>
+
+                    <span class="formula-name">
+                        Single-Phase Current
+                    </span>
+
+                    <span class="formula-eq">
+                        I = P / (V × cosφ)
+                    </span>
+
+                </li>
+
+
+                <li>
+
+                    <span class="formula-name">
+                        Three-Phase Current
+                    </span>
+
+                    <span class="formula-eq">
+                        I = P / (√3 × V × cosφ)
+                    </span>
+
+                </li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+
+    <!-- Your existing site footer should remain here -->
+
+
+    <script src="assets/js/power-calculator.js"></script>
+
+</body>
+</html>
+
