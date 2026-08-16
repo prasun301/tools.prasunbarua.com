@@ -1,43 +1,32 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
-    const systemTypeSelect = document.getElementById('system-type');
-    const calcTargetSelect = document.getElementById('calc-target');
-    const pfTargetOption = document.getElementById('pf-target-opt');
+    // Primary DOM Selectors (supports both structured ID layouts and template IDs)
+    const systemTypeSelect = document.getElementById('system-type') || document.getElementById('type');
+    const calcTargetSelect = document.getElementById('calc-target') || document.getElementById('mode');
 
-    // Input Rows
-    const rowVoltage = document.getElementById('row-voltage');
-    const rowCurrent = document.getElementById('row-current');
-    const rowPower = document.getElementById('row-power');
-    const rowPf = document.getElementById('row-pf');
-
-    // Input Fields
-    const valVoltage = document.getElementById('val-voltage');
-    const valCurrent = document.getElementById('val-current');
-    const valPower = document.getElementById('val-power');
-    const valPf = document.getElementById('val-pf');
-
-    // Buttons & Results
-    const calcBtn = document.getElementById('calc-btn');
-    const resetBtn = document.getElementById('reset-btn');
-    const resultsSection = document.getElementById('results-section');
+    const calcBtn = document.getElementById('calc-btn') || document.querySelector('.calc-btn');
+    const resetBtn = document.getElementById('reset-btn') || document.querySelector('.reset-btn');
+    const resultsSection = document.getElementById('results-section') || document.getElementById('result');
 
     const resLabel1 = document.getElementById('res-label-1');
     const resVal1 = document.getElementById('res-val-1');
     const resLabel2 = document.getElementById('res-label-2');
     const resVal2 = document.getElementById('res-val-2');
 
-    if (!calcBtn || !resultsSection) {
-        console.error('Power Calculator Error: Missing calcBtn or resultsSection in HTML.');
-        return;
-    }
+    if (!calcBtn) return; // Safety check if element doesn't exist
 
+    // Helper to highlight invalid input fields professionally
     const setFieldError = (inputEl, isError) => {
         if (!inputEl) return;
-        inputEl.classList.toggle('input-error', isError);
+        if (isError) {
+            inputEl.classList.add('input-error');
+        } else {
+            inputEl.classList.remove('input-error');
+        }
     };
 
+    // Helper to show inline warning banner instead of blocking alert popup
     const showNotification = (message, isError = true) => {
         let existingBanner = document.getElementById('power-alert-banner');
         if (!existingBanner) {
@@ -52,147 +41,194 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => existingBanner?.remove(), 6000);
     };
 
-    const clearErrors = () => {
-        [valVoltage, valCurrent, valPower, valPf].forEach(input => setFieldError(input, false));
+    // Helper to get active input elements (static or dynamically created)
+    const getInputs = () => ({
+        V: document.getElementById('val-voltage') || document.getElementById('V'),
+        I: document.getElementById('val-current') || document.getElementById('I'),
+        P: document.getElementById('val-power') || document.getElementById('P'),
+        PF: document.getElementById('val-pf') || document.getElementById('PF')
+    });
+
+    // Calculate Button Click Event
+    calcBtn.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+
+        // Clear previous notifications and input errors
         const existingBanner = document.getElementById('power-alert-banner');
         if (existingBanner) existingBanner.remove();
-    };
 
-    const formatUnit = (value, baseUnit) => {
-        if (isNaN(value) || !isFinite(value)) return '--';
-        const absVal = Math.abs(value);
-        if (absVal >= 1e6) return `${(value / 1e6).toFixed(4)} M${baseUnit}`;
-        if (absVal >= 1e3) return `${(value / 1e3).toFixed(4)} k${baseUnit}`;
-        return `${value.toFixed(4)} ${baseUnit}`;
-    };
+        const inputs = getInputs();
+        Object.values(inputs).forEach(input => setFieldError(input, false));
 
-    const updateFormVisibility = () => {
-        if (!systemTypeSelect || !calcTargetSelect) return;
+        const system = systemTypeSelect ? systemTypeSelect.value.toLowerCase() : '';
+        const mode = calcTargetSelect ? calcTargetSelect.value.toUpperCase() : '';
 
-        const system = systemTypeSelect.value;
-        const target = calcTargetSelect.value;
-        const isAc = system !== 'dc';
-
-        if (pfTargetOption) {
-            pfTargetOption.style.display = isAc ? 'block' : 'none';
-            if (!isAc && target === 'pf') calcTargetSelect.value = 'power';
+        if (!system || !mode) {
+            showNotification('Please select both System Type and Calculation Target.');
+            return;
         }
 
-        const activeTarget = calcTargetSelect.value;
+        const isAc = !system.includes('dc');
 
-        if (rowPower) rowPower.style.display = activeTarget === 'power' ? 'none' : 'grid';
-        if (rowVoltage) rowVoltage.style.display = activeTarget === 'voltage' ? 'none' : 'grid';
-        if (rowCurrent) rowCurrent.style.display = activeTarget === 'current' ? 'none' : 'grid';
-        if (rowPf) rowPf.style.display = (isAc && activeTarget !== 'pf') ? 'grid' : 'none';
+        const valV = inputs.V ? parseFloat(inputs.V.value) : NaN;
+        const valI = inputs.I ? parseFloat(inputs.I.value) : NaN;
+        const valP = inputs.P ? parseFloat(inputs.P.value) : NaN;
+        const valPF = isAc ? (inputs.PF ? parseFloat(inputs.PF.value) : 1.0) : 1.0;
 
-        clearErrors();
-        resultsSection.style.display = 'none';
-    };
+        // Determine required fields for current mode
+        let requiredFields = [];
+        if (mode === 'POWER' || mode === 'P') {
+            requiredFields = [{ el: inputs.V, val: valV }, { el: inputs.I, val: valI }];
+            if (isAc) requiredFields.push({ el: inputs.PF, val: valPF });
+        } else if (mode === 'VOLTAGE' || mode === 'V') {
+            requiredFields = [{ el: inputs.P, val: valP }, { el: inputs.I, val: valI }];
+            if (isAc) requiredFields.push({ el: inputs.PF, val: valPF });
+        } else if (mode === 'CURRENT' || mode === 'I') {
+            requiredFields = [{ el: inputs.P, val: valP }, { el: inputs.V, val: valV }];
+            if (isAc) requiredFields.push({ el: inputs.PF, val: valPF });
+        }
 
-    // Calculate Action
-    calcBtn.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevents page reload if button is inside a form
-        clearErrors();
-
-        const system = systemTypeSelect?.value || 'dc';
-        const target = calcTargetSelect?.value || 'power';
-        const sqrt3 = Math.sqrt(3);
-
-        const V = parseFloat(valVoltage?.value);
-        const I = parseFloat(valCurrent?.value);
-        const P = parseFloat(valPower?.value);
-        const PF = system === 'dc' ? 1.0 : parseFloat(valPf?.value);
-
-        let requiredInputs = [];
-        if (target === 'power') requiredInputs = [valVoltage, valCurrent, ...(system !== 'dc' ? [valPf] : [])];
-        else if (target === 'voltage') requiredInputs = [valPower, valCurrent, ...(system !== 'dc' ? [valPf] : [])];
-        else if (target === 'current') requiredInputs = [valPower, valVoltage, ...(system !== 'dc' ? [valPf] : [])];
-        else if (target === 'pf') requiredInputs = [valPower, valVoltage, valCurrent];
-
-        let hasInvalidInput = false;
-        requiredInputs.forEach(input => {
-            if (!input || isNaN(parseFloat(input.value))) {
-                setFieldError(input, true);
-                hasInvalidInput = true;
+        // Validate required inputs
+        let hasError = false;
+        requiredFields.forEach(field => {
+            if (isNaN(field.val)) {
+                setFieldError(field.el, true);
+                hasError = true;
             }
         });
 
-        if (hasInvalidInput) {
-            showNotification('Please fill in all required fields with valid numeric values.');
+        if (hasError) {
+            showNotification('Please enter valid numeric values for all required fields.');
             return;
         }
 
-        if (system !== 'dc' && target !== 'pf' && (PF < 0 || PF > 1)) {
-            setFieldError(valPf, true);
-            showNotification('Power Factor must be between 0 and 1.');
+        if (isAc && (valPF < 0 || valPF > 1)) {
+            setFieldError(inputs.PF, true);
+            showNotification('Power Factor (cosφ) must be between 0 and 1.');
             return;
         }
 
-        let calculatedP, calculatedV, calculatedI, calculatedPF, apparentS;
+        let calculatedP, calculatedV, calculatedI, apparentS;
+        const sqrt3 = Math.sqrt(3);
 
         try {
-            if (system === 'dc') {
-                if (target === 'power') { calculatedP = V * I; apparentS = calculatedP; }
-                else if (target === 'voltage') { if (I === 0) throw new Error('Division by zero'); calculatedV = P / I; apparentS = P; }
-                else if (target === 'current') { if (V === 0) throw new Error('Division by zero'); calculatedI = P / V; apparentS = P; }
-            } else if (system === '1phase') {
-                if (target === 'power') { calculatedP = V * I * PF; apparentS = V * I; }
-                else if (target === 'voltage') { if (I * PF === 0) throw new Error('Division by zero'); calculatedV = P / (I * PF); apparentS = calculatedV * I; }
-                else if (target === 'current') { if (V * PF === 0) throw new Error('Division by zero'); calculatedI = P / (V * PF); apparentS = V * calculatedI; }
-                else if (target === 'pf') { if (V * I === 0) throw new Error('Division by zero'); calculatedPF = P / (V * I); apparentS = V * I; }
-            } else if (system === '3phase') {
-                if (target === 'power') { calculatedP = sqrt3 * V * I * PF; apparentS = sqrt3 * V * I; }
-                else if (target === 'voltage') { if (sqrt3 * I * PF === 0) throw new Error('Division by zero'); calculatedV = P / (sqrt3 * I * PF); apparentS = sqrt3 * calculatedV * I; }
-                else if (target === 'current') { if (sqrt3 * V * PF === 0) throw new Error('Division by zero'); calculatedI = P / (sqrt3 * V * PF); apparentS = sqrt3 * V * calculatedI; }
-                else if (target === 'pf') { if (sqrt3 * V * I === 0) throw new Error('Division by zero'); calculatedPF = P / (sqrt3 * V * I); apparentS = sqrt3 * V * I; }
-            }
-
-            if (resLabel1 && resVal1 && resLabel2 && resVal2) {
-                if (target === 'power') {
-                    resLabel1.textContent = 'Active Real Power (P)';
-                    resVal1.textContent = formatUnit(calculatedP, 'W');
-                    resLabel2.textContent = 'Apparent Power (S)';
-                    resVal2.textContent = system === 'dc' ? formatUnit(apparentS, 'W') : formatUnit(apparentS, 'VA');
-                } else if (target === 'voltage') {
-                    resLabel1.textContent = 'Calculated Voltage (V)';
-                    resVal1.textContent = formatUnit(calculatedV, 'V');
-                    resLabel2.textContent = 'Apparent Power (S)';
-                    resVal2.textContent = system === 'dc' ? formatUnit(apparentS, 'W') : formatUnit(apparentS, 'VA');
-                } else if (target === 'current') {
-                    resLabel1.textContent = 'Calculated Current (I)';
-                    resVal1.textContent = formatUnit(calculatedI, 'A');
-                    resLabel2.textContent = 'Apparent Power (S)';
-                    resVal2.textContent = system === 'dc' ? formatUnit(apparentS, 'W') : formatUnit(apparentS, 'VA');
-                } else if (target === 'pf') {
-                    resLabel1.textContent = 'Power Factor (PF)';
-                    resVal1.textContent = calculatedPF.toFixed(4);
-                    resLabel2.textContent = 'Apparent Power (S)';
-                    resVal2.textContent = formatUnit(apparentS, 'VA');
+            if (mode === 'POWER' || mode === 'P') {
+                if (system.includes('dc')) {
+                    calculatedP = valV * valI;
+                    apparentS = calculatedP;
+                } else if (system.includes('1ph') || system.includes('1-phase')) {
+                    calculatedP = valV * valI * valPF;
+                    apparentS = valV * valI;
+                } else if (system.includes('3ph') || system.includes('3-phase')) {
+                    calculatedP = sqrt3 * valV * valI * valPF;
+                    apparentS = sqrt3 * valV * valI;
                 }
+            } else if (mode === 'VOLTAGE' || mode === 'V') {
+                if (valI === 0) throw new Error('Current cannot be zero.');
+                // Auto-detect if input power was entered in kW or W
+                const pWatts = valP < 1000 ? valP * 1000 : valP;
+
+                if (system.includes('dc')) {
+                    calculatedV = pWatts / valI;
+                    apparentS = pWatts;
+                } else if (system.includes('1ph') || system.includes('1-phase')) {
+                    if (valPF === 0) throw new Error('Power Factor cannot be zero.');
+                    calculatedV = pWatts / (valI * valPF);
+                    apparentS = calculatedV * valI;
+                } else if (system.includes('3ph') || system.includes('3-phase')) {
+                    if (valPF === 0) throw new Error('Power Factor cannot be zero.');
+                    calculatedV = pWatts / (sqrt3 * valI * valPF);
+                    apparentS = sqrt3 * calculatedV * valI;
+                }
+                calculatedP = pWatts;
+            } else if (mode === 'CURRENT' || mode === 'I') {
+                if (valV === 0) throw new Error('Voltage cannot be zero.');
+                const pWatts = valP < 1000 ? valP * 1000 : valP;
+
+                if (system.includes('dc')) {
+                    calculatedI = pWatts / valV;
+                    apparentS = pWatts;
+                } else if (system.includes('1ph') || system.includes('1-phase')) {
+                    if (valPF === 0) throw new Error('Power Factor cannot be zero.');
+                    calculatedI = pWatts / (valV * valPF);
+                    apparentS = valV * calculatedI;
+                } else if (system.includes('3ph') || system.includes('3-phase')) {
+                    if (valPF === 0) throw new Error('Power Factor cannot be zero.');
+                    calculatedI = pWatts / (sqrt3 * valV * valPF);
+                    apparentS = sqrt3 * valV * calculatedI;
+                }
+                calculatedP = pWatts;
             }
 
-            resultsSection.style.display = 'block';
+            // Convert Watts and VA to kW and kVA
+            const kW = calculatedP / 1000;
+            const kVA = apparentS / 1000;
+
+            // Display Results
+            if (resLabel1 && resVal1 && resLabel2 && resVal2) {
+                if (mode === 'POWER' || mode === 'P') {
+                    resLabel1.textContent = 'ACTIVE REAL POWER (P)';
+                    resVal1.textContent = `${kW.toFixed(4)} kW`;
+
+                    resLabel2.textContent = 'APPARENT POWER (S)';
+                    resVal2.textContent = system.includes('dc') ? `${kW.toFixed(4)} kW` : `${kVA.toFixed(4)} kVA`;
+                } else if (mode === 'VOLTAGE' || mode === 'V') {
+                    resLabel1.textContent = 'CALCULATED VOLTAGE (V)';
+                    resVal1.textContent = `${calculatedV.toFixed(4)} V`;
+
+                    resLabel2.textContent = 'APPARENT POWER (S)';
+                    resVal2.textContent = system.includes('dc') ? `${kW.toFixed(4)} kW` : `${kVA.toFixed(4)} kVA`;
+                } else if (mode === 'CURRENT' || mode === 'I') {
+                    resLabel1.textContent = 'CALCULATED CURRENT (I)';
+                    resVal1.textContent = `${calculatedI.toFixed(4)} A`;
+
+                    resLabel2.textContent = 'APPARENT POWER (S)';
+                    resVal2.textContent = system.includes('dc') ? `${kW.toFixed(4)} kW` : `${kVA.toFixed(4)} kVA`;
+                }
+                resultsSection.style.display = 'block';
+            } else if (resultsSection) {
+                // Single container output fallback
+                let textResult = '';
+                if (mode === 'POWER' || mode === 'P') {
+                    textResult = `⚡ Real Power = ${kW.toFixed(4)} kW | Apparent Power = ${kVA.toFixed(4)} kVA`;
+                } else if (mode === 'VOLTAGE' || mode === 'V') {
+                    textResult = `⚡ Voltage = ${calculatedV.toFixed(4)} V`;
+                } else if (mode === 'CURRENT' || mode === 'I') {
+                    textResult = `⚡ Current = ${calculatedI.toFixed(4)} A`;
+                }
+
+                resultsSection.innerHTML = textResult;
+                resultsSection.style.display = 'block';
+            }
+
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
         } catch (err) {
             showNotification(err.message || 'Invalid calculation parameters.');
         }
     });
 
-    if (resetBtn) {
-        resetBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (valVoltage) valVoltage.value = '';
-            if (valCurrent) valCurrent.value = '';
-            if (valPower) valPower.value = '';
-            if (valPf) valPf.value = '';
-            resultsSection.style.display = 'none';
-            clearErrors();
-            updateFormVisibility();
+    // Reset Button Click Event
+    resetBtn.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+
+        const inputs = getInputs();
+        Object.values(inputs).forEach(input => {
+            if (input) {
+                input.value = '';
+                setFieldError(input, false);
+            }
         });
-    }
 
-    if (systemTypeSelect) systemTypeSelect.addEventListener('change', updateFormVisibility);
-    if (calcTargetSelect) calcTargetSelect.addEventListener('change', updateFormVisibility);
+        const banner = document.getElementById('power-alert-banner');
+        if (banner) banner.remove();
 
-    updateFormVisibility();
+        if (resultsSection) {
+            if (resLabel1 && resVal1) {
+                resultsSection.style.display = 'none';
+            } else {
+                resultsSection.innerHTML = 'Result will appear here';
+            }
+        }
+    });
 });
