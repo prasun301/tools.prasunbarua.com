@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        ELEMENTS
-       ========================================================= */
+    ========================================================== */
 
     const typeSelect = document.getElementById('powerCalcType');
     const modeSelect = document.getElementById('powerCalcMode');
@@ -17,18 +17,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const resultsSection = document.getElementById('powerCalcResult');
     const resultGrid = document.getElementById('powerCalcResultGrid');
+
     const resultHeader = document.querySelector(
         '#powerCalcResult .results-header h3'
     );
 
-    if (!typeSelect || !modeSelect || !calcBtn || !resetBtn) {
+    const resultIcon = document.querySelector(
+        '#powerCalcResult .results-header .material-symbols-outlined'
+    );
+
+    const form = document.getElementById('power-calculator-form');
+
+
+    /* =========================================================
+       INITIAL SAFETY CHECK
+    ========================================================== */
+
+    if (
+        !typeSelect ||
+        !modeSelect ||
+        !inputSection ||
+        !inputsContainer ||
+        !calcBtn ||
+        !resetBtn ||
+        !resultsSection ||
+        !resultGrid
+    ) {
         return;
     }
 
 
     /* =========================================================
+       CONSTANTS
+    ========================================================== */
+
+    const CALCULATION_MODES = {
+        P: 'Power',
+        V: 'Voltage',
+        I: 'Current'
+    };
+
+    const SYSTEM_TYPES = {
+        dc: 'DC',
+        '1ph': 'Single-Phase AC',
+        '3ph': 'Three-Phase AC'
+    };
+
+
+    /* =========================================================
        HELPERS
-       ========================================================= */
+    ========================================================== */
 
     function formatNumber(value) {
 
@@ -36,52 +74,79 @@ document.addEventListener('DOMContentLoaded', () => {
             return '--';
         }
 
-        return Number(value).toFixed(4);
+        return new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 4
+        }).format(value);
     }
 
 
     function getValue(id) {
 
-        const element = document.getElementById(id);
+        const input = document.getElementById(id);
 
-        if (!element) {
+        if (!input) {
             return NaN;
         }
 
-        return parseFloat(element.value);
+        return parseFloat(input.value);
     }
 
 
-    function setInputError(input, error) {
+    function setInputError(input, hasError) {
 
         if (!input) {
             return;
         }
 
-        input.classList.toggle('input-error', error);
+        input.classList.toggle('input-error', hasError);
+
+        input.setAttribute(
+            'aria-invalid',
+            hasError ? 'true' : 'false'
+        );
     }
 
 
     function clearInputErrors() {
 
-        document
-            .querySelectorAll('#powerCalcInputs .input-error')
+        inputsContainer
+            .querySelectorAll('.input-error')
             .forEach(input => {
+
                 input.classList.remove('input-error');
+                input.setAttribute('aria-invalid', 'false');
+
             });
     }
 
 
     function showInputSection(show) {
 
-        inputSection.style.display = show ? 'block' : 'none';
+        inputSection.hidden = !show;
 
+        inputSection.style.display =
+            show ? 'block' : 'none';
+    }
+
+
+    function hideResults() {
+
+        resultsSection.hidden = true;
+        resultsSection.style.display = 'none';
+    }
+
+
+    function showResultsSection() {
+
+        resultsSection.hidden = false;
+        resultsSection.style.display = 'block';
     }
 
 
     /* =========================================================
        NOTIFICATION
-       ========================================================= */
+    ========================================================== */
 
     function showNotification(message, type = 'error') {
 
@@ -101,15 +166,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? 'error-banner'
                 : 'success-banner';
 
-        banner.innerHTML = `
-            <span class="material-symbols-outlined" aria-hidden="true">
-                ${type === 'error' ? 'error' : 'info'}
-            </span>
-            <span>${message}</span>
-        `;
+        const icon = document.createElement('span');
 
-        const form =
-            document.getElementById('powerCalcForm');
+        icon.className =
+            'material-symbols-outlined';
+
+        icon.setAttribute('aria-hidden', 'true');
+
+        icon.textContent =
+            type === 'error'
+                ? 'error'
+                : 'check_circle';
+
+        const text = document.createElement('span');
+
+        text.textContent = message;
+
+        banner.appendChild(icon);
+        banner.appendChild(text);
 
         if (form) {
             form.prepend(banner);
@@ -127,51 +201,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        RESULTS
-       ========================================================= */
+    ========================================================== */
 
     function showResults(results, icon = 'check_circle') {
 
         resultGrid.innerHTML = '';
 
-        const entries = Object.entries(results);
-
-        entries.forEach(([label, value]) => {
+        Object.entries(results).forEach(([label, value]) => {
 
             const item = document.createElement('div');
 
             item.className = 'result-item';
 
-            item.innerHTML = `
-                <span class="result-label">
-                    ${label}
-                </span>
+            const resultLabel =
+                document.createElement('span');
 
-                <span class="result-value">
-                    ${value}
-                </span>
-            `;
+            resultLabel.className =
+                'result-label';
+
+            resultLabel.textContent = label;
+
+            const resultValue =
+                document.createElement('span');
+
+            resultValue.className =
+                'result-value';
+
+            resultValue.textContent = value;
+
+            item.appendChild(resultLabel);
+            item.appendChild(resultValue);
 
             resultGrid.appendChild(item);
-
         });
 
 
-        const iconElement =
-            document.querySelector(
-                '#powerCalcResult .results-header .material-symbols-outlined'
-            );
-
-        if (iconElement) {
-            iconElement.textContent = icon;
+        if (resultIcon) {
+            resultIcon.textContent = icon;
         }
 
 
         if (resultHeader) {
-            resultHeader.textContent = 'Calculated Results';
+            resultHeader.textContent =
+                'Calculated Results';
         }
 
 
-        resultsSection.style.display = 'block';
+        showResultsSection();
 
         resultsSection.scrollIntoView({
             behavior: 'smooth',
@@ -189,26 +265,22 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        const iconElement =
-            document.querySelector(
-                '#powerCalcResult .results-header .material-symbols-outlined'
-            );
-
-        if (iconElement) {
-            iconElement.textContent = 'calculate';
+        if (resultIcon) {
+            resultIcon.textContent = 'calculate';
         }
 
         if (resultHeader) {
-            resultHeader.textContent = 'Calculator Status';
+            resultHeader.textContent =
+                'Calculator Status';
         }
 
-        resultsSection.style.display = 'none';
+        hideResults();
     }
 
 
     /* =========================================================
        INPUT CREATION
-       ========================================================= */
+    ========================================================== */
 
     function createInput(
         id,
@@ -221,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="input-row-card">
 
                 <div class="select-group">
+
                     <label for="${id}">
                         ${label}
                     </label>
@@ -228,7 +301,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="input-hint">
                         ${hint}
                     </span>
+
                 </div>
+
 
                 <div class="input-group">
 
@@ -243,6 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             min="0"
                             inputmode="decimal"
                             autocomplete="off"
+                            aria-invalid="false"
                         >
 
                         <span class="input-unit">
@@ -264,14 +340,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="input-row-card">
 
                 <div class="select-group">
+
                     <label for="powerCalcPF">
                         Power Factor
                     </label>
 
                     <span class="input-hint">
-                        Enter a value between 0 and 1
+                        Enter a value from 0.01 to 1.00
                     </span>
+
                 </div>
+
 
                 <div class="input-group">
 
@@ -288,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             max="1"
                             inputmode="decimal"
                             autocomplete="off"
+                            aria-invalid="false"
                         >
 
                         <span class="input-unit">
@@ -305,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        UPDATE INPUTS
-       ========================================================= */
+    ========================================================== */
 
     function updateInputs() {
 
@@ -316,7 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         clearInputErrors();
 
+        hideResults();
+
         showInputSection(false);
+
 
         if (!type || !mode) {
             return;
@@ -325,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         /* -----------------------------------------------------
            CALCULATE POWER
-           ----------------------------------------------------- */
+        ------------------------------------------------------ */
 
         if (mode === 'P') {
 
@@ -350,14 +433,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 inputsContainer.innerHTML +=
                     createPowerFactorInput();
-
             }
         }
 
 
         /* -----------------------------------------------------
            CALCULATE VOLTAGE
-           ----------------------------------------------------- */
+        ------------------------------------------------------ */
 
         else if (mode === 'V') {
 
@@ -382,14 +464,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 inputsContainer.innerHTML +=
                     createPowerFactorInput();
-
             }
         }
 
 
         /* -----------------------------------------------------
            CALCULATE CURRENT
-           ----------------------------------------------------- */
+        ------------------------------------------------------ */
 
         else if (mode === 'I') {
 
@@ -414,7 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 inputsContainer.innerHTML +=
                     createPowerFactorInput();
-
             }
         }
 
@@ -433,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        POWER FACTOR
-       ========================================================= */
+    ========================================================== */
 
     function getPowerFactor(type) {
 
@@ -447,31 +527,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const pf =
             parseFloat(pfInput?.value);
 
-        if (
-            Number.isNaN(pf) ||
+
+        const invalid =
+            !Number.isFinite(pf) ||
             pf <= 0 ||
-            pf > 1
-        ) {
+            pf > 1;
 
-            setInputError(pfInput, true);
 
+        setInputError(
+            pfInput,
+            invalid
+        );
+
+
+        if (invalid) {
             return null;
         }
-
-        setInputError(pfInput, false);
 
         return pf;
     }
 
 
     /* =========================================================
-       VALIDATION
-       ========================================================= */
+       POSITIVE VALUE VALIDATION
+    ========================================================== */
 
     function validatePositive(
         inputId,
-        fieldName,
-        allowZero = false
+        fieldName
     ) {
 
         const input =
@@ -482,20 +565,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         const invalid =
-            Number.isNaN(value) ||
-            (allowZero ? value < 0 : value <= 0);
+            !Number.isFinite(value) ||
+            value <= 0;
 
 
-        setInputError(input, invalid);
+        setInputError(
+            input,
+            invalid
+        );
 
 
         if (invalid) {
 
             showNotification(
-                allowZero
-                    ? `Please enter a valid ${fieldName}.`
-                    : `${fieldName} must be greater than zero.`
+                `${fieldName} must be greater than zero.`
             );
+
+            if (input) {
+                input.focus();
+            }
 
             return null;
         }
@@ -505,8 +593,139 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================================================
+       CALCULATE POWER
+    ========================================================== */
+
+    function calculatePower(type, V, I, pf) {
+
+        if (type === 'dc') {
+
+            return {
+                'DC Power':
+                    `${formatNumber(V * I)} W`
+            };
+        }
+
+
+        if (type === '1ph') {
+
+            return {
+                'Single-Phase Power':
+                    `${formatNumber(V * I * pf)} W`
+            };
+        }
+
+
+        if (type === '3ph') {
+
+            return {
+                'Three-Phase Power':
+                    `${formatNumber(
+                        Math.sqrt(3) * V * I * pf
+                    )} W`
+            };
+        }
+
+
+        return null;
+    }
+
+
+    /* =========================================================
+       CALCULATE VOLTAGE
+    ========================================================== */
+
+    function calculateVoltage(type, P, I, pf) {
+
+        if (type === 'dc') {
+
+            return {
+                'Voltage':
+                    `${formatNumber(P / I)} V`
+            };
+        }
+
+
+        if (type === '1ph') {
+
+            return {
+                'Single-Phase Voltage':
+                    `${formatNumber(
+                        P / (I * pf)
+                    )} V`
+            };
+        }
+
+
+        if (type === '3ph') {
+
+            return {
+                'Line Voltage':
+                    `${formatNumber(
+                        P /
+                        (
+                            Math.sqrt(3) *
+                            I *
+                            pf
+                        )
+                    )} V`
+            };
+        }
+
+
+        return null;
+    }
+
+
+    /* =========================================================
+       CALCULATE CURRENT
+    ========================================================== */
+
+    function calculateCurrent(type, P, V, pf) {
+
+        if (type === 'dc') {
+
+            return {
+                'Current':
+                    `${formatNumber(P / V)} A`
+            };
+        }
+
+
+        if (type === '1ph') {
+
+            return {
+                'Single-Phase Current':
+                    `${formatNumber(
+                        P / (V * pf)
+                    )} A`
+            };
+        }
+
+
+        if (type === '3ph') {
+
+            return {
+                'Line Current':
+                    `${formatNumber(
+                        P /
+                        (
+                            Math.sqrt(3) *
+                            V *
+                            pf
+                        )
+                    )} A`
+            };
+        }
+
+
+        return null;
+    }
+
+
+    /* =========================================================
        CALCULATE
-       ========================================================= */
+    ========================================================== */
 
     function calculate() {
 
@@ -536,13 +755,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Power factor must be greater than 0 and no greater than 1.'
             );
 
+            const pfInput =
+                document.getElementById('powerCalcPF');
+
+            if (pfInput) {
+                pfInput.focus();
+            }
+
             return;
         }
 
 
         /* -----------------------------------------------------
            POWER
-           ----------------------------------------------------- */
+        ------------------------------------------------------ */
 
         if (mode === 'P') {
 
@@ -568,55 +794,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
-            let power;
+            const results =
+                calculatePower(
+                    type,
+                    V,
+                    I,
+                    pf
+                );
 
 
-            if (type === 'dc') {
-
-                power = V * I;
-
-                showResults({
-                    'DC Power': `${formatNumber(power)} W`
-                });
-
-                return;
+            if (results) {
+                showResults(results);
             }
 
-
-            if (type === '1ph') {
-
-                power = V * I * pf;
-
-                showResults({
-                    'Single Phase Power':
-                        `${formatNumber(power)} W`
-                });
-
-                return;
-            }
-
-
-            if (type === '3ph') {
-
-                power =
-                    Math.sqrt(3) *
-                    V *
-                    I *
-                    pf;
-
-                showResults({
-                    'Three Phase Power':
-                        `${formatNumber(power)} W`
-                });
-
-                return;
-            }
+            return;
         }
 
 
         /* -----------------------------------------------------
            VOLTAGE
-           ----------------------------------------------------- */
+        ------------------------------------------------------ */
 
         if (mode === 'V') {
 
@@ -642,60 +839,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
-            let voltage;
+            const results =
+                calculateVoltage(
+                    type,
+                    P,
+                    I,
+                    pf
+                );
 
 
-            if (type === 'dc') {
-
-                voltage = P / I;
-
-                showResults({
-                    'Voltage':
-                        `${formatNumber(voltage)} V`
-                });
-
-                return;
+            if (results) {
+                showResults(results);
             }
 
-
-            if (type === '1ph') {
-
-                voltage =
-                    P /
-                    (I * pf);
-
-                showResults({
-                    'Single Phase Voltage':
-                        `${formatNumber(voltage)} V`
-                });
-
-                return;
-            }
-
-
-            if (type === '3ph') {
-
-                voltage =
-                    P /
-                    (
-                        Math.sqrt(3) *
-                        I *
-                        pf
-                    );
-
-                showResults({
-                    'Line Voltage':
-                        `${formatNumber(voltage)} V`
-                });
-
-                return;
-            }
+            return;
         }
 
 
         /* -----------------------------------------------------
            CURRENT
-           ----------------------------------------------------- */
+        ------------------------------------------------------ */
 
         if (mode === 'I') {
 
@@ -721,53 +884,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
-            let current;
+            const results =
+                calculateCurrent(
+                    type,
+                    P,
+                    V,
+                    pf
+                );
 
 
-            if (type === 'dc') {
-
-                current = P / V;
-
-                showResults({
-                    'Current':
-                        `${formatNumber(current)} A`
-                });
-
-                return;
-            }
-
-
-            if (type === '1ph') {
-
-                current =
-                    P /
-                    (V * pf);
-
-                showResults({
-                    'Single Phase Current':
-                        `${formatNumber(current)} A`
-                });
-
-                return;
-            }
-
-
-            if (type === '3ph') {
-
-                current =
-                    P /
-                    (
-                        Math.sqrt(3) *
-                        V *
-                        pf
-                    );
-
-                showResults({
-                    'Line Current':
-                        `${formatNumber(current)} A`
-                });
-
-                return;
+            if (results) {
+                showResults(results);
             }
         }
     }
@@ -775,7 +902,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        RESET
-       ========================================================= */
+    ========================================================== */
 
     function resetCalculator() {
 
@@ -797,23 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
             banner.remove();
         }
 
-        resultsSection.style.display = 'none';
-
-        resultGrid.innerHTML = '';
-
-        if (resultHeader) {
-            resultHeader.textContent =
-                'Calculated Results';
-        }
-
-        const iconElement =
-            document.querySelector(
-                '#powerCalcResult .results-header .material-symbols-outlined'
-            );
-
-        if (iconElement) {
-            iconElement.textContent = 'check_circle';
-        }
+        showReadyState();
 
         typeSelect.focus();
     }
@@ -821,7 +932,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        EVENTS
-       ========================================================= */
+    ========================================================== */
 
     typeSelect.addEventListener(
         'change',
@@ -833,10 +944,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             showInputSection(false);
 
-            resultsSection.style.display = 'none';
+            hideResults();
 
             clearInputErrors();
-
         }
     );
 
@@ -861,21 +971,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* =========================================================
        ENTER KEY
-       ========================================================= */
+    ========================================================== */
 
     inputsContainer.addEventListener(
         'keydown',
         event => {
 
-            if (event.key === 'Enter') {
+            if (
+                event.key === 'Enter' &&
+                !event.shiftKey
+            ) {
 
                 event.preventDefault();
 
                 calculate();
-
             }
-
         }
     );
+
+
+    /* =========================================================
+       ESCAPE KEY
+    ========================================================== */
+
+    document.addEventListener(
+        'keydown',
+        event => {
+
+            if (event.key !== 'Escape') {
+                return;
+            }
+
+            const banner =
+                document.getElementById(
+                    'power-calc-alert-banner'
+                );
+
+            if (banner) {
+                banner.remove();
+            }
+        }
+    );
+
+
+    /* =========================================================
+       INITIAL STATE
+    ========================================================== */
+
+    showReadyState();
 
 });
