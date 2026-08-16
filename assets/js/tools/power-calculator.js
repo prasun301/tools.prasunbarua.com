@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PRASUN ENGINEERING TECHNOLOGY
+   PRASUN TOOLS
    Power Calculator
    ========================================================================== */
 
@@ -9,13 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ----------------------------------------------------------------------
        ELEMENTS
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
-    const typeSelect =
-        document.getElementById("powerCalcType");
-
-    const modeSelect =
-        document.getElementById("powerCalcMode");
+    const typeSelect = document.getElementById("powerCalcType");
+    const modeSelect = document.getElementById("powerCalcMode");
 
     const inputSection =
         document.getElementById("powerCalcInputSection");
@@ -29,52 +26,83 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetButton =
         document.getElementById("powerCalcReset");
 
-    const resultValue =
-        document.getElementById("powerCalcResultValue");
-
     const resultGrid =
         document.getElementById("powerCalcResultGrid");
 
+    const resultHeader =
+        document.querySelector("#powerCalcResult .results-header");
+
+    /* ----------------------------------------------------------------------
+       SAFETY CHECK
+       ---------------------------------------------------------------------- */
+
+    if (
+        !typeSelect ||
+        !modeSelect ||
+        !inputSection ||
+        !inputsContainer ||
+        !calculateButton ||
+        !resetButton ||
+        !resultGrid
+    ) {
+        console.error("Power Calculator: Required elements are missing.");
+        return;
+    }
 
     /* ----------------------------------------------------------------------
        HELPERS
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
     function formatNumber(value) {
-        return Number(value).toFixed(4);
+
+        if (!Number.isFinite(value)) {
+            return "—";
+        }
+
+        return Number(value).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 4
+        });
     }
 
 
-    function getElementValue(id) {
+    function getValue(id) {
 
-        const element =
-            document.getElementById(id);
+        const element = document.getElementById(id);
 
         if (!element) {
             return NaN;
         }
 
         return parseFloat(element.value);
-
     }
 
 
     function showInputSection(show) {
 
         inputSection.hidden = !show;
-
     }
 
 
-    function setResult(
-        label,
-        value,
-        icon = "check_circle"
-    ) {
+    function updateResultIcon(iconName) {
+
+        if (!resultHeader) {
+            return;
+        }
+
+        const icon =
+            resultHeader.querySelector(".material-symbols-outlined");
+
+        if (icon) {
+            icon.textContent = iconName;
+        }
+    }
+
+
+    function setResult(label, value, iconName = "calculate") {
 
         resultGrid.innerHTML = `
             <div class="result-item">
-
                 <span class="result-label">
                     ${label}
                 </span>
@@ -82,23 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="result-value">
                     ${value}
                 </span>
-
             </div>
         `;
 
-        const header =
-            document.querySelector(
-                "#powerCalcResult .results-header"
-            );
-
-        if (header) {
-
-            header.querySelector(
-                ".material-symbols-outlined"
-            ).textContent = icon;
-
-        }
-
+        updateResultIcon(iconName);
     }
 
 
@@ -109,19 +124,29 @@ document.addEventListener("DOMContentLoaded", () => {
             message,
             "error"
         );
+    }
 
+
+    function validatePositive(value, fieldName) {
+
+        if (!Number.isFinite(value) || value <= 0) {
+
+            showError(
+                `${fieldName} must be greater than zero.`
+            );
+
+            return false;
+        }
+
+        return true;
     }
 
 
     /* ----------------------------------------------------------------------
        INPUT CREATION
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
-    function createInput(
-        id,
-        label,
-        unit
-    ) {
+    function createInput(id, label, unit, hint) {
 
         return `
             <div class="input-row-card">
@@ -133,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </label>
 
                     <span class="input-hint">
-                        Enter a valid value
+                        ${hint}
                     </span>
 
                 </div>
@@ -147,6 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         min="0"
                         inputmode="decimal"
                         autocomplete="off"
+                        aria-label="${label}"
                     >
 
                     <span class="input-unit">
@@ -157,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </div>
         `;
-
     }
 
 
@@ -173,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </label>
 
                     <span class="input-hint">
-                        Enter a value from 0 to 1
+                        Enter a value between 0 and 1
                     </span>
 
                 </div>
@@ -189,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         value="1"
                         inputmode="decimal"
                         autocomplete="off"
+                        aria-label="Power factor"
                     >
 
                     <span class="input-unit">
@@ -199,25 +225,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </div>
         `;
-
     }
 
 
     /* ----------------------------------------------------------------------
        UPDATE INPUTS
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
     function updateInputs() {
 
-        const type =
-            typeSelect.value;
-
-        const mode =
-            modeSelect.value;
+        const type = typeSelect.value;
+        const mode = modeSelect.value;
 
         inputsContainer.innerHTML = "";
-
         showInputSection(false);
+
+        setResult(
+            "Status",
+            "Ready",
+            "calculate"
+        );
 
         if (!type || !mode) {
             return;
@@ -225,8 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* ==============================================================
-           POWER
-        ============================================================== */
+           CALCULATE POWER
+           ============================================================== */
 
         if (mode === "P") {
 
@@ -234,28 +261,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 createInput(
                     "powerCalcVoltage",
                     "Voltage",
-                    "V"
+                    "V",
+                    "Enter system voltage"
                 ) +
 
                 createInput(
                     "powerCalcCurrent",
                     "Current",
-                    "A"
+                    "A",
+                    "Enter load current"
                 );
 
             if (type !== "dc") {
 
                 inputsContainer.innerHTML +=
                     createPowerFactorInput();
-
             }
-
         }
 
 
         /* ==============================================================
-           VOLTAGE
-        ============================================================== */
+           CALCULATE VOLTAGE
+           ============================================================== */
 
         else if (mode === "V") {
 
@@ -263,28 +290,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 createInput(
                     "powerCalcPower",
                     "Power",
-                    "W"
+                    "W",
+                    "Enter active power"
                 ) +
 
                 createInput(
                     "powerCalcCurrent",
                     "Current",
-                    "A"
+                    "A",
+                    "Enter load current"
                 );
 
             if (type !== "dc") {
 
                 inputsContainer.innerHTML +=
                     createPowerFactorInput();
-
             }
-
         }
 
 
         /* ==============================================================
-           CURRENT
-        ============================================================== */
+           CALCULATE CURRENT
+           ============================================================== */
 
         else if (mode === "I") {
 
@@ -292,22 +319,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 createInput(
                     "powerCalcPower",
                     "Power",
-                    "W"
+                    "W",
+                    "Enter active power"
                 ) +
 
                 createInput(
                     "powerCalcVoltage",
                     "Voltage",
-                    "V"
+                    "V",
+                    "Enter system voltage"
                 );
 
             if (type !== "dc") {
 
                 inputsContainer.innerHTML +=
                     createPowerFactorInput();
-
             }
-
         }
 
 
@@ -319,76 +346,276 @@ document.addEventListener("DOMContentLoaded", () => {
         if (firstInput) {
             firstInput.focus();
         }
-
     }
 
 
     /* ----------------------------------------------------------------------
        POWER FACTOR
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
-    function getPowerFactor(type) {
+    function getPowerFactor() {
+
+        const type = typeSelect.value;
 
         if (type === "dc") {
             return 1;
         }
 
-        const pf =
-            getElementValue("powerCalcPF");
+        const pf = getValue("powerCalcPF");
 
         if (
-            Number.isNaN(pf) ||
+            !Number.isFinite(pf) ||
             pf <= 0 ||
             pf > 1
         ) {
-
             return null;
-
         }
 
         return pf;
-
     }
 
 
     /* ----------------------------------------------------------------------
-       VALIDATION
-    ---------------------------------------------------------------------- */
+       CALCULATE POWER
+       ---------------------------------------------------------------------- */
 
-    function validateValue(
-        value,
-        fieldName
-    ) {
+    function calculatePower(type, pf) {
+
+        const voltage =
+            getValue("powerCalcVoltage");
+
+        const current =
+            getValue("powerCalcCurrent");
+
 
         if (
-            Number.isNaN(value) ||
-            value < 0
+            !validatePositive(
+                voltage,
+                "Voltage"
+            )
         ) {
-
-            showError(
-                `Enter a valid ${fieldName}.`
-            );
-
-            return false;
-
+            return;
         }
 
-        return true;
 
+        if (
+            !validatePositive(
+                current,
+                "Current"
+            )
+        ) {
+            return;
+        }
+
+
+        let power;
+        let label;
+
+
+        if (type === "dc") {
+
+            power =
+                voltage * current;
+
+            label = "DC Power";
+        }
+
+
+        else if (type === "1ph") {
+
+            power =
+                voltage *
+                current *
+                pf;
+
+            label = "Single-Phase Power";
+        }
+
+
+        else if (type === "3ph") {
+
+            power =
+                Math.sqrt(3) *
+                voltage *
+                current *
+                pf;
+
+            label = "Three-Phase Power";
+        }
+
+
+        setResult(
+            label,
+            `${formatNumber(power)} W`,
+            "bolt"
+        );
     }
 
 
     /* ----------------------------------------------------------------------
-       CALCULATE
-    ---------------------------------------------------------------------- */
+       CALCULATE VOLTAGE
+       ---------------------------------------------------------------------- */
+
+    function calculateVoltage(type, pf) {
+
+        const power =
+            getValue("powerCalcPower");
+
+        const current =
+            getValue("powerCalcCurrent");
+
+
+        if (
+            !validatePositive(
+                power,
+                "Power"
+            )
+        ) {
+            return;
+        }
+
+
+        if (
+            !validatePositive(
+                current,
+                "Current"
+            )
+        ) {
+            return;
+        }
+
+
+        let voltage;
+        let label;
+
+
+        if (type === "dc") {
+
+            voltage =
+                power / current;
+
+            label = "Voltage";
+        }
+
+
+        else if (type === "1ph") {
+
+            voltage =
+                power /
+                (current * pf);
+
+            label = "Single-Phase Voltage";
+        }
+
+
+        else if (type === "3ph") {
+
+            voltage =
+                power /
+                (
+                    Math.sqrt(3) *
+                    current *
+                    pf
+                );
+
+            label = "Line Voltage";
+        }
+
+
+        setResult(
+            label,
+            `${formatNumber(voltage)} V`,
+            "electric_bolt"
+        );
+    }
+
+
+    /* ----------------------------------------------------------------------
+       CALCULATE CURRENT
+       ---------------------------------------------------------------------- */
+
+    function calculateCurrent(type, pf) {
+
+        const power =
+            getValue("powerCalcPower");
+
+        const voltage =
+            getValue("powerCalcVoltage");
+
+
+        if (
+            !validatePositive(
+                power,
+                "Power"
+            )
+        ) {
+            return;
+        }
+
+
+        if (
+            !validatePositive(
+                voltage,
+                "Voltage"
+            )
+        ) {
+            return;
+        }
+
+
+        let current;
+        let label;
+
+
+        if (type === "dc") {
+
+            current =
+                power / voltage;
+
+            label = "Current";
+        }
+
+
+        else if (type === "1ph") {
+
+            current =
+                power /
+                (voltage * pf);
+
+            label = "Single-Phase Current";
+        }
+
+
+        else if (type === "3ph") {
+
+            current =
+                power /
+                (
+                    Math.sqrt(3) *
+                    voltage *
+                    pf
+                );
+
+            label = "Line Current";
+        }
+
+
+        setResult(
+            label,
+            `${formatNumber(current)} A`,
+            "electric_bolt"
+        );
+    }
+
+
+    /* ----------------------------------------------------------------------
+       MAIN CALCULATION
+       ---------------------------------------------------------------------- */
 
     function calculate() {
 
-        const type =
-            typeSelect.value;
-
-        const mode =
-            modeSelect.value;
+        const type = typeSelect.value;
+        const mode = modeSelect.value;
 
 
         if (!type || !mode) {
@@ -398,307 +625,68 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             return;
-
         }
 
 
-        const PF =
-            getPowerFactor(type);
+        const pf = getPowerFactor();
 
 
-        if (PF === null) {
+        if (pf === null) {
 
             showError(
                 "Power factor must be greater than 0 and no greater than 1."
             );
 
             return;
-
         }
 
-
-        /* ==============================================================
-           POWER
-        ============================================================== */
 
         if (mode === "P") {
 
-            const V =
-                getElementValue(
-                    "powerCalcVoltage"
-                );
+            calculatePower(
+                type,
+                pf
+            );
 
-            const I =
-                getElementValue(
-                    "powerCalcCurrent"
-                );
-
-
-            if (!validateValue(V, "voltage")) {
-                return;
-            }
-
-            if (!validateValue(I, "current")) {
-                return;
-            }
-
-
-            let power;
-
-
-            if (type === "dc") {
-
-                power =
-                    V * I;
-
-                setResult(
-                    "DC Power",
-                    `${formatNumber(power)} W`,
-                    "bolt"
-                );
-
-                return;
-
-            }
-
-
-            if (type === "1ph") {
-
-                power =
-                    V * I * PF;
-
-                setResult(
-                    "Single Phase Power",
-                    `${formatNumber(power)} W`,
-                    "bolt"
-                );
-
-                return;
-
-            }
-
-
-            if (type === "3ph") {
-
-                power =
-                    Math.sqrt(3) *
-                    V *
-                    I *
-                    PF;
-
-                setResult(
-                    "Three Phase Power",
-                    `${formatNumber(power)} W`,
-                    "bolt"
-                );
-
-                return;
-
-            }
-
+            return;
         }
 
-
-        /* ==============================================================
-           VOLTAGE
-        ============================================================== */
 
         if (mode === "V") {
 
-            const P =
-                getElementValue(
-                    "powerCalcPower"
-                );
+            calculateVoltage(
+                type,
+                pf
+            );
 
-            const I =
-                getElementValue(
-                    "powerCalcCurrent"
-                );
-
-
-            if (!validateValue(P, "power")) {
-                return;
-            }
-
-
-            if (
-                Number.isNaN(I) ||
-                I <= 0
-            ) {
-
-                showError(
-                    "Current must be greater than zero."
-                );
-
-                return;
-
-            }
-
-
-            let voltage;
-
-
-            if (type === "dc") {
-
-                voltage =
-                    P / I;
-
-                setResult(
-                    "Voltage",
-                    `${formatNumber(voltage)} V`,
-                    "electric_bolt"
-                );
-
-                return;
-
-            }
-
-
-            if (type === "1ph") {
-
-                voltage =
-                    P /
-                    (I * PF);
-
-                setResult(
-                    "Single Phase Voltage",
-                    `${formatNumber(voltage)} V`,
-                    "electric_bolt"
-                );
-
-                return;
-
-            }
-
-
-            if (type === "3ph") {
-
-                voltage =
-                    P /
-                    (
-                        Math.sqrt(3) *
-                        I *
-                        PF
-                    );
-
-                setResult(
-                    "Line Voltage",
-                    `${formatNumber(voltage)} V`,
-                    "electric_bolt"
-                );
-
-                return;
-
-            }
-
+            return;
         }
 
-
-        /* ==============================================================
-           CURRENT
-        ============================================================== */
 
         if (mode === "I") {
 
-            const P =
-                getElementValue(
-                    "powerCalcPower"
-                );
+            calculateCurrent(
+                type,
+                pf
+            );
 
-            const V =
-                getElementValue(
-                    "powerCalcVoltage"
-                );
-
-
-            if (!validateValue(P, "power")) {
-                return;
-            }
-
-
-            if (
-                Number.isNaN(V) ||
-                V <= 0
-            ) {
-
-                showError(
-                    "Voltage must be greater than zero."
-                );
-
-                return;
-
-            }
-
-
-            let current;
-
-
-            if (type === "dc") {
-
-                current =
-                    P / V;
-
-                setResult(
-                    "Current",
-                    `${formatNumber(current)} A`,
-                    "electric_bolt"
-                );
-
-                return;
-
-            }
-
-
-            if (type === "1ph") {
-
-                current =
-                    P /
-                    (V * PF);
-
-                setResult(
-                    "Single Phase Current",
-                    `${formatNumber(current)} A`,
-                    "electric_bolt"
-                );
-
-                return;
-
-            }
-
-
-            if (type === "3ph") {
-
-                current =
-                    P /
-                    (
-                        Math.sqrt(3) *
-                        V *
-                        PF
-                    );
-
-                setResult(
-                    "Line Current",
-                    `${formatNumber(current)} A`,
-                    "electric_bolt"
-                );
-
-                return;
-
-            }
-
+            return;
         }
 
+
+        showError(
+            "Please select a valid calculation parameter."
+        );
     }
 
 
     /* ----------------------------------------------------------------------
        RESET
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
     function resetCalculator() {
 
         typeSelect.value = "";
-
         modeSelect.value = "";
 
         inputsContainer.innerHTML = "";
@@ -710,13 +698,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "Ready",
             "calculate"
         );
-
     }
 
 
     /* ----------------------------------------------------------------------
        EVENTS
-    ---------------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
     typeSelect.addEventListener(
         "change",
@@ -733,7 +720,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Ready",
                 "calculate"
             );
-
         }
     );
 
@@ -757,8 +743,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ----------------------------------------------------------------------
-       ENTER KEY
-    ---------------------------------------------------------------------- */
+       ENTER KEY SUPPORT
+       ---------------------------------------------------------------------- */
 
     inputsContainer.addEventListener(
         "keydown",
@@ -769,11 +755,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
 
                 calculate();
-
             }
-
         }
     );
 
 });
-
