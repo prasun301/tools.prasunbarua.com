@@ -1,67 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5NNN0SFP0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-D5NNN0SFP0');
+    </script>
+
+
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Power Calculator — Prasun Tools</title>
 
-    <meta name="description"
-          content="Free electrical power calculator for DC, single-phase AC, and three-phase AC systems. Calculate power, voltage, and current using standard electrical formulas.">
+    <meta
+        name="description"
+        content="Calculate electrical power, voltage, or current for DC, single-phase AC, and three-phase AC systems."
+    >
 
-    <meta name="author"
-          content="Prasun Barua">
+    <link
+        rel="canonical"
+        href="https://tools.prasunbarua.com/tools/power-calculator.html"
+    >
 
-    <meta name="theme-color"
-          content="#2563eb">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <title>Power Calculator | Electrical Engineering Calculator</title>
 
     <!-- Google Material Symbols -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0"
+    >
+
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0"
-          rel="stylesheet">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/tools-pages.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- MAIN SITE CSS -->
+    <!-- IMPORTANT: ../ because this page is inside /tools/ -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+    <link rel="stylesheet" href="../assets/css/tools-pages.css">
+
+
+    <!-- Theme Initializer -->
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+            document.documentElement.setAttribute(
+                'data-theme',
+                savedTheme
+            );
+        } else {
+            const prefersDark =
+                window.matchMedia(
+                    '(prefers-color-scheme: dark)'
+                ).matches;
+
+            document.documentElement.setAttribute(
+                'data-theme',
+                prefersDark ? 'dark' : 'light'
+            );
+        }
+    </script>
+
 </head>
+
 
 <body>
 
-    <!-- Your existing site header should remain here -->
 
-    <main class="page-container">
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
-        <!-- Breadcrumb -->
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="index.html">Home</a>
+    <header class="site-header">
 
-            <span class="material-symbols-outlined"
-                  aria-hidden="true">
-                chevron_right
-            </span>
+        <div class="container header-inner">
 
-            <span>Power Calculator</span>
-        </nav>
+            <a
+                href="/"
+                class="logo"
+                aria-label="Prasun Tools Home"
+            >
 
-
-        <!-- Page Header -->
-        <header class="tool-page-header">
-
-            <div class="tool-page-icon"
-                 aria-hidden="true">
-
-                <span class="material-symbols-outlined">
-                    electrical_services
+                <span
+                    class="material-symbols-outlined logo-icon"
+                    aria-hidden="true"
+                >
+                    bolt
                 </span>
+
+                <span>Prasun Tools</span>
+
+            </a>
+
+
+            <nav
+                class="desktop-nav"
+                aria-label="Main Navigation"
+            >
+
+                <a href="/">
+                    Home
+                </a>
+
+                <a href="/#tools-grid" class="active">
+                    Tools
+                </a>
+
+                <a href="/about.html">
+                    About
+                </a>
+
+                <a href="/contact.html">
+                    Contact
+                </a>
+
+            </nav>
+
+
+            <div class="header-actions">
+
+                <button
+                    id="theme-toggle"
+                    class="icon-btn"
+                    type="button"
+                    aria-label="Toggle dark and light mode"
+                >
+
+                    <span
+                        class="material-symbols-outlined"
+                        aria-hidden="true"
+                    >
+                        dark_mode
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="icon-btn mobile-menu-btn"
+                    type="button"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                >
+
+                    <span
+                        class="material-symbols-outlined"
+                        aria-hidden="true"
+                    >
+                        menu
+                    </span>
+
+                </button>
 
             </div>
 
-            <div>
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MOBILE MENU
+    ========================================================== -->
+
+    <nav
+        id="mobile-menu"
+        class="mobile-menu"
+        aria-label="Mobile Navigation"
+    >
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/#tools-grid">
+            Tools
+        </a>
+
+        <a href="/about.html">
+            About
+        </a>
+
+        <a href="/contact.html">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main>
+
+        <div class="container">
+
+
+            <!-- Breadcrumb -->
+            <nav
+                class="breadcrumb"
+                aria-label="Breadcrumb"
+            >
+
+                <a href="/">
+                    Home
+                </a>
+
+                <span
+                    class="material-symbols-outlined"
+                    aria-hidden="true"
+                >
+                    chevron_right
+                </span>
+
+                <span>
+                    Power Calculator
+                </span>
+
+            </nav>
+
+
+            <!-- Page Header -->
+            <section class="tool-page-header">
+
+                <div class="tool-page-icon">
+
+                    <span
+                        class="material-symbols-outlined"
+                        aria-hidden="true"
+                    >
+                        electrical_services
+                    </span>
+
+                </div>
 
                 <h1>
                     Power Calculator
@@ -72,286 +272,404 @@
                     for DC, single-phase AC, and three-phase AC systems.
                 </p>
 
-            </div>
-
-        </header>
+            </section>
 
 
-        <!-- Calculator -->
-        <section class="calculator-card"
-                 aria-labelledby="calculator-heading">
+            <!-- =================================================
+                 CALCULATOR
+            ================================================== -->
 
-            <div class="calculator-inner">
+            <section
+                class="calculator-card"
+                aria-labelledby="calculator-title"
+            >
 
-                <h2 id="calculator-heading"
-                    class="section-title-tag">
-
-                    <span class="material-symbols-outlined"
-                          aria-hidden="true">
-                        calculate
-                    </span>
-
-                    Electrical Power Calculation
-
-                </h2>
+                <div class="calculator-inner">
 
 
-                <!-- System Type -->
-                <fieldset class="form-section-group">
+                    <!-- Calculator Header -->
+                    <div class="section-title-tag">
 
-                    <legend class="section-title-tag">
-                        System Configuration
-                    </legend>
-
-                    <div class="input-row-card">
-
-                        <div class="select-group">
-
-                            <label for="powerCalcType">
-                                System Type
-                            </label>
-
-                            <select id="powerCalcType">
-                                <option value="">
-                                    Select System
-                                </option>
-
-                                <option value="dc">
-                                    DC
-                                </option>
-
-                                <option value="1ph">
-                                    AC Single Phase
-                                </option>
-
-                                <option value="3ph">
-                                    AC Three Phase
-                                </option>
-                            </select>
-
-                        </div>
-
-
-                        <div class="select-group">
-
-                            <label for="powerCalcMode">
-                                Calculate
-                            </label>
-
-                            <select id="powerCalcMode">
-                                <option value="">
-                                    Select Parameter
-                                </option>
-
-                                <option value="P">
-                                    Power (P)
-                                </option>
-
-                                <option value="V">
-                                    Voltage (V)
-                                </option>
-
-                                <option value="I">
-                                    Current (I)
-                                </option>
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                </fieldset>
-
-
-                <!-- Dynamic Inputs -->
-                <fieldset class="form-section-group"
-                          id="powerCalcInputSection"
-                          hidden>
-
-                    <legend class="section-title-tag">
-                        Input Parameters
-                    </legend>
-
-                    <div class="power-calc-inputs"
-                         id="powerCalcInputs">
-                    </div>
-
-                </fieldset>
-
-
-                <!-- Buttons -->
-                <div class="action-buttons">
-
-                    <button type="button"
-                            class="btn primary-btn"
-                            id="powerCalcCalculate">
-
-                        <span class="material-symbols-outlined"
-                              aria-hidden="true">
+                        <span
+                            class="material-symbols-outlined"
+                            aria-hidden="true"
+                        >
                             calculate
                         </span>
 
-                        Calculate
-
-                    </button>
-
-
-                    <button type="button"
-                            class="btn secondary-btn"
-                            id="powerCalcReset">
-
-                        <span class="material-symbols-outlined"
-                              aria-hidden="true">
-                            restart_alt
-                        </span>
-
-                        Reset
-
-                    </button>
-
-                </div>
-
-
-                <!-- Result -->
-                <div class="results-box"
-                     id="powerCalcResult"
-                     role="status"
-                     aria-live="polite">
-
-                    <div class="results-header">
-
-                        <span class="material-symbols-outlined"
-                              aria-hidden="true">
-                            analytics
-                        </span>
-
-                        <h3>
-                            Result
-                        </h3>
+                        Electrical Power Calculation
 
                     </div>
 
-                    <div class="results-grid"
-                         id="powerCalcResultGrid">
 
-                        <div class="result-item">
+                    <!-- System Configuration -->
+                    <fieldset class="form-section-group">
 
-                            <span class="result-label">
-                                Status
+                        <legend class="section-title-tag">
+                            System Configuration
+                        </legend>
+
+
+                        <!-- System Type -->
+                        <div class="input-row-card">
+
+                            <div class="select-group">
+
+                                <label for="systemType">
+                                    System Type
+                                </label>
+
+                                <span class="input-hint">
+                                    Select the electrical system
+                                </span>
+
+                            </div>
+
+
+                            <div class="select-group">
+
+                                <select id="systemType">
+
+                                    <option value="">
+                                        Select System
+                                    </option>
+
+                                    <option value="dc">
+                                        DC
+                                    </option>
+
+                                    <option value="1ph">
+                                        AC Single Phase
+                                    </option>
+
+                                    <option value="3ph">
+                                        AC Three Phase
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Calculation Parameter -->
+                        <div class="input-row-card">
+
+                            <div class="select-group">
+
+                                <label for="calculationMode">
+                                    Calculate
+                                </label>
+
+                                <span class="input-hint">
+                                    Select the value to calculate
+                                </span>
+
+                            </div>
+
+
+                            <div class="select-group">
+
+                                <select id="calculationMode">
+
+                                    <option value="">
+                                        Select Parameter
+                                    </option>
+
+                                    <option value="P">
+                                        Power
+                                    </option>
+
+                                    <option value="V">
+                                        Voltage
+                                    </option>
+
+                                    <option value="I">
+                                        Current
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+
+
+                    <!-- Dynamic Inputs -->
+                    <div
+                        id="powerCalcInputSection"
+                        class="form-section-group"
+                        hidden
+                    >
+
+                        <div class="section-title-tag">
+
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                tune
                             </span>
 
-                            <span class="result-value"
-                                  id="powerCalcResultValue">
-                                Ready
-                            </span>
+                            Input Parameters
 
+                        </div>
+
+
+                        <div
+                            id="powerCalcInputs"
+                            class="power-calc-inputs"
+                        >
                         </div>
 
                     </div>
 
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+
+                        <button
+                            id="calculateBtn"
+                            class="btn primary-btn"
+                            type="button"
+                        >
+
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                calculate
+                            </span>
+
+                            Calculate
+
+                        </button>
+
+
+                        <button
+                            id="resetBtn"
+                            class="btn secondary-btn"
+                            type="button"
+                        >
+
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                restart_alt
+                            </span>
+
+                            Reset
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Results -->
+                    <section
+                        class="results-box"
+                        aria-live="polite"
+                    >
+
+                        <div class="results-header">
+
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                analytics
+                            </span>
+
+                            <h3>
+                                Result
+                            </h3>
+
+                        </div>
+
+
+                        <div
+                            id="powerCalcResult"
+                            class="results-grid"
+                        >
+
+                            <div class="result-item">
+
+                                <span class="result-label">
+                                    Status
+                                </span>
+
+                                <span class="result-value">
+                                    Ready
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
                 </div>
 
-            </div>
-
-        </section>
+            </section>
 
 
-        <!-- Formula Information -->
-        <section class="info-card"
-                 aria-labelledby="formula-heading">
+            <!-- =================================================
+                 FORMULAS
+            ================================================== -->
 
-            <div class="info-header">
+            <section class="info-card">
 
-                <span class="material-symbols-outlined"
-                      aria-hidden="true">
-                    functions
-                </span>
+                <div class="info-header">
 
-                <h3 id="formula-heading">
-                    Electrical Formulas
-                </h3>
-
-            </div>
-
-
-            <ul class="formula-list">
-
-                <li>
-
-                    <span class="formula-name">
-                        DC Power
+                    <span
+                        class="material-symbols-outlined"
+                        aria-hidden="true"
+                    >
+                        functions
                     </span>
 
-                    <span class="formula-eq">
-                        P = V × I
-                    </span>
+                    <h3>
+                        Electrical Formulas
+                    </h3>
 
-                </li>
-
-
-                <li>
-
-                    <span class="formula-name">
-                        Single-Phase AC Power
-                    </span>
-
-                    <span class="formula-eq">
-                        P = V × I × cosφ
-                    </span>
-
-                </li>
+                </div>
 
 
-                <li>
+                <ul class="formula-list">
 
-                    <span class="formula-name">
-                        Three-Phase AC Power
-                    </span>
+                    <li>
 
-                    <span class="formula-eq">
-                        P = √3 × V × I × cosφ
-                    </span>
+                        <span class="formula-name">
+                            DC Power
+                        </span>
 
-                </li>
+                        <span class="formula-eq">
+                            P = V × I
+                        </span>
 
-
-                <li>
-
-                    <span class="formula-name">
-                        Single-Phase Current
-                    </span>
-
-                    <span class="formula-eq">
-                        I = P / (V × cosφ)
-                    </span>
-
-                </li>
+                    </li>
 
 
-                <li>
+                    <li>
 
-                    <span class="formula-name">
-                        Three-Phase Current
-                    </span>
+                        <span class="formula-name">
+                            Single-Phase AC Power
+                        </span>
 
-                    <span class="formula-eq">
-                        I = P / (√3 × V × cosφ)
-                    </span>
+                        <span class="formula-eq">
+                            P = V × I × cosφ
+                        </span>
 
-                </li>
+                    </li>
 
-            </ul>
 
-        </section>
+                    <li>
+
+                        <span class="formula-name">
+                            Three-Phase AC Power
+                        </span>
+
+                        <span class="formula-eq">
+                            P = √3 × V × I × cosφ
+                        </span>
+
+                    </li>
+
+
+                    <li>
+
+                        <span class="formula-name">
+                            Single-Phase Current
+                        </span>
+
+                        <span class="formula-eq">
+                            I = P / (V × cosφ)
+                        </span>
+
+                    </li>
+
+
+                    <li>
+
+                        <span class="formula-name">
+                            Three-Phase Current
+                        </span>
+
+                        <span class="formula-eq">
+                            I = P / (√3 × V × cosφ)
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </section>
+
+        </div>
 
     </main>
 
 
-    <!-- Your existing site footer should remain here -->
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-links">
+
+                <a href="/">
+                    Home
+                </a>
+
+                <a href="/about.html">
+                    About
+                </a>
+
+                <a href="/privacy-policy.html">
+                    Privacy
+                </a>
+
+                <a href="/terms.html">
+                    Terms
+                </a>
+
+            </div>
 
 
-    <script src="assets/js/power-calculator.js"></script>
+            <p>
+
+                &copy; 2026 Tools by
+
+                <a
+                    href="https://www.prasunbarua.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Prasun Barua
+                </a>.
+
+                All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script src="../assets/js/power-calculator.js"></script>
 
 </body>
-</html>
 
+</html>
