@@ -357,3 +357,17 @@
         transform: translateY(0); 
     }
 }
+
+/* ==========================================================================
+   Power Calculator
+   ========================================================================== */
+
+.power-calc-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#powerCalcInputSection[hidden] {
+    display: none;
+}
