@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Free electrical power calculator for DC, single-phase AC, and three-phase AC systems. Calculate power, voltage, or current using voltage, current, and power factor.">
+
+    <meta name="keywords"
+          content="power calculator, electrical power calculator, DC power calculator, AC power calculator, single phase power calculator, three phase power calculator">
+
+    <meta name="author"
+          content="Prasun Barua">
+
+    <meta name="robots"
+          content="index, follow">
+
+    <meta name="theme-color"
+          content="#2563eb">
+
+    <title>Electrical Power Calculator | DC, Single Phase & Three Phase</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="calculator-page">
+
+    <section class="calculator-wrapper"
+             aria-labelledby="calculator-title">
+
+        <header class="calculator-header">
+
+            <div class="calculator-icon" aria-hidden="true">
+                ⚡
+            </div>
+
+            <div>
+                <h1 id="calculator-title">
+                    Electrical Power Calculator
+                </h1>
+
+                <p>
+                    Calculate power, voltage, or current for DC,
+                    single-phase AC, and three-phase AC systems.
+                </p>
+            </div>
+
+        </header>
+
+
+        <section class="calculator-card">
+
+            <!-- System Type -->
+            <div class="form-group">
+
+                <label for="systemType">
+                    System Type
+                </label>
+
+                <select id="systemType"
+                        aria-describedby="systemHelp">
+
+                    <option value="">
+                        Select system type
+                    </option>
+
+                    <option value="dc">
+                        DC
+                    </option>
+
+                    <option value="1ph">
+                        AC Single Phase
+                    </option>
+
+                    <option value="3ph">
+                        AC Three Phase
+                    </option>
+
+                </select>
+
+                <small id="systemHelp" class="field-help">
+                    Select the electrical system you want to calculate.
+                </small>
+
+            </div>
+
+
+            <!-- Calculation Mode -->
+            <div class="form-group">
+
+                <label for="calculationMode">
+                    Calculate
+                </label>
+
+                <select id="calculationMode"
+                        aria-describedby="modeHelp"
+                        disabled>
+
+                    <option value="">
+                        Select what to calculate
+                    </option>
+
+                    <option value="P">
+                        Power (P)
+                    </option>
+
+                    <option value="V">
+                        Voltage (V)
+                    </option>
+
+                    <option value="I">
+                        Current (I)
+                    </option>
+
+                </select>
+
+                <small id="modeHelp" class="field-help">
+                    Choose the electrical quantity you want to determine.
+                </small>
+
+            </div>
+
+
+            <!-- Dynamic Inputs -->
+            <div id="inputFields"
+                 class="input-grid"
+                 aria-live="polite">
+            </div>
+
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+
+                <button type="button"
+                        id="calculateButton"
+                        class="btn btn-primary"
+                        disabled>
+
+                    <span aria-hidden="true">⚡</span>
+                    Calculate
+
+                </button>
+
+                <button type="button"
+                        id="resetButton"
+                        class="btn btn-secondary">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+
+            <!-- Result -->
+            <div id="resultBox"
+                 class="result-box"
+                 role="status"
+                 aria-live="polite">
+
+                <div class="result-placeholder">
+
+                    <span class="result-placeholder-icon"
+                          aria-hidden="true">
+                        ∑
+                    </span>
+
+                    <span>
+                        Your calculation result will appear here.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Formula -->
+            <div id="formulaBox"
+                 class="formula-box"
+                 hidden>
+
+                <div class="formula-title">
+                    Formula
+                </div>
+
+                <div id="formulaText"
+                     class="formula-text">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Information -->
+        <section class="info-section">
+
+            <h2>Electrical Power Formulas</h2>
+
+            <div class="formula-grid">
+
+                <article class="formula-card">
+
+                    <span class="formula-label">
+                        DC
+                    </span>
+
+                    <strong>
+                        P = V × I
+                    </strong>
+
+                    <p>
+                        Power equals voltage multiplied by current.
+                    </p>
+
+                </article>
+
+
+                <article class="formula-card">
+
+                    <span class="formula-label">
+                        Single Phase AC
+                    </span>
+
+                    <strong>
+                        P = V × I × cosφ
+                    </strong>
+
+                    <p>
+                        Power depends on voltage, current,
+                        and power factor.
+                    </p>
+
+                </article>
+
+
+                <article class="formula-card">
+
+                    <span class="formula-label">
+                        Three Phase AC
+                    </span>
+
+                    <strong>
+                        P = √3 × V × I × cosφ
+                    </strong>
+
+                    <p>
+                        Uses line voltage and line current
+                        for a balanced three-phase system.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <footer class="calculator-footer">
+
+            <p>
+                Electrical Power Calculator
+            </p>
+
+            <p>
+                Designed for quick electrical engineering calculations.
+            </p>
+
+        </footer>
+
+    </section>
+
+</main>
+
+
+<!-- JavaScript -->
+<script src="app.js" defer></script>
+
+</body>
+</html>
