@@ -1,4 +1,3 @@
-```javascript
 /* ==========================================================================
    PRASUN ENGINEERING TECHNOLOGY
    Power Calculator
@@ -777,4 +776,4 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 });
-```
+
