@@ -359,106 +359,780 @@
 }
 
 /* ==========================================================================
-   Power Calculator
+   POWER CALCULATOR — PAGE LAYOUT
    ========================================================================== */
 
-.power-calc-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+/*
+   Power Calculator uses the site's existing design tokens.
+
+   The calculator is intentionally scoped so it does not interfere
+   with the homepage or other tools.
+*/
+
+.power-calculator-page {
+    width: 100%;
 }
 
-#powerCalcInputSection[hidden] {
-    display: none;
+.power-calculator-page .tool-page-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
 }
+
+
 /* ==========================================================================
-   Power Calculator Specific Layout
+   Breadcrumb
    ========================================================================== */
 
-.power-calc-inputs {
+.power-calculator-page .breadcrumb {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.35rem;
+
+    padding: 1.25rem 0 2rem;
+
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-#powerCalcInputSection[hidden] {
-    display: none;
+.power-calculator-page .breadcrumb a {
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
 }
 
-.tool-page-header {
+.power-calculator-page .breadcrumb a:hover {
+    color: var(--accent-color);
+}
+
+.power-calculator-page .breadcrumb .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--text-muted);
+}
+
+
+/* ==========================================================================
+   Tool Header
+   ========================================================================== */
+
+.power-calculator-page .tool-page-header {
     text-align: center;
     max-width: 760px;
     margin: 0 auto 2.5rem;
 }
 
-.tool-page-icon {
+.power-calculator-page .tool-page-icon {
     width: 56px;
     height: 56px;
+
     margin: 0 auto 1rem;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: 14px;
+
     background-color: color-mix(
         in srgb,
         var(--accent-color) 10%,
         var(--card-bg)
     );
+
     color: var(--accent-color);
 }
 
-.tool-page-icon .material-symbols-outlined {
+.power-calculator-page .tool-page-icon .material-symbols-outlined {
     font-size: 30px;
 }
 
-.tool-page-header h1 {
-    margin-bottom: 0.75rem;
+.power-calculator-page .tool-page-header h1 {
+    margin: 0 0 0.75rem;
+
     color: var(--text-primary);
+
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
 }
 
-.tool-page-header p {
-    color: var(--text-secondary);
-    max-width: 680px;
+.power-calculator-page .tool-page-header p {
     margin: 0 auto;
+
+    max-width: 680px;
+
+    color: var(--text-secondary);
+
+    font-size: 1rem;
+    line-height: 1.7;
 }
 
-.breadcrumb {
+
+/* ==========================================================================
+   Calculator Card
+   ========================================================================== */
+
+.power-calculator-page .calculator-card {
+    width: 100%;
+
+    background-color: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+
+    padding: 2rem;
+
+    box-shadow:
+        0 20px 40px -15px rgba(0, 0, 0, 0.06),
+        0 0 1px 1px var(--border-color);
+
+    transition:
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.power-calculator-page .calculator-card:hover {
+    box-shadow:
+        0 24px 48px -12px rgba(0, 0, 0, 0.09),
+        0 0 1px 1px var(--border-color);
+}
+
+
+/* ==========================================================================
+   Calculator Heading
+   ========================================================================== */
+
+.power-calculator-page .calculator-heading {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 1.25rem 0 2rem;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
+    gap: 0.65rem;
+
+    margin-bottom: 1.5rem;
 }
 
-.breadcrumb a {
-    color: var(--text-secondary);
-}
-
-.breadcrumb a:hover {
+.power-calculator-page .calculator-heading .material-symbols-outlined {
     color: var(--accent-color);
+    font-size: 24px;
 }
 
-.breadcrumb .material-symbols-outlined {
-    font-size: 18px;
+.power-calculator-page .calculator-heading h2 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 1.1rem;
+    font-weight: 750;
 }
 
-@media (max-width: 640px) {
 
-    .calculator-card {
-        padding: 1.25rem;
+/* ==========================================================================
+   Calculator Inner
+   ========================================================================== */
+
+.power-calculator-page .calculator-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    margin: 0;
+}
+
+
+/* ==========================================================================
+   Form Section
+   ========================================================================== */
+
+.power-calculator-page .form-section-group {
+    border: 0;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.power-calculator-page .section-title-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.power-calculator-page .section-title-tag::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background-color: var(--border-color);
+}
+
+
+/* ==========================================================================
+   Input Rows
+   ========================================================================== */
+
+.power-calculator-page .power-calc-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.power-calculator-page .input-row-card {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(240px, 1fr);
+
+    align-items: center;
+
+    gap: 1.25rem;
+
+    padding: 1rem 1.125rem;
+
+    background-color: var(--bg-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.power-calculator-page .input-row-card:hover {
+    border-color: color-mix(
+        in srgb,
+        var(--accent-color) 40%,
+        var(--border-color)
+    );
+}
+
+.power-calculator-page .input-row-card:focus-within {
+    border-color: var(--accent-color);
+
+    box-shadow:
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--accent-color) 12%,
+            transparent
+        );
+
+    background-color: var(--card-bg);
+}
+
+
+/* ==========================================================================
+   Labels
+   ========================================================================== */
+
+.power-calculator-page .input-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.3rem;
+}
+
+.power-calculator-page .input-group label {
+    color: var(--text-primary);
+
+    font-size: 0.9rem;
+    font-weight: 650;
+
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.power-calculator-page .input-hint {
+    color: var(--text-secondary);
+
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   Input Fields
+   ========================================================================== */
+
+.power-calculator-page .input-field-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.power-calculator-page .input-field-wrapper input,
+.power-calculator-page .select-group select {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 0.7rem 0.9rem;
+
+    background-color: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.power-calculator-page .input-field-wrapper input {
+    padding-right: 4.5rem;
+}
+
+.power-calculator-page .input-field-wrapper input:focus,
+.power-calculator-page .select-group select:focus {
+    border-color: var(--accent-color);
+
+    box-shadow:
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--accent-color) 10%,
+            transparent
+        );
+}
+
+.power-calculator-page .input-unit {
+    position: absolute;
+
+    right: 0.65rem;
+
+    padding: 0.2rem 0.45rem;
+
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+
+    background-color: var(--bg-color);
+
+    color: var(--text-secondary);
+
+    font-size: 0.7rem;
+    font-weight: 750;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================================================
+   Select Fields
+   ========================================================================== */
+
+.power-calculator-page .select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.power-calculator-page .select-group label {
+    color: var(--text-primary);
+
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+.power-calculator-page .select-group select {
+    cursor: pointer;
+
+    appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%2364748b'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+
+    padding-right: 2.5rem;
+}
+
+
+/* ==========================================================================
+   Action Buttons
+   ========================================================================== */
+
+.power-calculator-page .action-buttons {
+    display: flex;
+    align-items: center;
+
+    gap: 0.75rem;
+
+    margin: 0.25rem 0 0;
+}
+
+.power-calculator-page .btn {
+    min-height: 46px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    padding: 0.7rem 1.25rem;
+
+    border-radius: 10px;
+    border: none;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.power-calculator-page .btn .material-symbols-outlined {
+    font-size: 19px;
+}
+
+.power-calculator-page .primary-btn {
+    background-color: var(--accent-color);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 14px color-mix(
+            in srgb,
+            var(--accent-color) 25%,
+            transparent
+        );
+}
+
+.power-calculator-page .primary-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px color-mix(
+            in srgb,
+            var(--accent-color) 32%,
+            transparent
+        );
+}
+
+.power-calculator-page .secondary-btn {
+    background-color: transparent;
+
+    color: var(--text-primary);
+
+    border: 1px solid var(--border-color);
+}
+
+.power-calculator-page .secondary-btn:hover {
+    background-color: var(--bg-color);
+    border-color: var(--text-secondary);
+}
+
+
+/* ==========================================================================
+   Results
+   ========================================================================== */
+
+.power-calculator-page .results-box {
+    margin-top: 1.25rem;
+
+    padding: 1.5rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bg-color) 0%,
+            color-mix(
+                in srgb,
+                var(--accent-color) 4%,
+                var(--bg-color)
+            ) 100%
+        );
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--accent-color) 35%,
+        var(--border-color)
+    );
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 12px 30px -10px rgba(0, 0, 0, 0.05);
+
+    animation: powerCalculatorFadeIn 0.3s ease;
+}
+
+.power-calculator-page .results-header {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    margin-bottom: 1rem;
+}
+
+.power-calculator-page .results-header .material-symbols-outlined {
+    color: var(--accent-color);
+    font-size: 21px;
+}
+
+.power-calculator-page .results-header h3 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 0.85rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.power-calculator-page .results-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 0.875rem;
+}
+
+.power-calculator-page .result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    padding: 1rem 1.1rem;
+
+    background-color: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.power-calculator-page .result-label {
+    color: var(--text-secondary);
+
+    font-size: 0.7rem;
+    font-weight: 750;
+
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.power-calculator-page .result-value {
+    color: var(--text-primary);
+
+    font-size: 1.3rem;
+    font-weight: 800;
+
+    line-height: 1.3;
+}
+
+
+/* ==========================================================================
+   Formula Information
+   ========================================================================== */
+
+.power-calculator-page .info-card {
+    margin-top: 1.5rem;
+
+    padding: 1.5rem;
+
+    background-color: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 30px -10px rgba(0, 0, 0, 0.04);
+}
+
+.power-calculator-page .info-header {
+    display: flex;
+    align-items: center;
+
+    gap: 0.55rem;
+
+    margin-bottom: 1rem;
+}
+
+.power-calculator-page .info-header .material-symbols-outlined {
+    color: var(--accent-color);
+    font-size: 21px;
+}
+
+.power-calculator-page .info-header h3 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 0.9rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.power-calculator-page .formula-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0;
+
+    list-style: none;
+}
+
+.power-calculator-page .formula-list li {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.35rem;
+
+    padding: 0.9rem 0;
+
+    border-bottom: 1px solid var(--border-color);
+}
+
+.power-calculator-page .formula-list li:first-child {
+    padding-top: 0;
+}
+
+.power-calculator-page .formula-list li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.power-calculator-page .formula-name {
+    color: var(--text-primary);
+
+    font-size: 0.85rem;
+    font-weight: 650;
+}
+
+.power-calculator-page .formula-eq {
+    width: fit-content;
+
+    padding: 0.3rem 0.55rem;
+
+    background-color: var(--bg-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+
+    color: var(--text-secondary);
+
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        monospace;
+
+    font-size: 0.78rem;
+}
+
+
+/* ==========================================================================
+   Hidden Input Section
+   ========================================================================== */
+
+.power-calculator-page #powerCalcInputSection[hidden] {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   Animation
+   ========================================================================== */
+
+@keyframes powerCalculatorFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(6px);
     }
 
-    .breadcrumb {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+    .power-calculator-page .tool-page-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .power-calculator-page .calculator-card {
+        padding: 1.25rem;
+        border-radius: 16px;
+    }
+
+    .power-calculator-page .input-row-card {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+    }
+
+    .power-calculator-page .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .power-calculator-page .btn {
+        width: 100%;
+    }
+
+    .power-calculator-page .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .power-calculator-page .breadcrumb {
+        padding-top: 1rem;
         padding-bottom: 1.5rem;
     }
 
-    .tool-page-header {
-        margin-bottom: 1.75rem;
+    .power-calculator-page .tool-page-header {
+        margin-bottom: 1.5rem;
     }
 
-    .tool-page-header h1 {
-        font-size: 2rem;
+    .power-calculator-page .tool-page-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .power-calculator-page .tool-page-header p {
+        font-size: 0.9rem;
     }
 
 }
