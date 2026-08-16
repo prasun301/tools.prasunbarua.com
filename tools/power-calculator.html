@@ -1,1 +1,197 @@
+1
 
+<div class="power-calc-container">
+
+2
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+3
+
+​
+
+4
+
+<style>
+
+5
+
+/* ================================================
+
+6
+
+   1. DEFAULT LIGHT MODE CONFIGURATION
+
+7
+
+================================================ */
+
+8
+
+.power-calc-container {
+
+9
+
+    --pwr-card: #ffffff;
+
+10
+
+    --pwr-text: #0f172a;
+
+11
+
+    --pwr-muted: #64748b;
+
+12
+
+    --pwr-primary: #2563eb;
+
+13
+
+    --pwr-border: #e2e8f0;
+
+14
+
+    --pwr-result: #eff6ff;
+
+15
+
+​
+
+16
+
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+17
+
+    padding: 15px 0;
+
+18
+
+    max-width: 760px;
+
+19
+
+    margin: auto;
+
+20
+
+    color-scheme: light dark;
+
+21
+
+}
+
+22
+
+​
+
+23
+
+/* ================================================
+
+24
+
+   2. AUTOMATIC SYSTEM DARK MODE 
+
+25
+
+================================================ */
+
+26
+
+@media (prefers-color-scheme: dark) {
+
+27
+
+    .power-calc-container {
+
+28
+
+        --pwr-card: #0f172a;
+
+29
+
+        --pwr-text: #e5e7eb;
+
+30
+
+        --pwr-muted: #94a3b8;
+
+31
+
+        --pwr-primary: #3b82f6;
+
+32
+
+        --pwr-border: #1e293b;
+
+33
+
+        --pwr-result: #0b1220;
+
+34
+
+    }
+
+35
+
+}
+
+36
+
+​
+
+37
+
+/* ================================================
+
+38
+
+   3. BLOGGER DARK THEME FORCE OVERRIDES
+
+39
+
+================================================ */
+
+40
+
+:root.dark .power-calc-container, body.dark .power-calc-container,
+
+41
+
+:root.dark-mode .power-calc-container, body.dark-mode .power-calc-container,
+
+42
+
+:root[data-theme="dark"] .power-calc-container, body[data-theme="dark"] .power-calc-container,
+
+43
+
+:root.theme-dark .power-calc-container, body.theme-dark .power-calc-container {
+
+44
+
+    --pwr-card: #0f172a;
+
+45
+
+    --pwr-text: #e5e7eb;
+
+46
+
+    --pwr-muted: #94a3b8;
+
+47
+
+    --pwr-primary: #3b82f6;
+
+48
+
+    --pwr-border: #1e293b;
+
+Page settings
+Search Description
+Options
+Custom Robot Tags
+Page: Edit
